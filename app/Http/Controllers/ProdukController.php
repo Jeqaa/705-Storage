@@ -20,7 +20,9 @@ class ProdukController extends Controller
         $kategori = $request->input('kategori');
         $jumlah_barang = $request->input('jumlah_barang');
 
-        $result = DB::insert('INSERT INTO produk (nama_produk, kategori, jumlah_barang) VALUES (?, ?, ?)', [$nama_produk, $kategori, $jumlah_barang]);
+        $now = \Carbon\Carbon::now('Asia/Jakarta');
+
+        $result = DB::insert('INSERT INTO produk (nama_produk, kategori, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?)', [$nama_produk, $kategori, $jumlah_barang, $now, $now]);
 
         if ($result) {
             return redirect('/')->with('success', 'Data berhasil dimasukkan!');
