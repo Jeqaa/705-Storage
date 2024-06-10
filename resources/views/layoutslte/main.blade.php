@@ -1,6 +1,3 @@
-main.blade.php:
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +18,6 @@ main.blade.php:
   <!-- JQVMap -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/jqvmap/jqvmap.min.css') }}">
     <!-- Select2 -->
-  {{-- <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.css') }}"> --}}
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">

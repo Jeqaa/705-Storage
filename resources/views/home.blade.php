@@ -1,37 +1,56 @@
-@extends('layouts.template');
+@extends('layouts.template')
 
 @section('title')
 Home
 @endsection
 
 @section('content')
-    <!-- Main Content -->
-    <div class="container-fluid">
-      <h1>{{ $title }}</h1>
-      <h3 class="pt-1 mb-3">All Items</h3>
-      <div class="row">
-        <table class="table table-striped">
-          <thead class="table-head">
-            <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Stock</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="itemsRow">
-              <td>namanyaaaaaaaaa</td>
-              <td>categorynyaaaaaaa</td>
-              <td>101</td>
-              <td class="tdBtn">
-                <button class="editBtn me-4 rounded-2">Edit</button>
-                <button class="deleteBtn rounded-2">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="container-fluid">
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
+    <h1>{{ $title }}</h1>
+    <h3 class="pt-1 mb-3">All Items</h3>
+    <div class="row">
+        <table class="table table-striped">
+            <thead class="table-head">
+                <tr>
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+              @php $i = 1; @endphp
+              @foreach ($produk as $prd)
+                <tr>
+                  <td>{{ $i }}</td>
+                  <td>{{ $prd->nama_produk }}</td>
+                  <td>{{ $prd->kategori }}</td>
+                  <td>{{ $prd->jumlah_barang }}</td>
+                  <td>
+                    <form action="{{ route('produk.destroy', $prd->nama_produk) }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
+                      
+                    </form>
+                 </td>
+                </tr>
+                @php $i++; @endphp
+              @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection
