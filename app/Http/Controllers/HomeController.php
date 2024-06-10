@@ -1,0 +1,16 @@
+<?php 
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
+{   
+    public function dashboardlte(){
+        return view('dashboardlte');
+    }
+
+    //index
+    public function index(){
+        return view('home' , ['title' => 'Home']);
+    }
+}
