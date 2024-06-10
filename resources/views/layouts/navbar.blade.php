@@ -52,15 +52,20 @@
     @csrf
     <div class="mb-3">
         <label for="nama_produk" class="form-label">Nama Produk</label>
-        <input type="text" class="form-control" id="nama_produk" name="nama_produk">
+        <input type="text" class="form-control" id="nama_produk" name="nama_produk" required>
     </div>
     <div class="mb-3">
-        <label for="kategori" class="form-label">Kategori</label>
-        <textarea class="form-control" id="kategori" name="kategori" rows="3"></textarea>
-    </div>
+    <label for="kategori" class="form-label">Kategori</label>
+    <select class="form-select" id="kategori" name="kategori">
+        <option value="Best Seller">Best Seller</option>
+        <option value="Other">Other</option>
+        <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
+    </select>
+</div>
+
     <div class="mb-3">
         <label for="jumlah_barang" class="form-label">Jumlah Barang</label>
-        <textarea class="form-control" id="jumlah_barang" name="jumlah_barang" rows="3"></textarea>
+        <textarea class="form-control" id="jumlah_barang" name="jumlah_barang" rows="3" required></textarea>
     </div>
     <div class="d-flex justify-content-between">
         <button type="submit" class="btn btn-primary">Submit</button>
