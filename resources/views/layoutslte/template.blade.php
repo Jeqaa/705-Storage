@@ -9,8 +9,9 @@
         @include('layoutslte.sidebar');
         @yield('content');
 
+        {{-- @include('layoutslte.footer') --}}
         @include('layoutslte.script')
     </div>
 </body>
+
 </html>
-  
