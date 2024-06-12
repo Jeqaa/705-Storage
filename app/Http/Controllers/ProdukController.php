@@ -10,8 +10,8 @@ class ProdukController extends Controller
     public function index()
     {
         $produk = produk::all();
-        $title = 'Home';
-        return view('home',['produk' => $produk,'title'=>$title]);
+        // $title = 'Home';
+        return view('dashboardlte',['produk' => $produk]);
     }
 
     public function store(Request $request)
@@ -39,6 +39,4 @@ class ProdukController extends Controller
         return redirect()->route('produk')->with('success', 'Produk deleted successfully.');
     }
 }
-
-
 
