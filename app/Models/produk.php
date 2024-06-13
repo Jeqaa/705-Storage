@@ -12,10 +12,10 @@ class Produk extends Model
     protected $table = 'produk';
 
     // Set the primary key
-    protected $primaryKey = 'nama_produk';
+    protected $primaryKey = 'id';
 
     // Disable auto-incrementing for the primary key
-    public $incrementing = false;
+    public $incrementing = true;
 
     // Set the primary key type
     protected $keyType = 'string';
@@ -31,8 +31,4 @@ class Produk extends Model
 
     // Enable timestamps if you want Laravel to manage created_at and updated_at
     public $timestamps = true;
-
-    // If you want to customize the timestamp columns
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'terakhir_sunting';
 }
