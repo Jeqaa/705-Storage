@@ -259,6 +259,8 @@
                                 <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
                             </div>
                         </form>
+
+                
                     </div>
                 </section>
 
@@ -285,7 +287,8 @@
                                                 <td>{{ $prd->kategori }}</td>
                                                 <td>{{ $prd->jumlah_barang }}</td>
                                                 <td>
-                                                    <form action="{{ route('produk.destroy', $prd->nama_produk) }}"
+                                                   <a href="{{ route('produk.edit', $prd->id) }}" class ="btn btn-primary">Edit</a>
+                                                    <form action="{{ route('produk.destroy', $prd->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -306,6 +309,7 @@
                         <!-- /.card -->
                     </div>
                 </div>
+                
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
         </section>

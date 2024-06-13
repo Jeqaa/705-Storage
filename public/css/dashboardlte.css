@@ -1,5 +1,5 @@
 /* Sembunyikan form pada awalnya */
-#myForm {
+#myForm, #myEditForm{
     display: none;
     position: fixed;
     top: 50%;
