@@ -2,14 +2,7 @@
 
 
 @section('content')
-    <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-    </div>
-
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -24,7 +17,6 @@
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
-        <!-- /.content-header -->
 
         <!-- Main content -->
         <section class="content">
@@ -177,55 +169,46 @@
 
                 <section class="content">
                     <div class="container-fluid">
-                        {{-- <h2 class="text-center display-4">Enhanced Search</h2> --}}
-                        <form action="enhanced-results.html">
+                        <form>
                             <div class="row">
-                                <div class="col-md-10 offset-md-1">
+                                <div class="col-md-10">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-3">
                                             <div class="form-group">
-                                                <label>Result Type:</label>
-                                                <select class="select2" multiple="multiple" data-placeholder="Any"
-                                                    style="width: 100%;">
-                                                    <option>Text only</option>
-                                                    <option>Images</option>
-                                                    <option>Video</option>
+                                                <label>Sort</label>
+                                                <select class="select2" id="sort" name="sort" style="width: 100%;">
+                                                    <option value="asc">Low to High Stock</option>
+                                                    <option value="desc">High to Low Stock</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label>Sort Order:</label>
-                                                <select class="select2" style="width: 100%;">
-                                                    <option selected>ASC</option>
-                                                    <option>DESC</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Order By:</label>
-                                                <select class="select2" style="width: 100%;">
-                                                    <option selected>Title</option>
-                                                    <option>Date</option>
+                                                <label>Category</label>
+                                                <select class="select2" id="category" name="category" style="width: 100%;">
+                                                    <option value="all">All</option>
+                                                    <option value="best_seller">Best Seller</option>
+                                                    <option value="other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {{-- search bar --}}
                                     <div class="form-group">
                                         <div class="input-group input-group-lg">
-                                            <input type="search" class="form-control form-control-lg"
-                                                placeholder="Type your keywords here" value="Lorem ipsum">
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-lg btn-default">
+                                            <input name="search" id="search" type="text" autocomplete="off"
+                                                class="form-control form-control-lg" placeholder="Search...">
+                                            {{-- <div class="input-group-append">
+                                                <button type="submit" class="btn btn-lg btn-default" id="tombol-cari">
                                                     <i class="fa fa-search"></i>
                                                 </button>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="addItemBtn">
-                                    <a class="btn btn-danger d-flex flex-column justify-content-center" href="#"
+                                    <a class="btn btn-danger d-flex flex-column justify-content-center mb-3" href="#"
                                         role="button" id="addItemBtn">
                                         <i class="bi bi-upload"></i>
                                         <div class="ms-2">Add Item</div>
@@ -235,79 +218,88 @@
                             </div>
                         </form>
 
-                        <form id="myForm" class="mt-3 w-75" action="{{ route('produk.store') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="nama_produk" class="form-label">Nama Produk</label>
-                                <input type="text" class="form-control" id="nama_produk" name="nama_produk" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="kategori" class="form-label">Kategori</label>
-                                <select class="form-select" id="kategori" name="kategori">
-                                    <option value="Best Seller">Best Seller</option>
-                                    <option value="Other">Other</option>
-                                    <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
-                                </select>
-                            </div>
+                        <form id="myForm" class="col-md-6" action="{{ route('produk.store') }}" method="POST">
+                            <div class="card-body">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="nama_produk" class="form-label">Nama Produk</label>
+                                    <input type="text" class="form-control" id="nama_produk" name="nama_produk" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="kategori" class="form-label">Kategori</label>
+                                    <select class="form-select" id="kategori" name="kategori">
+                                        <option value="Best Seller">Best Seller</option>
+                                        <option value="Other">Other</option>
+                                        <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
+                                    </select>
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="jumlah_barang" class="form-label">Jumlah Barang</label>
-                                <textarea class="form-control" id="jumlah_barang" name="jumlah_barang" rows="3" required></textarea>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+
+                                <div class="form-group">
+                                    <label for="jumlah_barang" class="form-label">Jumlah Barang</label>
+                                    <input class="form-control" id="jumlah_barang" name="jumlah_barang" rows="3"
+                                        required></input>
+                                </div>
+                                <div class="form-group d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </section>
 
+
                 <div class="row">
-                    <div class="col-12">
-                        <div class="card">
+                    <div class="w-100">
+                        <div class="card ">
                             <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Name</th>
-                                            <th>Category</th>
-                                            <th>Stock</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php $i = 1; @endphp
-                                        @foreach ($produk as $prd)
-                                            <tr>
-                                                <td>{{ $i }}</td>
-                                                <td>{{ $prd->nama_produk }}</td>
-                                                <td>{{ $prd->kategori }}</td>
-                                                <td>{{ $prd->jumlah_barang }}</td>
-                                                <td>
-                                                    <form action="{{ route('produk.destroy', $prd->nama_produk) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger"
-                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
-
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            @php $i++; @endphp
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
+                                <div id="container-table" class="overflow-hidden">
+                                    @if (isset($produk) && count($produk) > 0)
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Name</th>
+                                                    <th>Category</th>
+                                                    <th>Stock</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php $i = 1; @endphp
+                                                @foreach ($produk as $prd)
+                                                    <tr>
+                                                        <td>{{ $i }}</td>
+                                                        <td>{{ $prd->nama_produk }}</td>
+                                                        <td>{{ $prd->kategori }}</td>
+                                                        <td>{{ $prd->jumlah_barang }}</td>
+                                                        <td>
+                                                            <form action="{{ route('produk.destroy', $prd->nama_produk) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger"
+                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @php $i++; @endphp
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <p class="text-danger font-weight-bold text-center pt-3">No products found.</p>
+                                    @endif
+                                </div>
                             </div>
-                            <!-- /.card-body -->
+
                         </div>
-                        <!-- /.card -->
+
                     </div>
                 </div>
-                <!-- /.row (main row) -->
-            </div><!-- /.container-fluid -->
+
+            </div>
         </section>
         <!-- /.content -->
     </div>

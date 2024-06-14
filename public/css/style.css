@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --bgRed: #e71d36;
     --bgWhite: #fff3f4;
     --darkRed: #0e0103;
@@ -19,7 +19,6 @@ body {
 
 .sidebarMenu {
     width: 16rem !important;
-    /* background-color: var(--darkRed); */
 }
 
 h3 {
@@ -71,7 +70,6 @@ h3 {
     height: 2.7rem;
 }
 
-/* hamburgermenu */
 .bi-list {
     font-size: 2.5em;
 }
@@ -122,12 +120,11 @@ h3 {
 
 .table-head th {
     padding: 12px;
-    /* background-color: var(--darkRed); */
+
     color: white;
     text-align: center;
     background-image: url(/img/patern2.png);
     background-repeat: no-repeat;
-    /* background-size: cover; */
 }
 
 .table tbody td {
@@ -161,8 +158,4 @@ td.tdBtn {
 
 .tdBtn button {
     width: 5rem;
-}
-
-/* .itemsRow:nth-child(odd) {
-    background-color: #ffff00 !important;
-  } */
+} */

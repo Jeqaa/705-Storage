@@ -1,5 +1,3 @@
-web.php:
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -22,4 +20,5 @@ Route::get('/setting', function () {
 Route::get('/', [ProdukController::class, 'index'])-> name('produk');
 Route::get('/produk', [ProdukController::class, 'index'])-> name('produk');
 Route::post('/produk/store', [ProdukController::class, 'store'])->name('produk.store');
+Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
 Route::delete('/produk/destroy/{nama_produk}', [ProdukController::class,'destroy'])-> name('produk.destroy');
