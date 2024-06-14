@@ -21,157 +21,13 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-
-                {{-- <div class="row">
-            <div class="col-md-6">
-              <!-- AREA CHART -->
-              <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Area Chart</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-              <!-- DONUT CHART -->
-              <div class="card card-danger">
-                <div class="card-header">
-                  <h3 class="card-title">Donut Chart</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-              <!-- PIE CHART -->
-              <div class="card card-danger">
-                <div class="card-header">
-                  <h3 class="card-title">Pie Chart</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-            </div>
-            <!-- /.col (LEFT) -->
-            <div class="col-md-6">
-              <!-- LINE CHART -->
-              <div class="card card-info">
-                <div class="card-header">
-                  <h3 class="card-title">Line Chart</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="lineChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-              <!-- BAR CHART -->
-              <div class="card card-success">
-                <div class="card-header">
-                  <h3 class="card-title">Bar Chart</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-              <!-- STACKED BAR CHART -->
-              <div class="card card-success">
-                <div class="card-header">
-                  <h3 class="card-title">Stacked Bar Chart</h3>
-  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="chart">
-                    <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-  
-            </div>
-            <!-- /.col (RIGHT) -->
-          </div> --}}
-
                 <!-- Small boxes (Stat box) -->
 
                 <section class="content">
                     <div class="container-fluid">
                         <form>
                             <div class="row">
-                                <div class="col-md-10">
+                                <div class="col-md-10 px-0">
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
@@ -194,20 +50,16 @@
                                         </div>
                                     </div>
 
+
                                     {{-- search bar --}}
                                     <div class="form-group">
                                         <div class="input-group input-group-lg">
                                             <input name="search" id="search" type="text" autocomplete="off"
                                                 class="form-control form-control-lg" placeholder="Search...">
-                                            {{-- <div class="input-group-append">
-                                                <button type="submit" class="btn btn-lg btn-default" id="tombol-cari">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="addItemBtn">
+                                <div class="addItemBtn px-0">
                                     <a class="btn btn-danger d-flex flex-column justify-content-center mb-3" href="#"
                                         role="button" id="addItemBtn">
                                         <i class="bi bi-upload"></i>
@@ -218,7 +70,11 @@
                             </div>
                         </form>
 
+
                         <form id="myForm" class="col-md-6" action="{{ route('produk.store') }}" method="POST">
+                            <div class="card-header d-flex justify-content-center border-bottom mb-3">
+                                <h3 class="card-title py-3 fs-4 fw-bold">ADD ITEM</h3>
+                            </div>
                             <div class="card-body">
                                 @csrf
                                 <div class="form-group">
@@ -246,6 +102,8 @@
                                 </div>
                             </div>
                         </form>
+
+
                     </div>
                 </section>
 
@@ -256,26 +114,28 @@
                             <div class="card-body table-responsive p-0">
                                 <div id="container-table" class="overflow-hidden">
                                     @if (isset($produk) && count($produk) > 0)
-                                        <table class="table table-hover text-nowrap">
+                                        <table class="table table-hover text-nowrap mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>No.</th>
-                                                    <th>Name</th>
-                                                    <th>Category</th>
-                                                    <th>Stock</th>
-                                                    <th>Action</th>
+                                                    <th class="text-center">No.</th>
+                                                    <th class="text-center">Name</th>
+                                                    <th class="text-center">Category</th>
+                                                    <th class="text-center">Stock</th>
+                                                    <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php $i = 1; @endphp
                                                 @foreach ($produk as $prd)
                                                     <tr>
-                                                        <td>{{ $i }}</td>
-                                                        <td>{{ $prd->nama_produk }}</td>
-                                                        <td>{{ $prd->kategori }}</td>
-                                                        <td>{{ $prd->jumlah_barang }}</td>
-                                                        <td>
-                                                            <form action="{{ route('produk.destroy', $prd->nama_produk) }}"
+                                                        <td class="text-center">{{ $i }}</td>
+                                                        <td class="text-center">{{ $prd->nama_produk }}</td>
+                                                        <td class="text-center">{{ $prd->kategori }}</td>
+                                                        <td class="text-center">{{ $prd->jumlah_barang }}</td>
+                                                        <td class="d-flex justify-content-center">
+                                                            <a href="{{ route('produk.edit', $prd->id) }}"
+                                                                class ="btn btn-primary me-2">Edit</a>
+                                                            <form action="{{ route('produk.destroy', $prd->id) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')

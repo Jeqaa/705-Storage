@@ -4,27 +4,28 @@
             <div class="card-body table-responsive p-0">
                 <div id="container-table">
                     @if (isset($produk) && count($produk) > 0)
-                        <table class="table table-hover text-nowrap">
+                        <table class="table table-hover text-nowrap mb-0">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Stock</th>
-                                    <th>Action</th>
+                                    <th class="text-center">No.</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php $i = 1; @endphp
                                 @foreach ($produk as $prd)
                                     <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $prd->nama_produk }}</td>
-                                        <td>{{ $prd->kategori }}</td>
-                                        <td>{{ $prd->jumlah_barang }}</td>
-                                        <td>
-                                            <form action="{{ route('produk.destroy', $prd->nama_produk) }}"
-                                                method="POST">
+                                        <td class="text-center">{{ $i }}</td>
+                                        <td class="text-center">{{ $prd->nama_produk }}</td>
+                                        <td class="text-center">{{ $prd->kategori }}</td>
+                                        <td class="text-center">{{ $prd->jumlah_barang }}</td>
+                                        <td class="d-flex justify-content-center">
+                                            <a href="{{ route('produk.edit', $prd->id) }}"
+                                                class ="btn btn-primary me-2">Edit</a>
+                                            <form action="{{ route('produk.destroy', $prd->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger"

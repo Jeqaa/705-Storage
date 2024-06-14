@@ -1,5 +1,6 @@
 /* Sembunyikan form pada awalnya */
-#myForm {
+#myForm,
+#myEditForm {
     display: none;
     position: fixed;
     top: 50%;
@@ -26,4 +27,14 @@
 
 .marginbot-0 {
     margin-bottom: 0 !important;
+}
+
+.table-centered td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0; /* Sesuaikan padding jika diperlukan */
+    margin: 0; /* Sesuaikan margin jika diperlukan */
+    height: 100%; /* Memastikan sel memiliki tinggi penuh */
 }

@@ -39,7 +39,9 @@
                             <td>{{ $prd->kategori }}</td>
                             <td>{{ $prd->jumlah_barang }}</td>
                             <td>
-                                <form action="{{ route('produk.destroy', $prd->nama_produk) }}" method="POST">
+                                <a href="{{ route('produk.edit', $prd->id) }}" class="btn btn-primary">Edit</a>
+                                <p>ashdfahsdkfhasjdkhflaskdj</p>
+                                <form action="{{ route('produk.destroy', $prd->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"
