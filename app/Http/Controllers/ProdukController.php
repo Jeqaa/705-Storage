@@ -5,15 +5,56 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\produk;
+
 class ProdukController extends Controller
 {
     public function index()
     {
         $produk = produk::all();
-        // $title = 'Home';
         return view('dashboardlte',['produk' => $produk]);
+
     }
 
+    public function search(Request $request)
+    {
+        $query = Produk::query();
+        
+        // Filter berdasarkan pencarian
+        if ($request->filled('search')) {
+            $search = strtolower($request->input('search'));
+            $query->whereRaw('LOWER(nama_produk) LIKE ?', ["%{$search}%"]);
+        }
+
+        // Filter berdasarkan kategori
+        if ($request->filled('category') && $request->input('category') != 'all') {
+            $category = $request->input('category');
+            if ($category == 'best_seller') {
+                $query->where('kategori', '=', 'Best Seller');
+            } else if ($category == 'other') {
+                $query->where('kategori', '=', 'Other');
+            }
+        }
+
+        // Mengatur pengurutan
+        if ($request->filled('sort')) {
+            $sort = $request->input('sort');
+            if ($sort == 'asc') {
+                $query->orderBy('jumlah_barang', 'asc');
+            } else if ($sort == 'desc') {
+                $query->orderBy('jumlah_barang', 'desc');
+            }
+        }
+    
+        $produk = $query->get();
+
+            // Jika request adalah AJAX, kembalikan response JSON atau HTML
+        // if ($request->ajax()) {
+        //     return view('/layouts/table', ['produk' => $produk])->render();
+        // }
+    
+        return view('/layoutslte/table', ['produk' => $produk]);
+    }
+    
     public function store(Request $request)
     {
         $nama_produk = $request->input('nama_produk');
