@@ -131,6 +131,8 @@ class ProdukController extends Controller
             'kategori' => 'required',
             'jumlah_barang' => 'required',
         ]);
+
+        // variabel yang menyimpan waktu sekarang
         $now = \Carbon\Carbon::now('Asia/Jakarta');
 
         $update = [
@@ -140,37 +142,44 @@ class ProdukController extends Controller
             'updated_at'=>$now
         ];
         
+        // untuk mencari apakah sebelumnya itu sudah ada produk yang sama
         $inputNamaProduk = strtolower(str_replace(' ', '', $request->input('nama_produk')));
         $productCount = produk::whereRaw('LOWER(REPLACE(nama_produk, \' \', \'\')) = ?', [$inputNamaProduk])
         ->where('id', '<>', $id)
         ->count();
         
+        // kalau ternyata user mencoba mengedit nama proudk ke nama yang sudah ada, maka akan masuk ke if, jika tidak maka akan ke else
         if ($productCount > 0) {
-            // Lakukan sesuatu jika data tidak ditemukan
+            // error message untuk user yang mencoba mengganti nama produk menggunakan yang sudah ada
             $errorMsg = 'Tidak Dapat Mengganti Nama Produk Dengan Yang Sudah Ada.';
             return view('error', compact('errorMsg'));
         } else {
+            // inisialisasi variabel pendukung
             $gantiNama = 'False';
             $keteranganList = [];
             $username = Auth::user()->name;
 
+            // ambil data produk sebelum diupdate (yang nanti akan dipakai untuk membandingkan)
             $data_barang_lama = produk::where('id', $id)
-                    ->first();
-
+            ->first();
             $jumlah_barang_lama = $data_barang_lama->jumlah_barang;
             $nama_barang_lama = $data_barang_lama->nama_produk;
             $kategori_barang_lama = $data_barang_lama->kategori;
-
+            
+            // update produk
             produk::whereId($id)->update($update);
             $data_barang_baru = produk::where('id', $id)
             ->first();
-
+            
+            // ambil data produk setelah diupdate (yang nanti akan dipakai untuk membandingkan)
             $jumlah_barang_baru = $data_barang_baru->jumlah_barang;
             $nama_barang_baru = $data_barang_baru->nama_produk;
             $kategori_barang_baru = $data_barang_baru->kategori;
 
+            // untuk menghitung berapa jumlah produk yang berubah
             $sum = abs($jumlah_barang_lama - $jumlah_barang_baru);
   
+            // untuk menuliskan keterangan, apa saja yang diubah oleh user
             if($nama_barang_lama != $nama_barang_baru){
                 $keteranganList[] = "Mengganti Nama Produk";
             } 
@@ -183,6 +192,9 @@ class ProdukController extends Controller
             if ($kategori_barang_lama != $kategori_barang_baru){
                 $keteranganList[] = "Mengubah Kategori Produk";
             }
+
+            // untuk menambahkan data ke tabel history jika memang terjadi perubahan (jadi kalau tidak ada perubahan yg dilakukan
+            // pasti keteranganList itu null)
             if($keteranganList){
                 $keterangan = implode(', ', $keteranganList);
 
@@ -197,6 +209,7 @@ class ProdukController extends Controller
     
             }
 
+            // untuk kembali ke halaman produk
             return redirect()->route('produk')
             ->with('success','Produk Berhasil Diupdate');
         }
