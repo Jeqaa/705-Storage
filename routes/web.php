@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\HistoryController;
 
 Auth::routes(['verify' => true]);
 
@@ -29,14 +30,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('setting');
 
     // CRUD Produk, ProdukController -> Redirect ke dashboardlte dengan data product
+    // ===================================================================================
+
+    // ke halaman utama
     Route::get('/', [ProdukController::class, 'index'])->name('produk');
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
+
+    // untuk mengubah produk
     Route::get('/produk/edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
+
+    // untuk menyimpan produk
     Route::post('/produk/store', [ProdukController::class, 'store'])->name('produk.store');
+
+    // untuk mencari produk
     Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
+
+    // untuk menghapus produk berdasarkan id
     Route::delete('/produk/destroy/{edit}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+
+    // untuk mengupdate produk berdasarkan id 
     Route::put('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
 
+    // CRUD History
+    // ===================================================================================
+
+    // untuk pindah kehalaman history
+    // Note : Route hanya 1 karena kebanyakan memakai controller di product (karna memang history terbentuk dari
+    // perubahan produk yang dilakukan user)
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.page');
+    
     // TAMBAHIN ROUTE LAIN
     // Route::get
 });

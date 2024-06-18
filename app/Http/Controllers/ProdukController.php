@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\produk;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 class ProdukController extends Controller
 {
     public function index()
@@ -67,11 +68,28 @@ class ProdukController extends Controller
         $productCount = produk::whereRaw('LOWER(REPLACE(nama_produk, \' \', \'\')) = ?', [$inputNamaProduk])
                               ->count();
 
+        
+
         if($productCount>0)  {
             $errorMsg = 'Tidak Dapat Membuat Produk Baru Dengan Nama Yang Sudah Ada.';
             return view('error', compact('errorMsg'));
         }  else{
-            $result = DB::insert('INSERT INTO produk (nama_produk, kategori, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?)', [$nama_produk, $kategori, $jumlah_barang, $now, $now]);
+            $result = DB::insert('INSERT INTO produk (nama_produk, kategori, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?)', [
+                $nama_produk, 
+                $kategori, 
+                $jumlah_barang, 
+                $now, 
+                $now]);
+
+            $username = Auth::user()->name;
+            $insertToHistory = DB::insert('INSERT INTO history (username, nama_produk, keterangan, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)', [
+                $username,
+                $nama_produk,
+                'Membuat Produk Baru',
+                $jumlah_barang,
+                $now,
+                $now
+            ]);
 
             if ($result) {
                 return redirect('/')->with('success', 'Data berhasil dimasukkan!');
@@ -84,6 +102,18 @@ class ProdukController extends Controller
     public function destroy($id)
     {
         $prd = produk::find($id);
+        $nama_produk = $prd->nama_produk;
+        $now = \Carbon\Carbon::now('Asia/Jakarta');
+
+        $username = Auth::user()->name;
+        $insertToHistory = DB::insert('INSERT INTO history (username, nama_produk, keterangan, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)', [
+            $username,
+            $nama_produk,
+            'Menghapus Produk',
+            '-',
+            $now,
+            $now
+        ]);
         $prd->delete();
 
         return redirect()->route('produk')->with('success', 'Produk deleted successfully.');
@@ -101,6 +131,8 @@ class ProdukController extends Controller
             'kategori' => 'required',
             'jumlah_barang' => 'required',
         ]);
+
+        // variabel yang menyimpan waktu sekarang
         $now = \Carbon\Carbon::now('Asia/Jakarta');
 
         $update = [
@@ -110,18 +142,74 @@ class ProdukController extends Controller
             'updated_at'=>$now
         ];
         
+        // untuk mencari apakah sebelumnya itu sudah ada produk yang sama
         $inputNamaProduk = strtolower(str_replace(' ', '', $request->input('nama_produk')));
         $productCount = produk::whereRaw('LOWER(REPLACE(nama_produk, \' \', \'\')) = ?', [$inputNamaProduk])
-                        ->where('id', '<>', $id)
-                        ->count();
+        ->where('id', '<>', $id)
+        ->count();
         
+        // kalau ternyata user mencoba mengedit nama proudk ke nama yang sudah ada, maka akan masuk ke if, jika tidak maka akan ke else
         if ($productCount > 0) {
-            // Lakukan sesuatu jika data tidak ditemukan
+            // error message untuk user yang mencoba mengganti nama produk menggunakan yang sudah ada
             $errorMsg = 'Tidak Dapat Mengganti Nama Produk Dengan Yang Sudah Ada.';
             return view('error', compact('errorMsg'));
         } else {
-                // Lakukan pembaruan data jika data tersebut tidak ada
+            // inisialisasi variabel pendukung
+            $gantiNama = 'False';
+            $keteranganList = [];
+            $username = Auth::user()->name;
+
+            // ambil data produk sebelum diupdate (yang nanti akan dipakai untuk membandingkan)
+            $data_barang_lama = produk::where('id', $id)
+            ->first();
+            $jumlah_barang_lama = $data_barang_lama->jumlah_barang;
+            $nama_barang_lama = $data_barang_lama->nama_produk;
+            $kategori_barang_lama = $data_barang_lama->kategori;
+            
+            // update produk
             produk::whereId($id)->update($update);
+            $data_barang_baru = produk::where('id', $id)
+            ->first();
+            
+            // ambil data produk setelah diupdate (yang nanti akan dipakai untuk membandingkan)
+            $jumlah_barang_baru = $data_barang_baru->jumlah_barang;
+            $nama_barang_baru = $data_barang_baru->nama_produk;
+            $kategori_barang_baru = $data_barang_baru->kategori;
+
+            // untuk menghitung berapa jumlah produk yang berubah
+            $sum = abs($jumlah_barang_lama - $jumlah_barang_baru);
+  
+            // untuk menuliskan keterangan, apa saja yang diubah oleh user
+            if($nama_barang_lama != $nama_barang_baru){
+                $keteranganList[] = "Mengganti Nama Produk";
+            } 
+            if ($jumlah_barang_lama < $jumlah_barang_baru){
+                $keteranganList[] = "Menambahkan Produk";
+            }
+            if ($jumlah_barang_lama > $jumlah_barang_baru){
+                $keteranganList[] = "Mengurangi Produk";
+            }
+            if ($kategori_barang_lama != $kategori_barang_baru){
+                $keteranganList[] = "Mengubah Kategori Produk";
+            }
+
+            // untuk menambahkan data ke tabel history jika memang terjadi perubahan (jadi kalau tidak ada perubahan yg dilakukan
+            // pasti keteranganList itu null)
+            if($keteranganList){
+                $keterangan = implode(', ', $keteranganList);
+
+                $insertToHistory = DB::insert('INSERT INTO history (username, nama_produk, keterangan, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)', [
+                    $username,
+                    $request->input('nama_produk'),
+                    $keterangan,
+                    $sum,
+                    $now,
+                    $now
+                ]);
+    
+            }
+
+            // untuk kembali ke halaman produk
             return redirect()->route('produk')
             ->with('success','Produk Berhasil Diupdate');
         }

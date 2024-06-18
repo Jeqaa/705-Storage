@@ -18,8 +18,8 @@
                 <div class="form-group">
                     <label for="kategori" class="form-label">Kategori</label>
                     <select class="form-select" id="kategori" name="kategori">
-                        <option value="Best Seller">Best Seller</option>
-                        <option value="Other">Other</option>
+                        <option value="Best Seller" {{ $prd->kategori == 'Best Seller' ? 'selected' : '' }}>Best Seller</option>
+                        <option value="Other" {{ $prd->kategori == 'Other' ? 'selected' : '' }}>Other</option>
                         <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
                     </select>
                 </div>
