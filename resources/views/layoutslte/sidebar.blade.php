@@ -42,6 +42,29 @@
                       </a>
                   </li>
                   <li class="nav-item">
+                      <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-user-secret"></i>
+                          <p>
+                              Role & Permission
+                              <i class="right fas fa-angle-left"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('all.permission') }}" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>All Permission</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="#" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Level 2</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="nav-item">
                       <a class="nav-link" href="{{ route('logout') }}"
                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                           <i class="nav-icon  fas fa-arrow-alt-circle-right"></i>

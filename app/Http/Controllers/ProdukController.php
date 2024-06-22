@@ -19,7 +19,7 @@ class ProdukController extends Controller
     public function search(Request $request)
     {
         $query = Produk::query();
-        
+
         // Filter berdasarkan pencarian
         if ($request->filled('search')) {
             $search = strtolower($request->input('search'));
@@ -45,17 +45,17 @@ class ProdukController extends Controller
                 $query->orderBy('jumlah_barang', 'desc');
             }
         }
-    
+
         $produk = $query->get();
 
             // Jika request adalah AJAX, kembalikan response JSON atau HTML
         // if ($request->ajax()) {
         //     return view('/layouts/table', ['produk' => $produk])->render();
         // }
-    
+
         return view('/layoutslte/table', ['produk' => $produk]);
     }
-    
+
     public function store(Request $request)
     {
         $nama_produk = $request->input('nama_produk');
@@ -68,17 +68,17 @@ class ProdukController extends Controller
         $productCount = produk::whereRaw('LOWER(REPLACE(nama_produk, \' \', \'\')) = ?', [$inputNamaProduk])
                               ->count();
 
-        
+
 
         if($productCount>0)  {
             $errorMsg = 'Tidak Dapat Membuat Produk Baru Dengan Nama Yang Sudah Ada.';
             return view('error', compact('errorMsg'));
         }  else{
             $result = DB::insert('INSERT INTO produk (nama_produk, kategori, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?)', [
-                $nama_produk, 
-                $kategori, 
-                $jumlah_barang, 
-                $now, 
+                $nama_produk,
+                $kategori,
+                $jumlah_barang,
+                $now,
                 $now]);
 
             $username = Auth::user()->name;
@@ -141,13 +141,13 @@ class ProdukController extends Controller
             'jumlah_barang'=>$request->input('jumlah_barang'),
             'updated_at'=>$now
         ];
-        
+
         // untuk mencari apakah sebelumnya itu sudah ada produk yang sama
         $inputNamaProduk = strtolower(str_replace(' ', '', $request->input('nama_produk')));
         $productCount = produk::whereRaw('LOWER(REPLACE(nama_produk, \' \', \'\')) = ?', [$inputNamaProduk])
         ->where('id', '<>', $id)
         ->count();
-        
+
         // kalau ternyata user mencoba mengedit nama proudk ke nama yang sudah ada, maka akan masuk ke if, jika tidak maka akan ke else
         if ($productCount > 0) {
             // error message untuk user yang mencoba mengganti nama produk menggunakan yang sudah ada
@@ -165,12 +165,12 @@ class ProdukController extends Controller
             $jumlah_barang_lama = $data_barang_lama->jumlah_barang;
             $nama_barang_lama = $data_barang_lama->nama_produk;
             $kategori_barang_lama = $data_barang_lama->kategori;
-            
+
             // update produk
             produk::whereId($id)->update($update);
             $data_barang_baru = produk::where('id', $id)
             ->first();
-            
+
             // ambil data produk setelah diupdate (yang nanti akan dipakai untuk membandingkan)
             $jumlah_barang_baru = $data_barang_baru->jumlah_barang;
             $nama_barang_baru = $data_barang_baru->nama_produk;
@@ -178,11 +178,11 @@ class ProdukController extends Controller
 
             // untuk menghitung berapa jumlah produk yang berubah
             $sum = abs($jumlah_barang_lama - $jumlah_barang_baru);
-  
+
             // untuk menuliskan keterangan, apa saja yang diubah oleh user
             if($nama_barang_lama != $nama_barang_baru){
                 $keteranganList[] = "Mengganti Nama Produk";
-            } 
+            }
             if ($jumlah_barang_lama < $jumlah_barang_baru){
                 $keteranganList[] = "Menambahkan Produk";
             }
@@ -206,7 +206,7 @@ class ProdukController extends Controller
                     $now,
                     $now
                 ]);
-    
+
             }
 
             // untuk kembali ke halaman produk

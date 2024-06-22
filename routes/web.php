@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\RoleController;
 
 Auth::routes(['verify' => true]);
 
@@ -33,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ===================================================================================
 
     // ke halaman utama
-    Route::get('/', [ProdukController::class, 'index'])->name('produk');
+    // Route::get('/', [ProdukController::class, 'index'])->name('produk');
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
 
     // untuk mengubah produk
@@ -48,7 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // untuk menghapus produk berdasarkan id
     Route::delete('/produk/destroy/{edit}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 
-    // untuk mengupdate produk berdasarkan id 
+    // untuk mengupdate produk berdasarkan id
     Route::put('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
 
     // CRUD History
@@ -58,11 +59,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Note : Route hanya 1 karena kebanyakan memakai controller di product (karna memang history terbentuk dari
     // perubahan produk yang dilakukan user)
     Route::get('/history', [HistoryController::class, 'index'])->name('history.page');
-    
+
     // TAMBAHIN ROUTE LAIN
     // Route::get
 });
 
 Route::get('/error', function () {
     return view('error', ['title' => 'Error']);
+});
+
+
+Route::controller(RoleController::class)->group(function () {
+    Route::get('/permission', 'allPermission')->name('all.permission');
+    Route::post('/permission/store', 'storePermission')->name('permission.store');
+    Route::get('/permission/edit/{id}', 'editPermission')->name('permission.edit');
+    Route::put('/permission/update/{id}', 'updatePermission')->name('permission.update');
+    Route::delete('/permission/delete/{id}', 'deletePermission')->name('permission.delete');
 });

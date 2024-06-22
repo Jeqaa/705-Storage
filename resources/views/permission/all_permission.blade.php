@@ -7,12 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        </ol>
+                        <h1 class="m-0">Permission</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -33,18 +28,20 @@
                                             <div class="form-group">
                                                 <label>Sort</label>
                                                 <select class="select2" id="sort" name="sort" style="width: 100%;">
-                                                    <option value="asc">Low to High Stock</option>
-                                                    <option value="desc">High to Low Stock</option>
+                                                    <option value="asc">Ascending</option>
+                                                    <option value="desc">Descending</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label>Category</label>
+                                                <label>Kategori group</label>
                                                 <select class="select2" id="category" name="category" style="width: 100%;">
                                                     <option value="all">All</option>
-                                                    <option value="best_seller">Best Seller</option>
-                                                    <option value="other">Other</option>
+                                                    <option value="dashboard">Dashboard</option>
+                                                    <option value="history">History</option>
+                                                    <option value="todo">To Do List</option>
+                                                    <option value="role">Role & Permission</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -63,7 +60,7 @@
                                     <a class="btn btn-danger d-flex flex-column justify-content-center mb-3" href="#"
                                         role="button" id="addItemBtn">
                                         <i class="bi bi-upload"></i>
-                                        <div class="ms-2">Add Item</div>
+                                        <div class="ms-2">Add permission</div>
                                     </a>
                                 </div>
                                 <div id="modalOverlay"></div>
@@ -71,31 +68,27 @@
                         </form>
 
 
-                        <form id="myForm" class="col-md-6" action="{{ route('produk.store') }}" method="POST">
+                        <form id="myForm" class="col-md-6" action="{{ route('permission.store') }}" method="POST">
                             <div class="card-header d-flex justify-content-center border-bottom mb-3">
-                                <h3 class="card-title py-3 fs-4 fw-bold">ADD ITEM</h3>
+                                <h3 class="card-title py-3 fs-4 fw-bold">ADD PERMISSION</h3>
                             </div>
                             <div class="card-body">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="nama_produk" class="form-label">Nama Produk</label>
-                                    <input type="text" class="form-control" id="nama_produk" name="nama_produk" required>
+                                    <label for="nama_permission" class="form-label">Nama Permission</label>
+                                    <input type="text" class="form-control" id="nama_permission" name="nama_permission"
+                                        required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="kategori" class="form-label">Kategori</label>
-                                    <select class="form-select" id="kategori" name="kategori">
-                                        <option selected disabled>Pilih kategori</option>
-                                        <option value="Best Seller">Best Seller</option>
-                                        <option value="Other">Other</option>
+                                    <label for="nama_group" class="form-label">Group</label>
+                                    <select class="form-select" id="nama_group" name="nama_group">
+                                        <option selected disabled>Pilih Group</option>
+                                        <option value="dashboard">Dashboard</option>
+                                        <option value="history">History</option>
+                                        <option value="todo">To Do List</option>
+                                        <option value="role">Role & Permission</option>
                                         <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
                                     </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="jumlah_barang" class="form-label">Jumlah Barang</label>
-                                    <input class="form-control" id="jumlah_barang" name="jumlah_barang" rows="3"
-                                        required></input>
                                 </div>
                                 <div class="form-group d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -114,34 +107,32 @@
                         <div class="card ">
                             <div class="card-body table-responsive p-0">
                                 <div id="container-table" class="overflow-hidden">
-                                    @if (isset($produk) && count($produk) > 0)
+                                    @if (isset($permissions) && count($permissions) > 0)
                                         <table class="table table-hover text-nowrap mb-0">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">No.</th>
-                                                    <th class="text-center">Name</th>
-                                                    <th class="text-center">Category</th>
-                                                    <th class="text-center">Stock</th>
+                                                    <th class="text-center">Nama Permission</th>
+                                                    <th class="text-center">Nama Group</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php $i = 1; @endphp
-                                                @foreach ($produk as $prd)
+                                                @foreach ($permissions as $item)
                                                     <tr>
                                                         <td class="text-center">{{ $i }}</td>
-                                                        <td class="text-center">{{ $prd->nama_produk }}</td>
-                                                        <td class="text-center">{{ $prd->kategori }}</td>
-                                                        <td class="text-center">{{ $prd->jumlah_barang }}</td>
+                                                        <td class="text-center">{{ $item->name }}</td>
+                                                        <td class="text-center">{{ $item->group_name }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            <a href="{{ route('produk.edit', $prd->id) }}"
+                                                            <a href="{{ route('permission.edit', $item->id) }}"
                                                                 class ="btn btn-primary me-2">Edit</a>
-                                                            <form action="{{ route('produk.destroy', $prd->id) }}"
+                                                            <form action="{{ route('permission.delete', $item->id) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
+                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus permission ini?')">Delete</button>
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -150,7 +141,7 @@
                                             </tbody>
                                         </table>
                                     @else
-                                        <p class="text-danger font-weight-bold text-center pt-3">No products found.</p>
+                                        <p class="text-danger font-weight-bold text-center pt-3">No permissions found.</p>
                                     @endif
                                 </div>
                             </div>
