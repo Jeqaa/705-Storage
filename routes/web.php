@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 
 Auth::routes(['verify' => true]);
@@ -34,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ===================================================================================
 
     // ke halaman utama
-    // Route::get('/', [ProdukController::class, 'index'])->name('produk');
+    Route::get('/', [ProdukController::class, 'index']);
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
 
     // untuk mengubah produk
@@ -68,11 +69,21 @@ Route::get('/error', function () {
     return view('error', ['title' => 'Error']);
 });
 
-
-Route::controller(RoleController::class)->group(function () {
+// Permission
+Route::controller(PermissionController::class)->group(function () {
     Route::get('/permission', 'allPermission')->name('all.permission');
+    Route::get('/permission/search', 'searchPermission')->name('permission.search');
     Route::post('/permission/store', 'storePermission')->name('permission.store');
     Route::get('/permission/edit/{id}', 'editPermission')->name('permission.edit');
     Route::put('/permission/update/{id}', 'updatePermission')->name('permission.update');
     Route::delete('/permission/delete/{id}', 'deletePermission')->name('permission.delete');
+});
+
+// Roles
+Route::controller(RoleController::class)->group(function () {
+    Route::get('/roles', 'allRoles')->name('all.roles');
+    Route::post('/roles/store', 'storeRoles')->name('roles.store');
+    Route::get('/roles/edit/{id}', 'editRoles')->name('roles.edit');
+    Route::put('/roles/update/{id}', 'updateRoles')->name('roles.update');
+    Route::delete('/roles/delete/{id}', 'deleteRoles')->name('roles.delete');
 });

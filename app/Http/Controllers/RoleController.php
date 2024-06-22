@@ -4,44 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
-    public function allPermission()
+    public function allRoles()
     {
-        $permissions = Permission::all();
-        return view('permission.all_permission', compact('permissions'));
+        $roles = Role::all();
+        return view('roles.all_roles', compact('roles'));
     }
 
-    public function storePermission(Request $request)
+    public function storeRoles(Request $request)
     {
-        Permission::create([
-            'name' => $request->nama_permission,
-            'group_name' => $request->nama_group,
+        Role::create([
+            'name' => $request->nama_role,
         ]);
-        return redirect()->route('all.permission')->with('success', 'Permission berhasil ditambahkan');
+        return redirect()->route('all.roles')->with('success', 'Role berhasil ditambahkan');
     }
 
-    public function editPermission($id)
+    public function editRoles($id)
     {
-        $permission = Permission::findOrFail($id);
-        return view('permission.edit_permission', compact('permission'));
+        $roles = Role::findOrFail($id);
+        return view('roles.edit_roles', compact('roles'));
     }
 
-    public function updatePermission(Request $request)
+    public function updateRoles(Request $request)
     {
-        $permission_id = $request->id;
-        Permission::findOrFail($permission_id)->update([
-            'name' => $request->nama_permission,
-            'group_name' => $request->nama_group,
+        $role_id = $request->id;
+        Role::findOrFail($role_id)->update([
+            'name' => $request->nama_role,
         ]);
-        return redirect()->route('all.permission')->with('success', 'Permission berhasil diupdate');
+        return redirect()->route('all.roles')->with('success', 'Role berhasil diupdate');
     }
 
-    public function deletePermission($id)
+    public function deleteRoles($id)
     {
-        Permission::findOrFail($id)->delete();
-        return redirect()->route('all.permission')->with('success', 'Permission berhasil dihapus');
+        Role::findOrFail($id)->delete();
+        return redirect()->route('all.roles')->with('success', 'Role berhasil dihapus');
     }
 }

@@ -25,8 +25,8 @@
                   data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                  <li class="nav-item menu-open">
-                      <a href="#" class="nav-link active">
+                  <li class="nav-item">
+                      <a href="{{ route('produk') }}" class="nav-link {{ Request::routeIs('produk') ? 'active' : '' }}">
                           <i class="nav-icon fas fa-house-user"></i>
                           <p>
                               Dashboard
@@ -34,32 +34,37 @@
                       </a>
                   </li>
                   <li class="nav-item">
-                      <a href="{{ route('history.page') }}" class="nav-link">
+                      <a href="{{ route('history.page') }}"
+                          class="nav-link {{ Request::routeIs('history.page') ? 'active' : '' }}">
                           <i class="nav-icon fas fa-history"></i>
                           <p>
                               History
                           </p>
                       </a>
                   </li>
-                  <li class="nav-item">
-                      <a href="#" class="nav-link">
+                  <li
+                      class="nav-item has-treeview {{ Request::routeIs('all.permission', 'all.roles') ? 'menu-open' : '' }}">
+                      <a href="#"
+                          class="nav-link {{ Request::routeIs('all.permission', 'all.roles') ? 'active' : '' }}">
                           <i class="nav-icon fas fa-user-secret"></i>
                           <p>
-                              Role & Permission
+                              Permission & Roles
                               <i class="right fas fa-angle-left"></i>
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="{{ route('all.permission') }}" class="nav-link">
+                              <a href="{{ route('all.permission') }}"
+                                  class="nav-link {{ Request::routeIs('all.permission') ? 'active' : '' }}">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>All Permission</p>
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="#" class="nav-link">
+                              <a href="{{ route('all.roles') }}"
+                                  class="nav-link {{ Request::routeIs('all.roles') ? 'active' : '' }}">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>Level 2</p>
+                                  <p>All Roles</p>
                               </a>
                           </li>
                       </ul>
