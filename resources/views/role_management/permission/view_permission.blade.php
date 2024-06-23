@@ -37,11 +37,14 @@
                                             <div class="form-group">
                                                 <label>Kategori group</label>
                                                 <select class="select2" id="category" name="category" style="width: 100%;">
-                                                    <option value="all">All</option>
+                                                    <option selected disabled>Pilih Group</option>
                                                     <option value="dashboard">Dashboard</option>
                                                     <option value="history">History</option>
+                                                    <option value="overview">Overview</option>
+                                                    <option value="profile">Profile</option>
+                                                    <option value="role_management">Role Management</option>
                                                     <option value="todo">To Do List</option>
-                                                    <option value="role">Role & Permission</option>
+                                                    <option value="user_management">User Management</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -85,8 +88,11 @@
                                         <option selected disabled>Pilih Group</option>
                                         <option value="dashboard">Dashboard</option>
                                         <option value="history">History</option>
+                                        <option value="overview">Overview</option>
+                                        <option value="profile">Profile</option>
+                                        <option value="role_management">Role Management</option>
                                         <option value="todo">To Do List</option>
-                                        <option value="role">Permission & Role</option>
+                                        <option value="user_management">User Management</option>
                                         <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
                                     </select>
                                 </div>
@@ -125,10 +131,10 @@
                                                         <td class="text-center">{{ $permission->name }}</td>
                                                         <td class="text-center">{{ $permission->group_name }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            {{-- @if (Auth::user()->can('permission.edit')) --}}
+                                                            @if (Auth::user()->can('permission.edit'))
                                                                 <a href="{{ route('permission.edit', $permission->id) }}"
                                                                     class ="btn btn-primary me-2">Edit</a>
-                                                            {{-- @endif --}}
+                                                            @endif
                                                             @if (Auth::user()->can('permission.delete'))
                                                                 <form
                                                                     action="{{ route('permission.delete', $permission->id) }}"

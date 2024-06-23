@@ -22,8 +22,17 @@
                         </option>
                         <option value="history" {{ $permission->group_name == 'history' ? 'selected' : '' }}>History
                         </option>
+                        <option value="todo" {{ $permission->group_name == 'overview' ? 'selected' : '' }}>Overview
+                        </option>
+                        <option value="profile" {{ $permission->group_name == 'profile' ? 'selected' : '' }}>Profile
+                        </option>
+                        <option value="role_management"
+                            {{ $permission->group_name == 'role_management' ? 'selected' : '' }}>Role
+                            Management</option>
                         <option value="todo" {{ $permission->group_name == 'todo' ? 'selected' : '' }}>To Do List</option>
-                        <option value="role" {{ $permission->group_name == 'role' ? 'selected' : '' }}>Role</option>
+                        <option value="user_management"
+                            {{ $permission->group_name == 'user_management' ? 'selected' : '' }}>User
+                            Management</option>
                         <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
                     </select>
                 </div>
