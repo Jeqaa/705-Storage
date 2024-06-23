@@ -7,10 +7,10 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function allRoles()
+    public function viewRoles()
     {
         $roles = Role::all();
-        return view('roles.all_roles', compact('roles'));
+        return view('role_management.roles.view_roles', compact('roles'));
     }
 
     public function storeRoles(Request $request)
@@ -18,13 +18,13 @@ class RoleController extends Controller
         Role::create([
             'name' => $request->nama_role,
         ]);
-        return redirect()->route('all.roles')->with('success', 'Role berhasil ditambahkan');
+        return redirect()->route('roles.view')->with('success', 'Role berhasil ditambahkan');
     }
 
     public function editRoles($id)
     {
         $roles = Role::findOrFail($id);
-        return view('roles.edit_roles', compact('roles'));
+        return view('role_management.roles.edit_roles', compact('roles'));
     }
 
     public function updateRoles(Request $request)
@@ -33,12 +33,12 @@ class RoleController extends Controller
         Role::findOrFail($role_id)->update([
             'name' => $request->nama_role,
         ]);
-        return redirect()->route('all.roles')->with('success', 'Role berhasil diupdate');
+        return redirect()->route('roles.view')->with('success', 'Role berhasil diupdate');
     }
 
     public function deleteRoles($id)
     {
         Role::findOrFail($id)->delete();
-        return redirect()->route('all.roles')->with('success', 'Role berhasil dihapus');
+        return redirect()->route('roles.view')->with('success', 'Role berhasil dihapus');
     }
 }

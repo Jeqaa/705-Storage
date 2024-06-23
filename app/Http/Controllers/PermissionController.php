@@ -7,10 +7,15 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
-    public function allPermission()
+    public function redirectToPermission()
+    {
+        return redirect()->route('permission.view');
+    }
+
+    public function viewPermission()
     {
         $permissions = Permission::all();
-        return view('permission.all_permission', compact('permissions'));
+        return view('role_management.permission.view_permission', compact('permissions'));
     }
 
     public function storePermission(Request $request)
@@ -19,13 +24,13 @@ class PermissionController extends Controller
             'name' => $request->nama_permission,
             'group_name' => $request->nama_group,
         ]);
-        return redirect()->route('all.permission')->with('success', 'Permission berhasil ditambahkan');
+        return redirect()->route('permission.view')->with('success', 'Permission berhasil ditambahkan');
     }
 
     public function editPermission($id)
     {
         $permission = Permission::findOrFail($id);
-        return view('permission.edit_permission', compact('permission'));
+        return view('role_management.permission.edit_permission', compact('permission'));
     }
 
     public function updatePermission(Request $request)
@@ -35,12 +40,12 @@ class PermissionController extends Controller
             'name' => $request->nama_permission,
             'group_name' => $request->nama_group,
         ]);
-        return redirect()->route('all.permission')->with('success', 'Permission berhasil diupdate');
+        return redirect()->route('permission.view')->with('success', 'Permission berhasil diupdate');
     }
 
     public function deletePermission($id)
     {
         Permission::findOrFail($id)->delete();
-        return redirect()->route('all.permission')->with('success', 'Permission berhasil dihapus');
+        return redirect()->route('permission.view')->with('success', 'Permission berhasil dihapus');
     }
 }

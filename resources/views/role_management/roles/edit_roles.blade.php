@@ -18,7 +18,7 @@
 
                 <div class="form-group d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="{{ route('all.roles') }}" type="button" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ route('view.roles') }}" type="button" class="btn btn-secondary">Cancel</a>
                 </div>
             </form>
         </div>

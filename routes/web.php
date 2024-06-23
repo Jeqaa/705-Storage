@@ -7,6 +7,8 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\AssignPermissionController;
+use App\Http\Controllers\ActiveRolesController;
 
 Auth::routes(['verify' => true]);
 
@@ -69,21 +71,36 @@ Route::get('/error', function () {
     return view('error', ['title' => 'Error']);
 });
 
-// Permission
+// Permission Routes
 Route::controller(PermissionController::class)->group(function () {
-    Route::get('/permission', 'allPermission')->name('all.permission');
-    Route::get('/permission/search', 'searchPermission')->name('permission.search');
-    Route::post('/permission/store', 'storePermission')->name('permission.store');
-    Route::get('/permission/edit/{id}', 'editPermission')->name('permission.edit');
-    Route::put('/permission/update/{id}', 'updatePermission')->name('permission.update');
-    Route::delete('/permission/delete/{id}', 'deletePermission')->name('permission.delete');
+    Route::get('/role-management', 'redirectToPermission');
+    Route::get('/role-management/permission', 'viewPermission')->name('permission.view');
+    Route::get('/role-management/permission/search', 'searchPermission')->name('permission.search');
+    Route::post('/role-management/permission/store', 'storePermission')->name('permission.store');
+    Route::get('/role-management/permission/edit/{id}', 'editPermission')->name('permission.edit');
+    Route::put('/role-management/permission/update/{id}', 'updatePermission')->name('permission.update');
+    Route::delete('/role-management/permission/delete/{id}', 'deletePermission')->name('permission.delete');
 });
 
-// Roles
+// Roles Routes
 Route::controller(RoleController::class)->group(function () {
-    Route::get('/roles', 'allRoles')->name('all.roles');
-    Route::post('/roles/store', 'storeRoles')->name('roles.store');
-    Route::get('/roles/edit/{id}', 'editRoles')->name('roles.edit');
-    Route::put('/roles/update/{id}', 'updateRoles')->name('roles.update');
-    Route::delete('/roles/delete/{id}', 'deleteRoles')->name('roles.delete');
+    Route::get('/role-management/roles', 'viewRoles')->name('roles.view');
+    Route::post('/role-management/roles/store', 'storeRoles')->name('roles.store');
+    Route::get('/role-management/roles/edit/{id}', 'editRoles')->name('roles.edit');
+    Route::put('/role-management/roles/update/{id}', 'updateRoles')->name('roles.update');
+    Route::delete('/role-management/roles/delete/{id}', 'deleteRoles')->name('roles.delete');
+});
+
+// Assign Permission Routes
+Route::controller(AssignPermissionController::class)->group(function () {
+    Route::get('/role-management/assign', 'viewAssignPermission')->name('assign.permission.view');
+    Route::post('/role-management/assign/store', 'rolePermissionStore')->name('assign.store');
+});
+
+// Active Role Routes
+Route::controller(ActiveRolesController::class)->group(function () {
+    Route::get('/role-management/active-role', 'viewActiveRoles')->name('active.roles.view');
+    Route::get('/role-management/active-role/edit/{id}', 'editActiveRoles')->name('active.roles.edit');
+    Route::put('/role-management/active-role/update/{id}', 'updateActiveRoles')->name('active.roles.update');
+    Route::delete('/role-management/active-role/delete/{id}', 'deleteActiveRoles')->name('active.roles.delete');
 });

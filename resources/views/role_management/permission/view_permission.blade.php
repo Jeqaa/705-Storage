@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Roles</h1>
+                        <h1 class="m-0">Permission</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -41,7 +41,7 @@
                                                     <option value="dashboard">Dashboard</option>
                                                     <option value="history">History</option>
                                                     <option value="todo">To Do List</option>
-                                                    <option value="role">Permission & Role</option>
+                                                    <option value="role">Role & Permission</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
                                     <a class="btn btn-danger d-flex flex-column justify-content-center mb-3" href="#"
                                         role="button" id="addItemBtn">
                                         <i class="bi bi-upload"></i>
-                                        <div class="ms-2">Add role</div>
+                                        <div class="ms-2">Add permission</div>
                                     </a>
                                 </div>
                                 <div id="modalOverlay"></div>
@@ -68,18 +68,28 @@
                         </form>
 
 
-                        <form id="myForm" class="col-md-6" action="{{ route('roles.store') }}" method="POST">
+                        <form id="myForm" class="col-md-6" action="{{ route('permission.store') }}" method="POST">
                             <div class="card-header d-flex justify-content-center border-bottom mb-3">
-                                <h3 class="card-title py-3 fs-4 fw-bold">ADD ROLE</h3>
+                                <h3 class="card-title py-3 fs-4 fw-bold">ADD PERMISSION</h3>
                             </div>
                             <div class="card-body">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="naam_role" class="form-label">Nama Role</label>
-                                    <input type="text" class="form-control" id="nama_role" name="nama_role"
+                                    <label for="nama_permission" class="form-label">Nama Permission</label>
+                                    <input type="text" class="form-control" id="nama_permission" name="nama_permission"
                                         required>
                                 </div>
-
+                                <div class="form-group">
+                                    <label for="nama_group" class="form-label">Group</label>
+                                    <select class="form-select" id="nama_group" name="nama_group">
+                                        <option selected disabled>Pilih Group</option>
+                                        <option value="dashboard">Dashboard</option>
+                                        <option value="history">History</option>
+                                        <option value="todo">To Do List</option>
+                                        <option value="role">Permission & Role</option>
+                                        <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
+                                    </select>
+                                </div>
                                 <div class="form-group d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                     <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -97,30 +107,32 @@
                         <div class="card ">
                             <div class="card-body table-responsive p-0">
                                 <div id="container-table" class="overflow-hidden">
-                                    @if (isset($roles) && count($roles) > 0)
+                                    @if (isset($permissions) && count($permissions) > 0)
                                         <table class="table table-hover text-nowrap mb-0">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">No.</th>
-                                                    <th class="text-center">Nama Role</th>
+                                                    <th class="text-center">Nama Permission</th>
+                                                    <th class="text-center">Nama Group</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php $i = 1; @endphp
-                                                @foreach ($roles as $item)
+                                                @foreach ($permissions as $permission)
                                                     <tr>
                                                         <td class="text-center">{{ $i }}</td>
-                                                        <td class="text-center">{{ $item->name }}</td>
+                                                        <td class="text-center">{{ $permission->name }}</td>
+                                                        <td class="text-center">{{ $permission->group_name }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            <a href="{{ route('roles.edit', $item->id) }}"
+                                                            <a href="{{ route('permission.edit', $permission->id) }}"
                                                                 class ="btn btn-primary me-2">Edit</a>
-                                                            <form action="{{ route('roles.delete', $item->id) }}"
+                                                            <form action="{{ route('permission.delete', $permission->id) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus role ini?')">Delete</button>
+                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus permission ini?')">Delete</button>
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -129,7 +141,7 @@
                                             </tbody>
                                         </table>
                                     @else
-                                        <p class="text-danger font-weight-bold text-center pt-3">No roles found.</p>
+                                        <p class="text-danger font-weight-bold text-center pt-3">No permissions found.</p>
                                     @endif
                                 </div>
                             </div>

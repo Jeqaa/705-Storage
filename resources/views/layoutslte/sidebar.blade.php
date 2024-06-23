@@ -2,7 +2,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="{{ route('home') }}" class="brand-link">
-          <img src="img/logo705.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
+          <img src="{{ asset('img/logo705.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
           <span class="logo-name">705 Storage</span>
       </a>
 
@@ -11,8 +11,8 @@
           <!-- Sidebar user panel (optional) -->
           <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
               <div>
-                  <img src="img/profile.png" width="40" height="40" class="imgProfile rounded-circle"
-                      alt="User Image">
+                  <img src="{{ asset('img/profile.png') }}" width="40" height="40"
+                      class="imgProfile rounded-circle" alt="User Image">
               </div>
               <div class="ms-3">
                   <a href="#" class="ms-0">{{ Auth::user()->name }}</a>
@@ -43,28 +43,44 @@
                       </a>
                   </li>
                   <li
-                      class="nav-item has-treeview {{ Request::routeIs('all.permission', 'all.roles') ? 'menu-open' : '' }}">
+                      class="nav-item has-treeview {{ Request::routeIs('permission.view', 'roles.view', 'assign.permission.view', 'active.roles.view') ? 'menu-open' : '' }}">
                       <a href="#"
-                          class="nav-link {{ Request::routeIs('all.permission', 'all.roles') ? 'active' : '' }}">
+                          class="nav-link {{ Request::routeIs('permission.view', 'roles.view', 'assign.permission.view', 'active.roles.view') ? 'active' : '' }}">
                           <i class="nav-icon fas fa-user-secret"></i>
                           <p>
-                              Permission & Roles
+                              Role Management
                               <i class="right fas fa-angle-left"></i>
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="{{ route('all.permission') }}"
-                                  class="nav-link {{ Request::routeIs('all.permission') ? 'active' : '' }}">
+                              <a href="{{ route('permission.view') }}"
+                                  class="nav-link {{ Request::routeIs('permission.view') ? 'active' : '' }}">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>All Permission</p>
+                                  <p>Permission</p>
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="{{ route('all.roles') }}"
-                                  class="nav-link {{ Request::routeIs('all.roles') ? 'active' : '' }}">
+                              <a href="{{ route('roles.view') }}"
+                                  class="nav-link {{ Request::routeIs('roles.view') ? 'active' : '' }}">
                                   <i class="far fa-circle nav-icon"></i>
-                                  <p>All Roles</p>
+                                  <p>Roles</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('assign.permission.view') }}"
+                                  class="nav-link {{ Request::routeIs('assign.permission.view') ? 'active' : '' }}">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Assign Permission</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('active.roles.view') }}"
+                                  class="nav-link {{ Request::routeIs('active.roles.view') ? 'active' : '' }}">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>
+                                    Active Roles
+                                  </p>
                               </a>
                           </li>
                       </ul>
