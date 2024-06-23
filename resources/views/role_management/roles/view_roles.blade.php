@@ -44,14 +44,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="addItemBtn px-0">
-                                    <a class="btn btn-danger d-flex flex-column justify-content-center mb-3" href="#"
-                                        role="button" id="addItemBtn">
-                                        <i class="bi bi-upload"></i>
-                                        <div class="ms-2">Add role</div>
-                                    </a>
-                                </div>
-                                <div id="modalOverlay"></div>
+                                @if (Auth::user()->can('roles.store'))
+                                    <div class="addItemBtn px-0">
+                                        <a class="btn btn-danger d-flex flex-column justify-content-center mb-3"
+                                            href="#" role="button" id="addItemBtn">
+                                            <i class="bi bi-upload"></i>
+                                            <div class="ms-2">Add role</div>
+                                        </a>
+                                    </div>
+                                    <div id="modalOverlay"></div>
+                                @endif
                             </div>
                         </form>
 
@@ -64,8 +66,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="naam_role" class="form-label">Nama Role</label>
-                                    <input type="text" class="form-control" id="nama_role" name="nama_role"
-                                        required>
+                                    <input type="text" class="form-control" id="nama_role" name="nama_role" required>
                                 </div>
 
                                 <div class="form-group d-flex justify-content-between">
@@ -101,15 +102,19 @@
                                                         <td class="text-center">{{ $i }}</td>
                                                         <td class="text-center">{{ $role->name }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            <a href="{{ route('roles.edit', $role->id) }}"
-                                                                class ="btn btn-primary me-2">Edit</a>
-                                                            <form action="{{ route('roles.delete', $role->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus role ini?')">Delete</button>
-                                                            </form>
+                                                            @if (Auth::user()->can('roles.edit'))
+                                                                <a href="{{ route('roles.edit', $role->id) }}"
+                                                                    class ="btn btn-primary me-2">Edit</a>
+                                                            @endif
+                                                            @if (Auth::user()->can('roles.delete'))
+                                                                <form action="{{ route('roles.delete', $role->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus role ini?')">Delete</button>
+                                                                </form>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                     @php $i++; @endphp

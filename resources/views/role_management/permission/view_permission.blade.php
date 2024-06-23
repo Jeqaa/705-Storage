@@ -59,14 +59,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="addItemBtn px-0">
-                                    <a class="btn btn-danger d-flex flex-column justify-content-center mb-3" href="#"
-                                        role="button" id="addItemBtn">
-                                        <i class="bi bi-upload"></i>
-                                        <div class="ms-2">Add permission</div>
-                                    </a>
-                                </div>
-                                <div id="modalOverlay"></div>
+                                @if (Auth::user()->can('permission.store'))
+                                    <div class="addItemBtn px-0">
+                                        <a class="btn btn-danger d-flex flex-column justify-content-center mb-3"
+                                            href="#" role="button" id="addItemBtn">
+                                            <i class="bi bi-upload"></i>
+                                            <div class="ms-2">Add permission</div>
+                                        </a>
+                                    </div>
+                                    <div id="modalOverlay"></div>
+                                @endif
                             </div>
                         </form>
 

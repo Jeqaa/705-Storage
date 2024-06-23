@@ -98,15 +98,19 @@
                                                         </td>
                                                         <td class="text-center">{{ $user->created_at }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            <a href="{{ route('manage-users.edit', $user->id) }}"
-                                                                class ="btn btn-primary me-2">Edit</a>
-                                                            <form action="{{ route('manage-users.delete', $user->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Delete</button>
-                                                            </form>
+                                                            @if (Auth::user()->can('user.management.edit'))
+                                                                <a href="{{ route('manage-users.edit', $user->id) }}"
+                                                                    class ="btn btn-primary me-2">Edit</a>
+                                                            @endif
+                                                            @if (Auth::user()->can('user.management.delete'))
+                                                                <form action="{{ route('manage-users.delete', $user->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">Delete</button>
+                                                                </form>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                     @php $i++; @endphp

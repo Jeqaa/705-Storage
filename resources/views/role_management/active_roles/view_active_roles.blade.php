@@ -83,15 +83,20 @@
                                                                 @endforeach
                                                             </td>
                                                             <td class="d-flex justify-content-center">
-                                                                <a href="{{ route('active.roles.edit', $role->id) }}"
-                                                                    class ="btn btn-primary me-2">Edit</a>
-                                                                <form action="{{ route('active.roles.delete', $role->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger"
-                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus role ini?')">Delete</button>
-                                                                </form>
+                                                                @if (Auth::user()->can('active.roles.edit'))
+                                                                    <a href="{{ route('active.roles.edit', $role->id) }}"
+                                                                        class ="btn btn-primary me-2">Edit</a>
+                                                                @endif
+                                                                @if (Auth::user()->can('active.roles.delete'))
+                                                                    <form
+                                                                        action="{{ route('active.roles.delete', $role->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="btn btn-danger"
+                                                                            onclick="return confirm('Apakah Anda yakin ingin menghapus role ini?')">Delete</button>
+                                                                    </form>
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                         @php $i++; @endphp
