@@ -9,11 +9,10 @@ use Spatie\Permission\Models\Permission;
 
 class ActiveRolesController extends Controller
 {
-    //
     public function viewActiveRoles()
     {
         $roles = Role::all();
-        return view('role_management.active_roles.view_roles_permission', compact('roles'));
+        return view('role_management.active_roles.view_active_roles', compact('roles'));
     }
 
     public function editActiveRoles($id)
@@ -22,7 +21,7 @@ class ActiveRolesController extends Controller
         $permissions = Permission::all();
         $permission_groups = User::getPermissionGroups();
         return view(
-            'role_management.active_roles.edit_roles_permission',
+            'role_management.active_roles.edit_active_roles',
             compact('role', 'permissions', 'permission_groups')
         );
     }

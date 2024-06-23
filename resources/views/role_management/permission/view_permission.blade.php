@@ -125,15 +125,21 @@
                                                         <td class="text-center">{{ $permission->name }}</td>
                                                         <td class="text-center">{{ $permission->group_name }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            <a href="{{ route('permission.edit', $permission->id) }}"
-                                                                class ="btn btn-primary me-2">Edit</a>
-                                                            <form action="{{ route('permission.delete', $permission->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus permission ini?')">Delete</button>
-                                                            </form>
+                                                            {{-- @if (Auth::user()->can('permission.edit')) --}}
+                                                                <a href="{{ route('permission.edit', $permission->id) }}"
+                                                                    class ="btn btn-primary me-2">Edit</a>
+                                                            {{-- @endif --}}
+                                                            @if (Auth::user()->can('permission.delete'))
+                                                                <form
+                                                                    action="{{ route('permission.delete', $permission->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus permission ini?')">Delete</button>
+                                                                </form>
+                                                            @endif
+
                                                         </td>
                                                     </tr>
                                                     @php $i++; @endphp

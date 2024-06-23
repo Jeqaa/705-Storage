@@ -1,7 +1,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="{{ route('home') }}" class="brand-link">
+      <a href="{{ route('produk') }}" class="brand-link">
           <img src="{{ asset('img/logo705.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
           <span class="logo-name">705 Storage</span>
       </a>
@@ -25,66 +25,95 @@
                   data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                  <li class="nav-item">
-                      <a href="{{ route('produk') }}" class="nav-link {{ Request::routeIs('produk') ? 'active' : '' }}">
-                          <i class="nav-icon fas fa-house-user"></i>
-                          <p>
-                              Dashboard
-                          </p>
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="{{ route('history.page') }}"
-                          class="nav-link {{ Request::routeIs('history.page') ? 'active' : '' }}">
-                          <i class="nav-icon fas fa-history"></i>
-                          <p>
-                              History
-                          </p>
-                      </a>
-                  </li>
-                  <li
-                      class="nav-item has-treeview {{ Request::routeIs('permission.view', 'roles.view', 'assign.permission.view', 'active.roles.view') ? 'menu-open' : '' }}">
-                      <a href="#"
-                          class="nav-link {{ Request::routeIs('permission.view', 'roles.view', 'assign.permission.view', 'active.roles.view') ? 'active' : '' }}">
-                          <i class="nav-icon fas fa-user-secret"></i>
-                          <p>
-                              Role Management
-                              <i class="right fas fa-angle-left"></i>
-                          </p>
-                      </a>
-                      <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                              <a href="{{ route('permission.view') }}"
-                                  class="nav-link {{ Request::routeIs('permission.view') ? 'active' : '' }}">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Permission</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('roles.view') }}"
-                                  class="nav-link {{ Request::routeIs('roles.view') ? 'active' : '' }}">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Roles</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('assign.permission.view') }}"
-                                  class="nav-link {{ Request::routeIs('assign.permission.view') ? 'active' : '' }}">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Assign Permission</p>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a href="{{ route('active.roles.view') }}"
-                                  class="nav-link {{ Request::routeIs('active.roles.view') ? 'active' : '' }}">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>
-                                    Active Roles
-                                  </p>
-                              </a>
-                          </li>
-                      </ul>
-                  </li>
+                  @if (Auth::user()->can('overview.view'))
+                      <li class="nav-item">
+                          <a href="{{ route('overview.view') }}"
+                              class="nav-link {{ Request::routeIs('overview.view') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-info"></i>
+                              <p>
+                                  Overview
+                              </p>
+                          </a>
+                      </li>
+                  @endif
+                  @if (Auth::user()->can('dashboard.view'))
+                      <li class="nav-item">
+                          <a href="{{ route('produk') }}"
+                              class="nav-link {{ Request::routeIs('produk') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-house-user"></i>
+                              <p>
+                                  Products
+                              </p>
+                          </a>
+                      </li>
+                  @endif
+                  @if (Auth::user()->can('history.view'))
+                      <li class="nav-item">
+                          <a href="{{ route('history.view') }}"
+                              class="nav-link {{ Request::routeIs('history.view') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-history"></i>
+                              <p>
+                                  History
+                              </p>
+                          </a>
+                      </li>
+                  @endif
+                  @if (Auth::user()->can('role.management.menu'))
+                      <li
+                          class="nav-item has-treeview {{ Request::routeIs('permission.view', 'roles.view', 'assign.permission.view', 'active.roles.view') ? 'menu-open' : '' }}">
+                          <a href="#"
+                              class="nav-link {{ Request::routeIs('permission.view', 'roles.view', 'assign.permission.view', 'active.roles.view') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-user-secret"></i>
+                              <p>
+                                  Role Management
+                                  <i class="right fas fa-angle-left"></i>
+                              </p>
+                          </a>
+                          <ul class="nav nav-treeview">
+                              @if (Auth::user()->can('permission.view'))
+                                  <li class="nav-item">
+                                      <a href="{{ route('permission.view') }}"
+                                          class="nav-link {{ Request::routeIs('permission.view') ? 'active' : '' }}">
+                                          <i class="far fa-circle nav-icon"></i>
+                                          <p>Permission</p>
+                                      </a>
+                                  </li>
+                              @endif
+                              @if (Auth::user()->can('roles.view'))
+                                  <li class="nav-item">
+                                      <a href="{{ route('roles.view') }}"
+                                          class="nav-link {{ Request::routeIs('roles.view') ? 'active' : '' }}">
+                                          <i class="far fa-circle nav-icon"></i>
+                                          <p>Roles</p>
+                                      </a>
+                                  </li>
+                              @endif
+                              @if (Auth::user()->can('active.roles.view'))
+                                  <li class="nav-item">
+                                      <a href="{{ route('active.roles.view') }}"
+                                          class="nav-link {{ Request::routeIs('active.roles.view') ? 'active' : '' }}">
+                                          <i class="far fa-circle nav-icon"></i>
+                                          <p>
+                                              Active Roles
+                                          </p>
+                                      </a>
+                                  </li>
+                              @endif
+                          </ul>
+                      </li>
+                  @endif
+                  @if (Auth::user()->can('user.management.view'))
+                      <li class="nav-item">
+                          <a href="{{ route('manage-users.view') }}"
+                              class="nav-link {{ Request::routeIs('manage-users.view') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-users"></i>
+                              <p>
+                                  User Management
+                              </p>
+                          </a>
+                      </li>
+                  @endif
+
                   <li class="nav-item">
                       <a class="nav-link" href="{{ route('logout') }}"
                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

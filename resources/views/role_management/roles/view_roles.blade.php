@@ -33,18 +33,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Kategori group</label>
-                                                <select class="select2" id="category" name="category" style="width: 100%;">
-                                                    <option value="all">All</option>
-                                                    <option value="dashboard">Dashboard</option>
-                                                    <option value="history">History</option>
-                                                    <option value="todo">To Do List</option>
-                                                    <option value="role">Permission & Role</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
 
 
