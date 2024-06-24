@@ -209,8 +209,7 @@
             title: type.charAt(0).toUpperCase() + type.slice(1),
             text: message,
             icon: type,
-            showConfirmButton: false,
-            timer: 3000
+            showConfirmButton: true,
         });
     @endif
 </script>
