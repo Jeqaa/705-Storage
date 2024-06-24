@@ -59,7 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (Auth::user()->can('dashboard.store'))
+                                @if (Auth::user()->can('produk.store'))
                                     <div class="addItemBtn px-0">
                                         <a class="btn btn-danger d-flex flex-column justify-content-center mb-3"
                                             href="#" role="button" id="addItemBtn">
@@ -86,7 +86,6 @@
                                 <div class="form-group">
                                     <label for="kategori" class="form-label">Kategori</label>
                                     <select class="form-select" id="kategori" name="kategori">
-                                        <option selected disabled>Pilih kategori</option>
                                         <option value="Best Seller">Best Seller</option>
                                         <option value="Other">Other</option>
                                         <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
@@ -136,11 +135,11 @@
                                                         <td class="text-center">{{ $prd->kategori }}</td>
                                                         <td class="text-center">{{ $prd->jumlah_barang }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            @if (Auth::user()->can('dashboard.edit'))
+                                                            @if (Auth::user()->can('produk.edit'))
                                                                 <a href="{{ route('produk.edit', $prd->id) }}"
                                                                     class ="btn btn-primary me-2">Edit</a>
                                                             @endif
-                                                            @if (Auth::user()->can('dashboard.delete'))
+                                                            @if (Auth::user()->can('produk.delete'))
                                                                 <form action="{{ route('produk.destroy', $prd->id) }}"
                                                                     method="POST">
                                                                     @csrf

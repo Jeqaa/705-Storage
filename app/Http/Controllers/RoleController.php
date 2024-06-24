@@ -15,10 +15,20 @@ class RoleController extends Controller
 
     public function storeRoles(Request $request)
     {
-        Role::create([
-            'name' => $request->nama_role,
-        ]);
-        return redirect()->route('roles.view')->with('success', 'Role berhasil ditambahkan');
+        $role = Role::firstOrCreate(
+            ['name' => $request->nama_role],
+        );
+        if ($role->wasRecentlyCreated) {
+            return redirect()->route('roles.view')->with([
+                'message' => 'Role ' . $role->name . ' berhasil ditambahkan.',
+                'alert-type' => 'success'
+            ]);
+        } else {
+            return redirect()->route('roles.view')->with([
+                'message' => 'Role ' . $role->name . ' sudah ada.',
+                'alert-type' => 'error'
+            ]);
+        }
     }
 
     public function editRoles($id)
@@ -29,16 +39,33 @@ class RoleController extends Controller
 
     public function updateRoles(Request $request)
     {
-        $role_id = $request->id;
-        Role::findOrFail($role_id)->update([
-            'name' => $request->nama_role,
+        $role = Role::findOrFail($request->id);
+        // cek apakah nama role baru sama beda role yang sudah ada
+        if ($role->name !== $request->nama_role) {
+            $existingRole = Role::where('name', $request->nama_role)->first();
+            // jika ya maka redirect dan tampilkan alert
+            if ($existingRole) {
+                return redirect()->route('roles.view')->with([
+                    'message' => 'Role ' . $role->name . ' sudah ada.',
+                    'alert-type' => 'error'
+                ]);
+            }
+        }
+        // update role
+        $role->name = $request->nama_role;
+        $role->save();
+        return redirect()->route('roles.view')->with([
+            'message' => 'Role berhasil diperbarui.',
+            'alert-type' => 'success'
         ]);
-        return redirect()->route('roles.view')->with('success', 'Role berhasil diupdate');
     }
 
     public function deleteRoles($id)
     {
         Role::findOrFail($id)->delete();
-        return redirect()->route('roles.view')->with('success', 'Role berhasil dihapus');
+        return redirect()->route('roles.view')->with([
+            'message' => 'Role berhasil dihapus.',
+            'alert-type' => 'success'
+        ]);
     }
 }

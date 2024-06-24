@@ -24,6 +24,16 @@ class ManageUserController extends Controller
 
     public function updateUser(Request $request, $id)
     {
+
+        $existingEmail = User::where('email', $request->email)->first();
+
+        // jika email sudah ada di database
+        if ($existingEmail && $existingEmail->id != $id) {
+            return redirect()->route('manage-users.view')->with([
+                'message' => 'Email ' . $request->email . ' sudah ada.',
+                'alert-type' => 'error'
+            ]);
+        }
         $user = User::findOrFail($id);
         $user->name = $request->nama_user;
         $user->email = $request->email;
@@ -35,7 +45,10 @@ class ManageUserController extends Controller
             $user->assignRole($request->nama_role);
         }
 
-        return redirect()->route('manage-users.view')->with('success', 'User berhasil diupdate');
+        return redirect()->route('manage-users.view')->with([
+            'message' => 'User berhasil diperbarui.',
+            'alert-type' => 'success'
+        ]);
     }
 
     public function deleteUser($id)
@@ -44,6 +57,9 @@ class ManageUserController extends Controller
         if (!is_null($user)) {
             $user->delete();
         }
-        return redirect()->route('manage-users.view')->with('success', 'User berhasil dihapus');
+        return redirect()->route('manage-users.view')->with([
+            'message' => 'User berhasil dihapus.',
+            'alert-type' => 'success'
+        ]);
     }
 }

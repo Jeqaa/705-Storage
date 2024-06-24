@@ -65,7 +65,7 @@
                             <div class="card-body">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="naam_role" class="form-label">Nama Role</label>
+                                    <label for="nama_role" class="form-label">Nama Role</label>
                                     <input type="text" class="form-control" id="nama_role" name="nama_role" required>
                                 </div>
 
@@ -111,8 +111,8 @@
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger"
-                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus role ini?')">Delete</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger swa2-confirm-delete">Delete</button>
                                                                 </form>
                                                             @endif
                                                         </td>

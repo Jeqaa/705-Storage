@@ -25,22 +25,22 @@
                   data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                  @if (Auth::user()->can('overview.view'))
+                  @if (Auth::user()->can('dashboard.view'))
                       <li class="nav-item">
-                          <a href="{{ route('overview.view') }}"
-                              class="nav-link {{ Request::routeIs('overview.view') ? 'active' : '' }}">
+                          <a href="{{ route('dashboard.view') }}"
+                              class="nav-link {{ Request::routeIs('dashboard.view') ? 'active' : '' }}">
                               <i class="nav-icon fas fa-info"></i>
                               <p>
-                                  Overview
+                                  Dashboard
                               </p>
                           </a>
                       </li>
                   @endif
-                  @if (Auth::user()->can('dashboard.view'))
+                  @if (Auth::user()->can('produk.view'))
                       <li class="nav-item">
                           <a href="{{ route('produk') }}"
                               class="nav-link {{ Request::routeIs('produk') ? 'active' : '' }}">
-                              <i class="nav-icon fas fa-house-user"></i>
+                              <i class="nav-icon fas fa-store"></i>
                               <p>
                                   Products
                               </p>

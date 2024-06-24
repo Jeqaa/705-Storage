@@ -26,18 +26,25 @@ class ActiveRolesController extends Controller
         );
     }
 
+    // update permission untuk role
     public function updateActiveRoles(Request $request, $id)
     {
         $role = Role::findOrFail($id);
         $permissions = $request->permission;
 
         if (!empty($permissions)) {
-            $role->syncpermissions($permissions);
-        }
+            $role->syncPermissions($permissions);
+        } else {
+            $role->syncPermissions([]); // jika tidak ada permission yang dipilih, maka hapus semua permission dari role
 
-        return redirect()->route('active.roles.view')->with('success', 'Role berhasil diupdate');
+        }
+        return redirect()->route('active.roles.view')->with([
+            'message' => 'Permission dari Role ' . $role->name . ' berhasil diperbarui.',
+            'alert-type' => 'success'
+        ]);
     }
 
+    // delete role
     public function deleteActiveRoles($id)
     {
         $role = Role::findOrFail($id);

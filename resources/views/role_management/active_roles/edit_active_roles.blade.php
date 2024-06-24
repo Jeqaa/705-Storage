@@ -35,11 +35,22 @@
                                             <h3>{{ $role->name }}</h3>
                                         </div>
 
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="checkDefaultmain">
-                                            <label class="form-check-label" for="checkDefaultmain">Pilih semua
-                                                permission</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="form-check">
+                                                    <button type="button" id="checkDefaultmain"
+                                                        class="btn btn-success">Pilih semua
+                                                        permission</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-check">
+                                                    <button type="button" id="clearAll" class="btn btn-danger">Hapus
+                                                        semua permission</button>
+                                                </div>
+                                            </div>
                                         </div>
+
 
                                         <hr>
 
@@ -77,7 +88,6 @@
                                                 </div>
                                             </div>
                                         @endforeach
-
                                         <div class="form-group d-flex justify-content-between">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
@@ -93,12 +103,18 @@
 
     <script>
         $('#checkDefaultmain').click(function() {
-            $('input[type=checkbox]').prop('checked', $(this).is(':checked'));
+            $('.group-checkbox').prop('checked', true);
+            $('input[name="permission[]"]').prop('checked', true);
         });
 
         $('.group-checkbox').click(function() {
             var group = $(this).data('group');
             $('.permission-checkbox-' + group).prop('checked', $(this).is(':checked'));
+        });
+
+        $('#clearAll').click(function() {
+            $('.group-checkbox').prop('checked', false);
+            $('input[name="permission[]"]').prop('checked', false);
         });
     </script>
 @endsection

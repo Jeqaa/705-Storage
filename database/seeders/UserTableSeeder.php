@@ -49,11 +49,11 @@ class UserTableSeeder extends Seeder
          * semua permission untuk admin
          */
         $adminPermissions = [
-            'overview.view',
             'dashboard.view',
-            'dashboard.store',
-            'dashboard.edit',
-            'dashboard.delete',
+            'produk.view',
+            'produk.store',
+            'produk.edit',
+            'produk.delete',
             'history.view',
             'todo.view',
             'todo.store',
@@ -84,11 +84,11 @@ class UserTableSeeder extends Seeder
          * permission untuk karyawan
          */
         $empPermissions = [
-            'overview.view',
             'dashboard.view',
-            'dashboard.store',
-            'dashboard.edit',
-            'dashboard.delete',
+            'produk.view',
+            'produk.store',
+            'produk.edit',
+            'produk.delete',
             'history.view',
             'todo.view',
             'todo.store',

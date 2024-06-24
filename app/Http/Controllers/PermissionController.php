@@ -20,11 +20,21 @@ class PermissionController extends Controller
 
     public function storePermission(Request $request)
     {
-        Permission::create([
-            'name' => $request->nama_permission,
-            'group_name' => $request->nama_group,
-        ]);
-        return redirect()->route('permission.view')->with('success', 'Permission berhasil ditambahkan');
+        $permission = Permission::firstOrCreate(
+            ['name' => $request->nama_permission],
+            ['group_name' => $request->nama_group]
+        );
+        if ($permission->wasRecentlyCreated) {
+            return redirect()->route('permission.view')->with([
+                'message' => 'Permission ' . $permission->name . ' berhasil ditambahkan.',
+                'alert-type' => 'success'
+            ]);
+        } else {
+            return redirect()->route('permission.view')->with([
+                'message' => 'Permission ' . $permission->name . ' sudah ada.',
+                'alert-type' => 'error'
+            ]);
+        }
     }
 
     public function editPermission($id)
@@ -35,17 +45,34 @@ class PermissionController extends Controller
 
     public function updatePermission(Request $request)
     {
-        $permission_id = $request->id;
-        Permission::findOrFail($permission_id)->update([
-            'name' => $request->nama_permission,
-            'group_name' => $request->nama_group,
+        $permission = Permission::findOrFail($request->id);
+        // cek apakah nama permission baru sama beda permission yang sudah ada
+        if ($permission->name !== $request->nama_permission) {
+            $existingPermission = Permission::where('name', $request->nama_permission)->first();
+            // jika ya maka redirect dan tampilkan alert
+            if ($existingPermission) {
+                return redirect()->route('permission.view')->with([
+                    'message' => 'Permission ' . $permission->name . ' sudah ada.',
+                    'alert-type' => 'error'
+                ]);
+            }
+        }
+        // update permission
+        $permission->name = $request->nama_permission;
+        $permission->group_name = $request->nama_group;
+        $permission->save();
+        return redirect()->route('permission.view')->with([
+            'message' => 'Permission berhasil diperbarui.',
+            'alert-type' => 'success'
         ]);
-        return redirect()->route('permission.view')->with('success', 'Permission berhasil diupdate');
     }
 
     public function deletePermission($id)
     {
         Permission::findOrFail($id)->delete();
-        return redirect()->route('permission.view')->with('success', 'Permission berhasil dihapus');
+        return redirect()->route('permission.view')->with([
+            'message' => 'Permission berhasil dihapus.',
+            'alert-type' => 'success'
+        ]);
     }
 }

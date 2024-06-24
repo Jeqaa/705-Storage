@@ -37,7 +37,7 @@
                                             <div class="form-group">
                                                 <label>Kategori group</label>
                                                 <select class="select2" id="category" name="category" style="width: 100%;">
-                                                    <option selected disabled>Pilih Group</option>
+                                                    <option selected>Pilih Group</option>
                                                     <option value="dashboard">Dashboard</option>
                                                     <option value="history">History</option>
                                                     <option value="overview">Overview</option>
@@ -87,7 +87,6 @@
                                 <div class="form-group">
                                     <label for="nama_group" class="form-label">Group</label>
                                     <select class="form-select" id="nama_group" name="nama_group">
-                                        <option selected disabled>Pilih Group</option>
                                         <option value="dashboard">Dashboard</option>
                                         <option value="history">History</option>
                                         <option value="overview">Overview</option>
@@ -143,8 +142,8 @@
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger"
-                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus permission ini?')">Delete</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger swa2-confirm-delete">Delete</button>
                                                                 </form>
                                                             @endif
 

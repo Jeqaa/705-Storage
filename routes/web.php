@@ -3,12 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OverviewController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\AssignPermissionController;
 use App\Http\Controllers\ActiveRolesController;
 use App\Http\Controllers\ManageUserController;
 
@@ -72,16 +71,16 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Overview
-    Route::get('/', [OverviewController::class, 'view'])->name('overview.view')->middleware('permission:overview.view');
+    Route::get('/', [DashboardController::class, 'view'])->name('dashboard.view')->middleware('permission:dashboard.view');
 
     // Produk
     Route::controller(ProdukController::class)->group(function () {
-        Route::get('/produk', 'index')->name('produk')->middleware('permission:dashboard.view');
-        Route::get('/produk/search', 'search')->name('produk.search')->middleware('permission:dashboard.view');
-        Route::post('/produk/store', 'store')->name('produk.store')->middleware('permission:dashboard.store');;
-        Route::get('/produk/edit/{id}', 'edit')->name('produk.edit')->middleware('permission:dashboard.edit');;
-        Route::put('/produk/update/{id}', 'update')->name('produk.update')->middleware('permission:dashboard.edit');;
-        Route::delete('/produk/destroy/{edit}', 'destroy')->name('produk.destroy')->middleware('permission:dashboard.update');;
+        Route::get('/produk', 'index')->name('produk')->middleware('permission:produk.view');
+        Route::get('/produk/search', 'search')->name('produk.search')->middleware('permission:produk.view');
+        Route::post('/produk/store', 'store')->name('produk.store')->middleware('permission:produk.store');;
+        Route::get('/produk/edit/{id}', 'edit')->name('produk.edit')->middleware('permission:produk.edit');;
+        Route::put('/produk/update/{id}', 'update')->name('produk.update')->middleware('permission:produk.edit');;
+        Route::delete('/produk/destroy/{edit}', 'destroy')->name('produk.destroy')->middleware('permission:produk.delete');;
     });
 
     // History
@@ -94,7 +93,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/role-management/permission/store', 'storePermission')->name('permission.store')->middleware('permission:permission.store');;
         Route::get('/role-management/permission/edit/{id}', 'editPermission')->name('permission.edit')->middleware('permission:permission.edit');;
         Route::put('/role-management/permission/update/{id}', 'updatePermission')->name('permission.update')->middleware('permission:permission.edit');;
-        Route::delete('/role-management/permission/delete/{id}', 'deletePermission')->name('permission.delete')->middleware('permission:permission.update');;
+        Route::delete('/role-management/permission/delete/{id}', 'deletePermission')->name('permission.delete')->middleware('permission:permission.delete');;
     });
 
     // Roles

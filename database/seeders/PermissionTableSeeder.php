@@ -15,13 +15,13 @@ class PermissionTableSeeder extends Seeder
     {
         $permissions = [
             // Overview Group
-            ['name' => 'overview.view', 'group_name' => 'overview'],
+            ['name' => 'dashboard.view', 'group_name' => 'dashboard'],
 
             // Dashboard Group
-            ['name' => 'dashboard.view', 'group_name' => 'dashboard'],
-            ['name' => 'dashboard.store', 'group_name' => 'dashboard'],
-            ['name' => 'dashboard.edit', 'group_name' => 'dashboard'],
-            ['name' => 'dashboard.delete', 'group_name' => 'dashboard'],
+            ['name' => 'produk.view', 'group_name' => 'produk'],
+            ['name' => 'produk.store', 'group_name' => 'produk'],
+            ['name' => 'produk.edit', 'group_name' => 'produk'],
+            ['name' => 'produk.delete', 'group_name' => 'produk'],
 
             // History Group
             ['name' => 'history.view', 'group_name' => 'history'],

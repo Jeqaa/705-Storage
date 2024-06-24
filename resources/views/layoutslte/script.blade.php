@@ -35,6 +35,12 @@
 <!-- Select2 -->
 <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
 
+<!-- Toastr -->
+<script src="{{ asset('adminlte/plugins/toastr/toastr.min.js') }}"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     $(function() {
         // Get context with jQuery - using jQuery's .get() method.
@@ -192,6 +198,22 @@
     });
 </script>
 
+{{-- SweetAlert2 Alert --}}
+<script src="{{ asset('js/swa2.js') }}"></script>
+{{-- SweetAlert2 Session --}}
+<script>
+    @if (Session::has('message'))
+        let message = "{{ Session::get('message') }}";
+        let type = "{{ Session::get('alert-type', 'info') }}";
+        Swal.fire({
+            title: type.charAt(0).toUpperCase() + type.slice(1),
+            text: message,
+            icon: type,
+            showConfirmButton: false,
+            timer: 3000
+        });
+    @endif
+</script>
 
 <script src="{{ asset('js/dashboardlte.js') }}"></script>
 
