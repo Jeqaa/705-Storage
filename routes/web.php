@@ -128,8 +128,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/to-dos/store', 'todoStore')->name('to-dos.store')->middleware('permission:todos.store');
         Route::get('/to-dos/edit/{id}', 'editTodo')->name('to-dos.edit')->middleware('permission:todos.edit');
         Route::put('/to-dos/update/{id}', 'updateTodo')->name('to-dos.update')->middleware('permission:todos.edit');
-        Route::patch('/to-dos/{id}/done', 'markAsDone')->name('to-dos.markAsDone')->middleware('permission:todos.edit');
-        Route::patch('/to-dos/{id}/undone', 'markAsUndone')->name('to-dos.markAsUndone')->middleware('permission:todos.edit');
+        Route::patch('/to-dos/done/{id}', 'markAsDone')->name('to-dos.markAsDone')->middleware('permission:todos.edit');
+        Route::patch('/to-dos/undone/{id}', 'markAsUndone')->name('to-dos.markAsUndone')->middleware('permission:todos.edit');
         Route::delete('/to-dos/delete/{id}', 'deleteTodo')->name('to-dos.delete')->middleware('permission:todos.delete');
     });
 });
