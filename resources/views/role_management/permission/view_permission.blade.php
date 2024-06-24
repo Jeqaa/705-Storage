@@ -114,48 +114,51 @@
                         <div class="card ">
                             <div class="card-body table-responsive p-0">
                                 <div id="container-table" class="overflow-hidden">
-                                    @if (isset($permissions) && count($permissions) > 0)
-                                        <table class="table table-hover text-nowrap mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">No.</th>
-                                                    <th class="text-center">Nama Permission</th>
-                                                    <th class="text-center">Nama Group</th>
-                                                    <th class="text-center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php $i = 1; @endphp
-                                                @foreach ($permissions as $permission)
+                                    <div class="table-responsive">
+                                        @if (isset($permissions) && count($permissions) > 0)
+                                            <table class="table table-hover text-nowrap mb-0">
+                                                <thead>
                                                     <tr>
-                                                        <td class="text-center">{{ $i }}</td>
-                                                        <td class="text-center">{{ $permission->name }}</td>
-                                                        <td class="text-center">{{ $permission->group_name }}</td>
-                                                        <td class="d-flex justify-content-center">
-                                                            @if (Auth::user()->can('permission.edit'))
-                                                                <a href="{{ route('permission.edit', $permission->id) }}"
-                                                                    class ="btn btn-primary me-2">Edit</a>
-                                                            @endif
-                                                            @if (Auth::user()->can('permission.delete'))
-                                                                <form
-                                                                    action="{{ route('permission.delete', $permission->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger swa2-confirm-delete">Delete</button>
-                                                                </form>
-                                                            @endif
-
-                                                        </td>
+                                                        <th class="text-center">No.</th>
+                                                        <th class="text-center">Nama Permission</th>
+                                                        <th class="text-center">Nama Group</th>
+                                                        <th class="text-center">Action</th>
                                                     </tr>
-                                                    @php $i++; @endphp
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <p class="text-danger font-weight-bold text-center pt-3">No permissions found.</p>
-                                    @endif
+                                                </thead>
+                                                <tbody>
+                                                    @php $i = 1; @endphp
+                                                    @foreach ($permissions as $permission)
+                                                        <tr>
+                                                            <td class="text-center">{{ $i }}</td>
+                                                            <td class="text-center">{{ $permission->name }}</td>
+                                                            <td class="text-center">{{ $permission->group_name }}</td>
+                                                            <td class="d-flex justify-content-center">
+                                                                @if (Auth::user()->can('permission.edit'))
+                                                                    <a href="{{ route('permission.edit', $permission->id) }}"
+                                                                        class ="btn btn-primary me-2">Edit</a>
+                                                                @endif
+                                                                @if (Auth::user()->can('permission.delete'))
+                                                                    <form
+                                                                        action="{{ route('permission.delete', $permission->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="btn btn-danger swa2-confirm-delete">Delete</button>
+                                                                    </form>
+                                                                @endif
+
+                                                            </td>
+                                                        </tr>
+                                                        @php $i++; @endphp
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            <p class="text-danger font-weight-bold text-center pt-3">No permissions found.
+                                            </p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 

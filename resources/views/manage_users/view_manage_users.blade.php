@@ -70,56 +70,63 @@
                         <div class="card ">
                             <div class="card-body table-responsive p-0">
                                 <div id="container-table" class="overflow-hidden">
-                                    @if (isset($users) && count($users) > 0)
-                                        <table class="table table-hover text-nowrap mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">No.</th>
-                                                    <th class="text-center">Name</th>
-                                                    <th class="text-center">Email</th>
-                                                    <th class="text-center">Role</th>
-                                                    <th class="text-center">Created At</th>
-                                                    <th class="text-center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php $i = 1; @endphp
-                                                @foreach ($users as $user)
+                                    <div class="table-responsive">
+                                        @if (isset($users) && count($users) > 0)
+                                            <table class="table table-hover text-nowrap mb-0">
+                                                <thead>
                                                     <tr>
-                                                        <td class="text-center">{{ $i }}</td>
-                                                        <td class="text-center">{{ $user->name }}</td>
-                                                        <td class="text-center">{{ $user->email }}</td>
-                                                        <td class="text-center">
-                                                            @foreach ($user->roles as $role)
-                                                                <span class="badge badge-pill bg-danger">
-                                                                    {{ $role->name }}
-                                                                </span>
-                                                            @endforeach
-                                                        </td>
-                                                        <td class="text-center">{{ $user->created_at }}</td>
-                                                        <td class="d-flex justify-content-center">
-                                                            @if (Auth::user()->can('user.management.edit'))
-                                                                <a href="{{ route('manage-users.edit', $user->id) }}"
-                                                                    class ="btn btn-primary me-2">Edit</a>
-                                                            @endif
-                                                            @if (Auth::user()->can('user.management.delete'))
-                                                                <form action="{{ route('manage-users.delete', $user->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger swa2-confirm-delete">Delete</button>
-                                                                </form>
-                                                            @endif
-                                                        </td>
+                                                        <th class="text-center">No.</th>
+                                                        <th class="text-center">Name</th>
+                                                        <th class="text-center">Email</th>
+                                                        <th class="text-center">Role</th>
+                                                        <th class="text-center">Email Verified At</th>
+                                                        <th class="text-center">Created At</th>
+                                                        <th class="text-center">Updated At</th>
+                                                        <th class="text-center">Action</th>
                                                     </tr>
-                                                    @php $i++; @endphp
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <p class="text-danger font-weight-bold text-center pt-3">No users found.</p>
-                                    @endif
+                                                </thead>
+                                                <tbody>
+                                                    @php $i = 1; @endphp
+                                                    @foreach ($users as $user)
+                                                        <tr>
+                                                            <td class="text-center">{{ $i }}</td>
+                                                            <td class="text-center">{{ $user->name }}</td>
+                                                            <td class="text-center">{{ $user->email }}</td>
+                                                            <td class="text-center">
+                                                                @foreach ($user->roles as $role)
+                                                                    <span class="badge badge-pill bg-danger">
+                                                                        {{ $role->name }}
+                                                                    </span>
+                                                                @endforeach
+                                                            </td>
+                                                            <td class="text-center">{{ $user->email_verified_at }}</td>
+                                                            <td class="text-center">{{ $user->created_at }}</td>
+                                                            <td class="text-center">{{ $user->updated_at }}</td>
+                                                            <td class="d-flex justify-content-center">
+                                                                @if (Auth::user()->can('user.management.edit'))
+                                                                    <a href="{{ route('manage-users.edit', $user->id) }}"
+                                                                        class ="btn btn-primary me-2">Edit</a>
+                                                                @endif
+                                                                @if (Auth::user()->can('user.management.delete'))
+                                                                    <form
+                                                                        action="{{ route('manage-users.delete', $user->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="btn btn-danger swa2-confirm-delete">Delete</button>
+                                                                    </form>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        @php $i++; @endphp
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            <p class="text-danger font-weight-bold text-center pt-3">No users found.</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
