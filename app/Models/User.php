@@ -44,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function todos()
+    {
+        return $this->hasMany(Todo::class);
+    }
+
     public static function getPermissionGroups()
     {
         $permission_groups = DB::table('permissions')

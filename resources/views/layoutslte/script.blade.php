@@ -35,12 +35,6 @@
 <!-- Select2 -->
 <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
 
-<!-- Toastr -->
-<script src="{{ asset('adminlte/plugins/toastr/toastr.min.js') }}"></script>
-
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     $(function() {
         // Get context with jQuery - using jQuery's .get() method.
@@ -198,9 +192,14 @@
     });
 </script>
 
+<!-- Toastr -->
+<script src="{{ asset('adminlte/plugins/toastr/toastr.min.js') }}"></script>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 {{-- SweetAlert2 Alert --}}
 <script src="{{ asset('js/swa2.js') }}"></script>
-{{-- SweetAlert2 Session --}}
 <script>
     @if (Session::has('message'))
         let message = "{{ Session::get('message') }}";
@@ -210,6 +209,28 @@
             text: message,
             icon: type,
             showConfirmButton: true,
+        });
+    @endif
+</script>
+
+{{-- SweetAlert2 Mixin --}}
+<script>
+    @if (Session::has('mixin-type'))
+        let messageType = '{{ Session::get('mixin-type') }}';
+        let messageTitle = '{{ Session::get('mixin-title') }}';
+        Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        }).fire({
+            icon: messageType,
+            title: messageTitle,
         });
     @endif
 </script>

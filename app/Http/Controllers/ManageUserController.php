@@ -22,6 +22,7 @@ class ManageUserController extends Controller
         return view('manage_users.edit_manage_users', compact('user', 'roles'));
     }
 
+    // update nama user, email user (unik), dan role
     public function updateUser(Request $request, $id)
     {
 
@@ -51,6 +52,7 @@ class ManageUserController extends Controller
         ]);
     }
 
+    // hapus user
     public function deleteUser($id)
     {
         $user = User::findOrFail($id);

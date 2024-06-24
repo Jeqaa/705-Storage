@@ -18,6 +18,7 @@ class PermissionController extends Controller
         return view('role_management.permission.view_permission', compact('permissions'));
     }
 
+    // tambah permission (unik) dengan nama group
     public function storePermission(Request $request)
     {
         $permission = Permission::firstOrCreate(
@@ -43,6 +44,7 @@ class PermissionController extends Controller
         return view('role_management.permission.edit_permission', compact('permission'));
     }
 
+    // update nama permission (unik) dan nama group
     public function updatePermission(Request $request)
     {
         $permission = Permission::findOrFail($request->id);
@@ -67,6 +69,7 @@ class PermissionController extends Controller
         ]);
     }
 
+    // hapus salah satu permission beserta nama groupnya
     public function deletePermission($id)
     {
         Permission::findOrFail($id)->delete();
