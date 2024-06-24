@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard</h1>
+                        <h1 class="m-0">Products</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -59,14 +59,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="addItemBtn px-0">
-                                    <a class="btn btn-danger d-flex flex-column justify-content-center mb-3" href="#"
-                                        role="button" id="addItemBtn">
-                                        <i class="bi bi-upload"></i>
-                                        <div class="ms-2">Add Item</div>
-                                    </a>
-                                </div>
-                                <div id="modalOverlay"></div>
+                                @if (Auth::user()->can('produk.store'))
+                                    <div class="addItemBtn px-0">
+                                        <a class="btn btn-danger d-flex flex-column justify-content-center mb-3"
+                                            href="#" role="button" id="addItemBtn">
+                                            <i class="bi bi-upload"></i>
+                                            <div class="ms-2">Add Item</div>
+                                        </a>
+                                    </div>
+                                    <div id="modalOverlay"></div>
+                                @endif
                             </div>
                         </form>
 
@@ -133,15 +135,19 @@
                                                         <td class="text-center">{{ $prd->kategori }}</td>
                                                         <td class="text-center">{{ $prd->jumlah_barang }}</td>
                                                         <td class="d-flex justify-content-center">
-                                                            <a href="{{ route('produk.edit', $prd->id) }}"
-                                                                class ="btn btn-primary me-2">Edit</a>
-                                                            <form action="{{ route('produk.destroy', $prd->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
-                                                            </form>
+                                                            @if (Auth::user()->can('produk.edit'))
+                                                                <a href="{{ route('produk.edit', $prd->id) }}"
+                                                                    class ="btn btn-primary me-2">Edit</a>
+                                                            @endif
+                                                            @if (Auth::user()->can('produk.delete'))
+                                                                <form action="{{ route('produk.destroy', $prd->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger"
+                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
+                                                                </form>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                     @php $i++; @endphp
