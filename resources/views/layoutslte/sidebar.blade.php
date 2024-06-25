@@ -3,19 +3,18 @@
       <!-- Brand Logo -->
       <a href="{{ route('home') }}" class="brand-link">
           <img src="img/logo705.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3">
-          <span class="logo-name">705 Storage</span>
+          <span class="brand-text logo-name">705 Storage</span>
       </a>
 
       <!-- Sidebar -->
       <div class="sidebar">
           <!-- Sidebar user panel (optional) -->
-          <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
-              <div>
-                  <img src="img/profile.png" width="40" height="40" class="imgProfile rounded-circle"
-                      alt="User Image">
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+              <div class="image">
+                  <img src="img/profile.jpg" class="rounded-circle" alt="User Image">
               </div>
-              <div class="ms-3">
-                  <a href="#" class="ms-0">{{ Auth::user()->name }}</a>
+              <div class="info">
+                  <a href="#" class="d-block">{{ Auth::user()->name }}</a>
               </div>
           </div>
 
@@ -25,15 +24,15 @@
                   data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                  <li class="nav-item menu-open">
-                      <a href="#" class="nav-link active">
+                  <li class="nav-item li-sidebar ">
+                      <a href="{{ route('produk') }}" class="nav-link">
                           <i class="nav-icon fas fa-house-user"></i>
                           <p>
                               Dashboard
                           </p>
                       </a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item li-sidebar ">
                       <a href="{{ route('history.page') }}" class="nav-link">
                           <i class="nav-icon fas fa-history"></i>
                           <p>
