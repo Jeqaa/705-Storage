@@ -58,6 +58,17 @@
                           </a>
                       </li>
                   @endif
+                  @if (Auth::user()->can('todos.view'))
+                      <li class="nav-item">
+                          <a href="{{ route('to-dos.view') }}"
+                              class="nav-link {{ Request::routeIs('to-dos.view') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-list"></i>
+                              <p>
+                                  To-Do
+                              </p>
+                          </a>
+                      </li>
+                  @endif
                   @if (Auth::user()->can('role.management.menu'))
                       <li
                           class="nav-item has-treeview {{ Request::routeIs('permission.view', 'roles.view', 'assign.permission.view', 'active.roles.view') ? 'menu-open' : '' }}">

@@ -13,6 +13,7 @@ class RoleController extends Controller
         return view('role_management.roles.view_roles', compact('roles'));
     }
 
+    // simpan nama role
     public function storeRoles(Request $request)
     {
         $role = Role::firstOrCreate(
@@ -37,6 +38,7 @@ class RoleController extends Controller
         return view('role_management.roles.edit_roles', compact('roles'));
     }
 
+    // update nama role (unik)
     public function updateRoles(Request $request)
     {
         $role = Role::findOrFail($request->id);
@@ -60,6 +62,7 @@ class RoleController extends Controller
         ]);
     }
 
+    // hapus role
     public function deleteRoles($id)
     {
         Role::findOrFail($id)->delete();

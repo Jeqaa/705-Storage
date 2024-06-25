@@ -10,6 +10,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ActiveRolesController;
 use App\Http\Controllers\ManageUserController;
+use App\Http\Controllers\TodoController;
 
 Auth::routes(['verify' => true]);
 
@@ -70,10 +71,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 // });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Overview
+    // Overview Routes
     Route::get('/', [DashboardController::class, 'view'])->name('dashboard.view')->middleware('permission:dashboard.view');
 
-    // Produk
+    // Produk Routes
     Route::controller(ProdukController::class)->group(function () {
         Route::get('/produk', 'index')->name('produk')->middleware('permission:produk.view');
         Route::get('/produk/search', 'search')->name('produk.search')->middleware('permission:produk.view');
@@ -83,10 +84,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/produk/destroy/{edit}', 'destroy')->name('produk.destroy')->middleware('permission:produk.delete');;
     });
 
-    // History
+    // History Routes
     Route::get('/history', [HistoryController::class, 'index'])->name('history.view');
 
-    // Permission
+    // Permission Routes
     Route::controller(PermissionController::class)->group(function () {
         Route::get('/role-management', 'redirectToPermission');
         Route::get('/role-management/permission', 'viewPermission')->name('permission.view')->middleware('permission:permission.view');
@@ -96,7 +97,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/role-management/permission/delete/{id}', 'deletePermission')->name('permission.delete')->middleware('permission:permission.delete');;
     });
 
-    // Roles
+    // Roles Routes
     Route::controller(RoleController::class)->group(function () {
         Route::get('/role-management/roles', 'viewRoles')->name('roles.view')->middleware('permission:roles.view');
         Route::post('/role-management/roles/store', 'storeRoles')->name('roles.store')->middleware('permission:roles.store');
@@ -105,7 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/role-management/roles/delete/{id}', 'deleteRoles')->name('roles.delete')->middleware('permission:roles.delete');
     });
 
-    // Active Role
+    // Active Role Routes
     Route::controller(ActiveRolesController::class)->group(function () {
         Route::get('/role-management/active-role', 'viewActiveRoles')->name('active.roles.view')->middleware('permission:active.roles.view');
         Route::get('/role-management/active-role/edit/{id}', 'editActiveRoles')->name('active.roles.edit')->middleware('permission:active.roles.edit');
@@ -119,6 +120,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/manage-users/edit/{id}', 'editUser')->name('manage-users.edit')->middleware('permission:user.management.edit');
         Route::put('/manage-users/update/{id}', 'updateUser')->name('manage-users.update')->middleware('permission:user.management.edit');
         Route::delete('/manage-users/delete/{id}', 'deleteUser')->name('manage-users.delete')->middleware('permission:user.management.delete');
+    });
+
+    // To do routes
+    Route::controller(TodoController::class)->group(function () {
+        Route::get('/to-dos', 'viewTodos')->name('to-dos.view')->middleware('permission:todos.view');
+        Route::post('/to-dos/store', 'todoStore')->name('to-dos.store')->middleware('permission:todos.store');
+        Route::get('/to-dos/edit/{id}', 'editTodo')->name('to-dos.edit')->middleware('permission:todos.edit');
+        Route::put('/to-dos/update/{id}', 'updateTodo')->name('to-dos.update')->middleware('permission:todos.edit');
+        Route::patch('/to-dos/done/{id}', 'markAsDone')->name('to-dos.markAsDone')->middleware('permission:todos.edit');
+        Route::patch('/to-dos/undone/{id}', 'markAsUndone')->name('to-dos.markAsUndone')->middleware('permission:todos.edit');
+        Route::delete('/to-dos/delete/{id}', 'deleteTodo')->name('to-dos.delete')->middleware('permission:todos.delete');
     });
 });
 

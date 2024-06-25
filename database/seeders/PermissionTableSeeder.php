@@ -14,10 +14,16 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            // Overview Group
-            ['name' => 'dashboard.view', 'group_name' => 'dashboard'],
+            // Announcement Group
+            ['name' => 'announcement.view', 'group_name' => 'announcement'],
+            ['name' => 'announcement.store', 'group_name' => 'announcement'],
+            ['name' => 'announcement.edit', 'group_name' => 'announcement'],
+            ['name' => 'announcement.delete', 'group_name' => 'announcement'],
 
             // Dashboard Group
+            ['name' => 'dashboard.view', 'group_name' => 'dashboard'],
+
+            // Product Group
             ['name' => 'produk.view', 'group_name' => 'produk'],
             ['name' => 'produk.store', 'group_name' => 'produk'],
             ['name' => 'produk.edit', 'group_name' => 'produk'],
@@ -26,11 +32,11 @@ class PermissionTableSeeder extends Seeder
             // History Group
             ['name' => 'history.view', 'group_name' => 'history'],
 
-            // Todo Group
-            ['name' => 'todo.view', 'group_name' => 'todo'],
-            ['name' => 'todo.store', 'group_name' => 'todo'],
-            ['name' => 'todo.edit', 'group_name' => 'todo'],
-            ['name' => 'todo.delete', 'group_name' => 'todo'],
+            // Todos Group
+            ['name' => 'todos.view', 'group_name' => 'todos'],
+            ['name' => 'todos.store', 'group_name' => 'todos'],
+            ['name' => 'todos.edit', 'group_name' => 'todos'],
+            ['name' => 'todos.delete', 'group_name' => 'todos'],
 
             // Role Management Group
             ['name' => 'role.management.menu', 'group_name' => 'role_management'],
