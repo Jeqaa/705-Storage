@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminLTE 3 | Dashboard</title>
     <link rel="stylesheet" href="{{ asset('css/dashboardlte.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/history.css') }}">
 
 
     <!-- Google Font: Source Sans Pro -->

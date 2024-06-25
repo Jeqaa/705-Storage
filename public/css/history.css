@@ -1,0 +1,19 @@
+.red-row {
+    background-color: #f7bec0 !important; /* Warna merah */
+}
+.green-row {
+    background-color: #94c973 !important; /* Warna hijau */
+}
+.yellow-row {
+    background-color: #fede00 !important; /* Warna kuning */
+}
+.blue-row {
+    background-color: #75e6da !important; /* Warna biru */
+}
+.pagination-links {
+    font-size: 14px; /* Atur ukuran teks sesuai kebutuhan */
+}
+
+.table-history {
+    background-color: #fe5b5b !important;
+}
