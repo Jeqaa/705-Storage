@@ -2,17 +2,29 @@
 
 
 @section('content')
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{-- SweetAlert2 Alert --}}
+<script src="{{ asset('js/swa2.js') }}"></script>
+<script>
+    @if (Session::has('message'))
+        let message = "{{ Session::get('message') }}";
+        let type = "{{ Session::get('alert-type', 'info') }}";
+        Swal.fire({
+            title: type.charAt(0).toUpperCase() + type.slice(1),
+            text: message,
+            icon: type,
+            showConfirmButton: true,
+        });
+    @endif
+</script>
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Products</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -44,7 +56,8 @@
                                                 <select class="select2" id="category" name="category" style="width: 100%;">
                                                     <option value="all">All</option>
                                                     <option value="best_seller">Best Seller</option>
-                                                    <option value="other">Other</option>
+                                                    <option value="other_voer">Other (Voer)</option>
+                                                    <option value="other_liquid">Other (Liquid)</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -87,16 +100,20 @@
                                     <label for="kategori" class="form-label">Kategori</label>
                                     <select class="form-select" id="kategori" name="kategori">
                                         <option value="Best Seller">Best Seller</option>
-                                        <option value="Other">Other</option>
-                                        <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
+                                        <option value="Other (Voer)">Other (Voer)</option>
+                                        <option value="Other (Liquid)">Other (Liquid)</option>
                                     </select>
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label for="jumlah_barang" class="form-label">Jumlah Barang</label>
-                                    <input class="form-control" id="jumlah_barang" name="jumlah_barang" rows="3"
-                                        required></input>
+                                    <label for="jumlah_barang" class="form-label">Jumlah_barang:</label>
+                                    <div class="input-group">
+                                        <!-- <button class="btn btn-outline-secondary" type="button" id="btnMinus">-</button> -->
+                                        <input type="number" name="jumlah_barang" id="jumlah_barang" class="form-control input-number"
+                                             min="0" required>
+                                        <!-- <button class="btn btn-outline-secondary" type="button" id="btnPlus">+</button> -->
+                                    </div>
                                 </div>
                                 <div class="form-group d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -140,12 +157,12 @@
                                                                     class ="btn btn-primary me-2">Edit</a>
                                                             @endif
                                                             @if (Auth::user()->can('produk.delete'))
-                                                                <form action="{{ route('produk.destroy', $prd->id) }}"
-                                                                    method="POST">
+                                                                <form action="{{ route('produk.destroy', $prd->id) }}" method="POST"
+                                                                    class="d-inline">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger"
-                                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-danger btn-sm swa2-confirm-delete">Delete</button>
                                                                 </form>
                                                             @endif
                                                         </td>
@@ -170,4 +187,5 @@
         <!-- /.content -->
     </div>
     <!-- ./wrapper -->
+
 @endsection
