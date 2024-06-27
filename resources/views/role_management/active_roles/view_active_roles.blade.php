@@ -56,12 +56,12 @@
                                 <div id="container-table" class="overflow-hidden">
                                     <div class="table-responsive">
                                         @if (isset($roles) && count($roles) > 0)
-                                            <table class="table table-hover text-nowrap mb-0">
+                                            <table class="table table-hover text-nowrap mb-0 table-responsive-vertical">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">No.</th>
                                                         <th class="text-center">Nama Role</th>
-                                                        <th class="text-center">Permission</th>
+                                                        <th class="text-center ">Permission</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -74,7 +74,7 @@
                                                             <td class="text-center">
                                                                 @php $count = 0; @endphp
                                                                 @foreach ($role->permissions as $permission)
-                                                                    @if ($count % 10 == 0 && $count != 0)
+                                                                    @if ($count % 7 == 0 && $count != 0)
                                                                         <br>
                                                                     @endif
                                                                     <span
