@@ -185,31 +185,11 @@
                         <div class="card card-dark">
                             <div class="card-header">
                                 <h3 class="card-title">Latest Edits</h3>
-                                <div class="card-tools">
-                                    <span><strong>Description:</strong></span>
-                                    <span class="badge badge-success">Create New Products</span>
-                                    <span class="badge badge-warning">Reducing Products</span>
-                                    <span class="badge badge-primary">Add Products</span>
-                                    <span class="badge badge-danger">Delete Products</span>
-                                </div>
                             </div>
                             <div class="card-body">
                                 <ul class="list-group">
                                     @foreach ($latestEdits as $edit)
-                                        @php
-                                            $keterangan = $edit->keterangan;
-                                            $row_class = '';
-                                            if (strpos($keterangan, 'Membuat Produk Baru') !== false) {
-                                                $row_class = 'list-group-item-success';
-                                            } elseif (strpos($keterangan, 'Mengurangi Produk') !== false) {
-                                                $row_class = 'list-group-item-warning';
-                                            } elseif (strpos($keterangan, 'Menambahkan Produk') !== false) {
-                                                $row_class = 'list-group-item-primary';
-                                            } elseif (strpos($keterangan, 'Menghapus Produk') !== false) {
-                                                $row_class = 'list-group-item-danger';
-                                            }
-                                        @endphp
-                                        <li class="list-group-item {{ $row_class }}">
+                                        <li class="list-group-item list-group-item-info">
                                             Product: <span class="fw-bold">{{ $edit->nama_produk }}</span>
                                             by <span class="fw-bold">{{ $edit->username }}</span>
                                             at {{ $edit->created_at }}
@@ -226,17 +206,17 @@
             @if (Auth::user()->can('user.management.view'))
                 <div class="card card-dark">
                     <div class="card-header">
-                        <h3 class="card-title">Latest Members</h3>
+                        <h3 class="card-title">Latest Users</h3>
                     </div>
 
                     <div class="card-body p-0">
                         <ul class="users-list clearfix">
-                            @foreach ($latestMembers as $member)
+                            @foreach ($latestUsers as $user)
                                 <li>
                                     <img src="{{ asset('dist/img/user-placeholder.png') }}" alt="User Image">
-                                    <a class="users-list-name" href="{{ route('manage-users.edit', $member->id) }}"
-                                        data-toggle="tooltip" title="Edit">{{ $member->name }}</a>
-                                    <span class="users-list-date">{{ $member->created_at->diffForHumans() }}</span>
+                                    <a class="users-list-name" href="{{ route('manage-users.edit', $user->id) }}"
+                                        data-toggle="tooltip" title="Edit">{{ $user->name }}</a>
+                                    <span class="users-list-date">{{ $user->created_at->diffForHumans() }}</span>
                                 </li>
                             @endforeach
                         </ul>

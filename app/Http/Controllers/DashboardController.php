@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
         $latestEdits = History::orderBy('created_at', 'desc')->limit(5)->get();
 
-        $latestMembers = User::orderBy('created_at', 'desc')->take(8)->get();
+        $latestUsers = User::orderBy('created_at', 'desc')->take(8)->get();
 
         $title = 'Dashboard - 705 Storage';
 
@@ -48,7 +48,7 @@ class DashboardController extends Controller
             'topProducts',
             'productCountsByCategory',
             'latestEdits',
-            'latestMembers',
+            'latestUsers',
             'title'
         ));
     }

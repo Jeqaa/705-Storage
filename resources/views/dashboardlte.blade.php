@@ -1,6 +1,5 @@
 @extends('layoutslte.template')
 
-
 @section('content')
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -33,45 +32,11 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-
-                <section class="content">
-                    <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        {{-- button add --}}
                         <form>
                             <div class="row">
-                                <div class="col-md-10 px-0">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Sort</label>
-                                                <select class="select2" id="sort" name="sort" style="width: 100%;">
-                                                    <option value="asc">Low to High Stock</option>
-                                                    <option value="desc">High to Low Stock</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Category</label>
-                                                <select class="select2" id="category" name="category" style="width: 100%;">
-                                                    <option value="all">All</option>
-                                                    <option value="best_seller">Best Seller</option>
-                                                    <option value="other_voer">Other (Voer)</option>
-                                                    <option value="other_liquid">Other (Liquid)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    {{-- search bar --}}
-                                    <div class="form-group">
-                                        <div class="input-group input-group-lg">
-                                            <input name="search" id="search" type="text" autocomplete="off"
-                                                class="form-control form-control-lg" placeholder="Search...">
-                                        </div>
-                                    </div>
-                                </div>
                                 @if (Auth::user()->can('produk.store'))
                                     <div class="addItemBtn px-0">
                                         <a class="btn btn-dark d-flex flex-column justify-content-center mb-3"
@@ -84,8 +49,6 @@
                                 @endif
                             </div>
                         </form>
-
-
                         <form id="myForm" class="col-md-6" action="{{ route('produk.store') }}" method="POST">
                             <div class="card-header d-flex justify-content-center border-bottom mb-3">
                                 <h3 class="card-title py-3 fs-4 fw-bold">ADD ITEM</h3>
@@ -104,8 +67,6 @@
                                         <option value="Other (Liquid)">Other (Liquid)</option>
                                     </select>
                                 </div>
-
-
                                 <div class="form-group">
                                     <label for="jumlah_barang" class="form-label">Jumlah_barang:</label>
                                     <div class="input-group">
@@ -121,65 +82,50 @@
                                 </div>
                             </div>
                         </form>
-
-
-                    </div>
-                </section>
-
-
-                <div class="row">
-                    <div class="w-100">
-                        <div class="card ">
-                            <div class="card-body table-responsive p-0">
-                                <div id="container-table" class="overflow-hidden">
-                                    @if (isset($produk) && count($produk) > 0)
-                                        <table class="table table-hover text-nowrap mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">No.</th>
-                                                    <th class="text-center">Name</th>
-                                                    <th class="text-center">Category</th>
-                                                    <th class="text-center">Stock</th>
-                                                    <th class="text-center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php $i = ($produk->currentPage() - 1) * $produk->perPage() + 1; @endphp
-                                                @foreach ($produk as $prd)
-                                                    <tr>
-                                                        <td class="text-center">{{ $i }}</td>
-                                                        <td class="text-center">{{ $prd->nama_produk }}</td>
-                                                        <td class="text-center">{{ $prd->kategori }}</td>
-                                                        <td class="text-center">{{ $prd->jumlah_barang }}</td>
-                                                        <td class="d-flex justify-content-center">
-                                                            @if (Auth::user()->can('produk.edit'))
-                                                                <a href="{{ route('produk.edit', $prd->id) }}"
-                                                                    class ="btn btn-primary me-2">Edit</a>
-                                                            @endif
-                                                            @if (Auth::user()->can('produk.delete'))
-                                                                <form action="{{ route('produk.destroy', $prd->id) }}"
-                                                                    method="POST" class="d-inline">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger btn-sm swa2-confirm-delete">Delete</button>
-                                                                </form>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                    @php $i++; @endphp
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        {{ $produk->links() }}
-                                    @else
-                                        <p class="text-danger font-weight-bold text-center pt-3">No products found.</p>
-                                    @endif
-                                </div>
-                            </div>
-
+                        <div class="mb-3">
+                            <label for="categoryFilter" class="form-label">Filter by Category:</label>
+                            <select id="categoryFilter" class="form-control">
+                                <option value="">All</option>
+                            </select>
                         </div>
-
+                        <table id="productsTable" class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No.</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 1; @endphp
+                                @foreach ($produk as $prd)
+                                    <tr>
+                                        <td class="text-center">{{ $i }}</td>
+                                        <td class="text-center">{{ $prd->nama_produk }}</td>
+                                        <td class="text-center">{{ $prd->kategori }}</td>
+                                        <td class="text-center">{{ $prd->jumlah_barang }}</td>
+                                        <td class="d-flex justify-content-center">
+                                            @if (Auth::user()->can('produk.edit'))
+                                                <a href="{{ route('produk.edit', $prd->id) }}"
+                                                    class ="btn btn-primary me-2">Edit</a>
+                                            @endif
+                                            @if (Auth::user()->can('produk.delete'))
+                                                <form action="{{ route('produk.destroy', $prd->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-sm swa2-confirm-delete">Delete</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @php $i++; @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -187,6 +133,35 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- ./wrapper -->
+    <!-- /.content-wrapper -->
 
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            var table = $('#productsTable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "searching": true,
+                "language": {
+                    "search": "Search:",
+                    "paginate": {
+                        "next": "&raquo;",
+                        "previous": "&laquo;"
+                    }
+                }
+            });
+
+            // Populate the select element with unique categories
+            var select = $('#categoryFilter');
+            table.column(2).data().unique().sort().each(function(d, j) {
+                select.append('<option value="' + d + '">' + d + '</option>');
+            });
+
+            // Apply the filter
+            select.on('change', function() {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                table.column(2).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+        });
+    </script>
 @endsection

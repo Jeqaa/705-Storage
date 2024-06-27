@@ -11,7 +11,7 @@ class ManageUserController extends Controller
 {
     public function viewUsers()
     {
-        $users = User::paginate(10);
+        $users = User::all();
         $title = 'User Management - 705 Storage';
         return view('manage_users.view_manage_users', compact('users', 'title'));
     }

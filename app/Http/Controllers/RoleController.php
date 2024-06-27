@@ -9,7 +9,7 @@ class RoleController extends Controller
 {
     public function viewRoles()
     {
-        $roles = Role::paginate(10);
+        $roles = Role::all();
         $title = 'Roles - 705 Storage';
         return view('role_management.roles.view_roles', compact('roles', 'title'));
     }

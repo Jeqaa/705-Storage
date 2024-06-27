@@ -2,6 +2,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+
     <link rel="stylesheet" href="{{ asset('css/dashboardlte.css') }}">
     <link rel="stylesheet" href="{{ asset('css/history.css') }}">
     <!-- jQuery -->

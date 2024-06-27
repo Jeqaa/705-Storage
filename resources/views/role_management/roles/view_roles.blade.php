@@ -1,6 +1,5 @@
 @extends('layoutslte.template')
 
-
 @section('content')
     <div class="content-wrapper">
         <div class="content-header">
@@ -8,42 +7,19 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0">Roles</h1>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-
-                <section class="content">
-                    <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        {{-- button add --}}
                         <form>
                             <div class="row">
-                                <div class="col-md-10 px-0">
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label>Sort</label>
-                                                <select class="select2" id="sort" name="sort" style="width: 100%;">
-                                                    <option value="asc">Ascending</option>
-                                                    <option value="desc">Descending</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    {{-- search bar --}}
-                                    <div class="form-group">
-                                        <div class="input-group input-group-lg">
-                                            <input name="search" id="search" type="text" autocomplete="off"
-                                                class="form-control form-control-lg" placeholder="Search...">
-                                        </div>
-                                    </div>
-                                </div>
                                 @if (Auth::user()->can('roles.store'))
                                     <div class="addItemBtn px-0">
                                         <a class="btn btn-dark d-flex flex-column justify-content-center mb-3"
@@ -56,8 +32,6 @@
                                 @endif
                             </div>
                         </form>
-
-
                         <form id="myForm" class="col-md-6" action="{{ route('roles.store') }}" method="POST">
                             <div class="card-header d-flex justify-content-center border-bottom mb-3">
                                 <h3 class="card-title py-3 fs-4 fw-bold">ADD ROLE</h3>
@@ -75,63 +49,40 @@
                                 </div>
                             </div>
                         </form>
-
-
-                    </div>
-                </section>
-
-
-                <div class="row">
-                    <div class="w-100">
-                        <div class="card ">
-                            <div class="card-body table-responsive p-0">
-                                <div id="container-table" class="overflow-hidden">
-                                    <div class="table-responsive">
-                                        @if (isset($roles) && count($roles) > 0)
-                                            <table class="table table-hover text-nowrap mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center">No.</th>
-                                                        <th class="text-center">Nama Role</th>
-                                                        <th class="text-center">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php $i = ($roles->currentPage() - 1) * $roles->perPage() + 1; @endphp
-                                                    @foreach ($roles as $role)
-                                                        <tr>
-                                                            <td class="text-center">{{ $i }}</td>
-                                                            <td class="text-center">{{ $role->name }}</td>
-                                                            <td class="d-flex justify-content-center">
-                                                                @if (Auth::user()->can('roles.edit'))
-                                                                    <a href="{{ route('roles.edit', $role->id) }}"
-                                                                        class ="btn btn-primary me-2">Edit</a>
-                                                                @endif
-                                                                @if (Auth::user()->can('roles.delete'))
-                                                                    <form action="{{ route('roles.delete', $role->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger swa2-confirm-delete">Delete</button>
-                                                                    </form>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        @php $i++; @endphp
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                            {{ $roles->links() }}
-                                        @else
-                                            <p class="text-danger font-weight-bold text-center pt-3">No roles found.</p>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
+                        <table id="rolesTable" class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No.</th>
+                                    <th class="text-center">Nama Role</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 1; @endphp
+                                @foreach ($roles as $role)
+                                    <tr>
+                                        <td class="text-center">{{ $i }}</td>
+                                        <td class="text-center">{{ $role->name }}</td>
+                                        <td class="text-center">
+                                            @if (Auth::user()->can('roles.edit'))
+                                                <a href="{{ route('roles.edit', $role->id) }}"
+                                                    class="btn btn-primary">Edit</a>
+                                            @endif
+                                            @if (Auth::user()->can('roles.delete'))
+                                                <form action="{{ route('roles.delete', $role->id) }}"
+                                                    method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-danger swa2-confirm-delete">Delete</button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @php $i++; @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -139,5 +90,23 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- ./wrapper -->
+    <!-- /.content-wrapper -->
+
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            var table = $('#rolesTable').DataTable({
+                "paging": true,
+                "ordering": true,
+                "searching": true,
+                "language": {
+                    "search": "Search:",
+                    "paginate": {
+                        "next": "&raquo;",
+                        "previous": "&laquo;"
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

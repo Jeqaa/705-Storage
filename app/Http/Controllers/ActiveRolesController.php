@@ -11,7 +11,7 @@ class ActiveRolesController extends Controller
 {
     public function viewActiveRoles()
     {
-        $roles = Role::paginate(10);
+        $roles = Role::all();
         $title = 'Active Roles - 705 Storage';
         return view('role_management.active_roles.view_active_roles', compact('roles', 'title'));
     }

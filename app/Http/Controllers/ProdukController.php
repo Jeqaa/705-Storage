@@ -12,7 +12,7 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $produk = produk::paginate(10);
+        $produk = produk::all();
         $title = 'Produk - 705 Storage';
         return view('dashboardlte', compact('produk', 'title'));
     }

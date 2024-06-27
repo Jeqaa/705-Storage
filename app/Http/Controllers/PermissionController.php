@@ -14,7 +14,7 @@ class PermissionController extends Controller
 
     public function viewPermission()
     {
-        $permissions = Permission::paginate(10);
+        $permissions = Permission::all();
         $title = 'Permission - 705 Storage';
         return view('role_management.permission.view_permission', compact('permissions', 'title'));
     }
