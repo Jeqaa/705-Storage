@@ -1,277 +1,190 @@
 @extends('layoutslte.template')
+<style>
+    .scroll-container {
+        height: 40px;
+        overflow: hidden;
+        position: relative;
+    }
 
+    .scroll-content {
+        position: absolute;
+        width: 100%;
+    }
+
+    .scroll-content ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    .scroll-content li {
+        list-style: none;
+        height: 40px;
+        line-height: 40px;
+        background-color: #ffc107;
+        border: none;
+        color: #ffffff;
+    }
+</style>
 
 @section('content')
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Online Store Visitors</h3>
-                                <a href="javascript:void(0);">View Report</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <p class="d-flex flex-column">
-                                    <span class="text-bold text-lg">820</span>
-                                    <span>Visitors Over Time</span>
-                                </p>
-                                <p class="ml-auto d-flex flex-column text-right">
-                                    <span class="text-success">
-                                        <i class="fas fa-arrow-up"></i> 12.5%
-                                    </span>
-                                    <span class="text-muted">Since last week</span>
-                                </p>
-                            </div>
-                            <!-- /.d-flex -->
+    <div class="content-wrapper" style="min-height: 805px;">
 
-                            <div class="position-relative mb-4">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                                <canvas id="visitors-chart" height="200" width="486"
-                                    style="display: block; width: 486px; height: 200px;"
-                                    class="chartjs-render-monitor"></canvas>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-end">
-                                <span class="mr-2">
-                                    <i class="fas fa-square text-primary"></i> This Week
-                                </span>
-
-                                <span>
-                                    <i class="fas fa-square text-gray"></i> Last Week
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card -->
-
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <h3 class="card-title">Products</h3>
-                            <div class="card-tools">
-                                <a href="#" class="btn btn-tool btn-sm">
-                                    <i class="fas fa-download"></i>
-                                </a>
-                                <a href="#" class="btn btn-tool btn-sm">
-                                    <i class="fas fa-bars"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-body table-responsive p-0">
-                            <table class="table table-striped table-valign-middle">
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Sales</th>
-                                        <th>More</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <img src="dist/img/default-150x150.png" alt="Product 1"
-                                                class="img-circle img-size-32 mr-2">
-                                            Some Product
-                                        </td>
-                                        <td>$13 USD</td>
-                                        <td>
-                                            <small class="text-success mr-1">
-                                                <i class="fas fa-arrow-up"></i>
-                                                12%
-                                            </small>
-                                            12,000 Sold
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-muted">
-                                                <i class="fas fa-search"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="dist/img/default-150x150.png" alt="Product 1"
-                                                class="img-circle img-size-32 mr-2">
-                                            Another Product
-                                        </td>
-                                        <td>$29 USD</td>
-                                        <td>
-                                            <small class="text-warning mr-1">
-                                                <i class="fas fa-arrow-down"></i>
-                                                0.5%
-                                            </small>
-                                            123,234 Sold
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-muted">
-                                                <i class="fas fa-search"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="dist/img/default-150x150.png" alt="Product 1"
-                                                class="img-circle img-size-32 mr-2">
-                                            Amazing Product
-                                        </td>
-                                        <td>$1,230 USD</td>
-                                        <td>
-                                            <small class="text-danger mr-1">
-                                                <i class="fas fa-arrow-down"></i>
-                                                3%
-                                            </small>
-                                            198 Sold
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-muted">
-                                                <i class="fas fa-search"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="dist/img/default-150x150.png" alt="Product 1"
-                                                class="img-circle img-size-32 mr-2">
-                                            Perfect Item
-                                            <span class="badge bg-danger">NEW</span>
-                                        </td>
-                                        <td>$199 USD</td>
-                                        <td>
-                                            <small class="text-success mr-1">
-                                                <i class="fas fa-arrow-up"></i>
-                                                63%
-                                            </small>
-                                            87 Sold
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-muted">
-                                                <i class="fas fa-search"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col-md-6 -->
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Sales</h3>
-                                <a href="javascript:void(0);">View Report</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <p class="d-flex flex-column">
-                                    <span class="text-bold text-lg">$18,230.00</span>
-                                    <span>Sales Over Time</span>
-                                </p>
-                                <p class="ml-auto d-flex flex-column text-right">
-                                    <span class="text-success">
-                                        <i class="fas fa-arrow-up"></i> 33.1%
-                                    </span>
-                                    <span class="text-muted">Since last month</span>
-                                </p>
-                            </div>
-                            <!-- /.d-flex -->
-
-                            <div class="position-relative mb-4">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                                <canvas id="sales-chart" height="200" width="486"
-                                    style="display: block; width: 486px; height: 200px;"
-                                    class="chartjs-render-monitor"></canvas>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-end">
-                                <span class="mr-2">
-                                    <i class="fas fa-square text-primary"></i> This year
-                                </span>
-
-                                <span>
-                                    <i class="fas fa-square text-gray"></i> Last year
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card -->
-
-                    <div class="card">
-                        <div class="card-header border-0">
-                            <h3 class="card-title">Online Store Overview</h3>
-                            <div class="card-tools">
-                                <a href="#" class="btn btn-sm btn-tool">
-                                    <i class="fas fa-download"></i>
-                                </a>
-                                <a href="#" class="btn btn-sm btn-tool">
-                                    <i class="fas fa-bars"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                <p class="text-success text-xl">
-                                    <i class="ion ion-ios-refresh-empty"></i>
-                                </p>
-                                <p class="d-flex flex-column text-right">
-                                    <span class="font-weight-bold">
-                                        <i class="ion ion-android-arrow-up text-success"></i> 12%
-                                    </span>
-                                    <span class="text-muted">CONVERSION RATE</span>
-                                </p>
-                            </div>
-                            <!-- /.d-flex -->
-                            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                <p class="text-warning text-xl">
-                                    <i class="ion ion-ios-cart-outline"></i>
-                                </p>
-                                <p class="d-flex flex-column text-right">
-                                    <span class="font-weight-bold">
-                                        <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
-                                    </span>
-                                    <span class="text-muted">SALES RATE</span>
-                                </p>
-                            </div>
-                            <!-- /.d-flex -->
-                            <div class="d-flex justify-content-between align-items-center mb-0">
-                                <p class="text-danger text-xl">
-                                    <i class="ion ion-ios-people-outline"></i>
-                                </p>
-                                <p class="d-flex flex-column text-right">
-                                    <span class="font-weight-bold">
-                                        <i class="ion ion-android-arrow-down text-danger"></i> 1%
-                                    </span>
-                                    <span class="text-muted">REGISTRATION RATE</span>
-                                </p>
-                            </div>
-                            <!-- /.d-flex -->
-                        </div>
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Dashboard</h1>
                     </div>
                 </div>
-                <!-- /.col-md-6 -->
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
+
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+
+                    {{-- Box untuk total produk --}}
+                    @if (Auth::user()->can('produk.view'))
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>{{ $totalProducts }}</h3>
+                                    <p>Products</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pricetags"></i>
+                                </div>
+                                <a href="{{ route('produk') }}" class="small-box-footer" style="color: #ffffff;">More info
+                                    <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Box untuk produk yang stocknya < 8 --}}
+                    @if (Auth::user()->can('produk.view'))
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3 style="color: #ffffff;">{{ $totalLowStockProducts }} <sup style="font-size: 20px">(
+                                            <8 in stock)</sup>
+                                    </h3>
+                                    @if (count($lowStockProducts) == 0)
+                                        <p style="color: #ffffff;">No products in low stock</p>
+                                    @else
+                                        <div class="scroll-container">
+                                            <div class="scroll-content">
+                                                <ul class="list-group">
+                                                    @foreach ($lowStockProducts as $product)
+                                                        <li class="list-group-item">
+                                                            {{ $product->nama_produk }} -
+                                                            {{ $product->jumlah_barang }} in stock
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                                <ul class="list-group">
+                                                    @foreach ($lowStockProducts as $product)
+                                                        <li class="list-group-item">
+                                                            {{ $product->nama_produk }} -
+                                                            {{ $product->jumlah_barang }} in stock
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-alert"></i>
+                                </div>
+                                <a href="{{ route('produk') }}" class="small-box-footer"
+                                    style="color: #ffffff !important;">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Box untuk history terbaru --}}
+                    @if (Auth::user()->can('history.view'))
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                @if ($latestHistory)
+                                    <h3>Product: {{ $latestHistory->nama_produk }}</h3>
+                                    <p>last updated by {{ $latestHistory->username }}</p>
+                                @else
+                                    <h3>None</h3>
+                                    <p>No history found</p>
+                                @endif
+
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="{{ route('history.view') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    @endif
+
+                    {{-- Box untuk todo yang belum selesai --}}
+                    @if (Auth::user()->can('todos.view'))
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-primary">
+                            <div class="inner">
+                                <h3>{{ $totalInProgressTodos }}</h3>
+                                <p>In Progress To-Dos</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-clipboard"></i>
+                            </div>
+                            <a href="{{ route('to-dos.view') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    @endif
+
+                    {{-- Box untuk user yang tidak memiliki akses ke aplikasi --}}
+                    @if (Auth::user()->can('user.management.view'))
+                    <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ $totalNotEmployeeUsers }}</h3>
+                                <p>Users without access to the application</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person"></i>
+                            </div>
+                            <a href="{{ route('manage-users.view') }}" class="small-box-footer">More info <i
+                                    class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+        </section>
+
     </div>
+    <script>
+        $(document).ready(function() {
+            var $scrollContainer = $('.scroll-container');
+            var $scrollContent = $('.scroll-content');
+            var itemHeight = $('.list-group-item').outerHeight();
+            var scrollHeight = $scrollContent.height() / 2;
+
+            function scroll() {
+                $scrollContainer.animate({
+                    scrollTop: '+=' + itemHeight
+                }, 1500, 'linear', function() {
+                    if ($scrollContainer.scrollTop() >= scrollHeight) {
+                        $scrollContainer.scrollTop(0); // Reset scroll position to top
+                    }
+                    scroll(); // Repeat the scrolling
+                });
+            }
+
+            scroll(); // Start the scrolling
+        });
+    </script>
 @endsection
