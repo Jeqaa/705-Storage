@@ -77,17 +77,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Profile Routes
     Route::controller(ProfileController::class)->group(function() {
-        Route::get('/profile', 'profile')->name('profile.edit');
-        Route::post('/profile/update-name/{id}', 'updateName')->name('profile.updateName');
-        Route::get('/profile/send-to-old-mail/{id}/', 'sendToOldMail')->name('profile.sendToOldMail');
-        Route::post('/profile/send-to-new-mail/{id}/', 'sendToNewMail')->name('profile.sendToNewMail');
-        Route::get('/profile/send-reset-password/{id}/', 'sendResetPassword')->name('profile.sendResetPassword');
-        Route::get('/profile/otp}', 'otp')->name('profile.otp');
-        Route::post('/profile/verify-otp/{id}', 'verifyOtp')->name('profile.verifyOtp');
+        Route::get('/profile', 'profile')->name('profile.edit')->middleware('permission:profile.view');
+        Route::post('/profile/update-name/{id}', 'updateName')->name('profile.updateName')->middleware('permission:profile.edit');
+        Route::get('/profile/send-to-old-mail/{id}/', 'sendToOldMail')->name('profile.sendToOldMail')->middleware('permission:profile.edit');
+        Route::post('/profile/send-to-new-mail/{id}/', 'sendToNewMail')->name('profile.sendToNewMail')->middleware('permission:profile.edit');
+        Route::get('/profile/send-reset-password/{id}/', 'sendResetPassword')->name('profile.sendResetPassword')->middleware('permission:profile.edit');
+        Route::get('/profile/otp}', 'otp')->name('profile.otp')->middleware('permission:profile.edit');
+        Route::post('/profile/verify-otp/{id}', 'verifyOtp')->name('profile.verifyOtp')->middleware('permission:profile.edit');
         Route::get('/profile/change-mail-page', 'changeMailPage')->name('profile.changeMailPage');
-        Route::get('/profile/change-password-page', 'changePasswordPage')->name('profile.changePasswordPage');
-        Route::post('/profile/change-password/{id}', 'changePassword')->name('profile.changePassword');
-        Route::post('/profile/change-picture/{id}', 'changePicture')->name('profile.changePicture');
+        Route::get('/profile/change-password-page', 'changePasswordPage')->name('profile.changePasswordPage')->middleware('permission:profile.edit');
+        Route::post('/profile/change-password/{id}', 'changePassword')->name('profile.changePassword')->middleware('permission:profile.edit');
+        Route::post('/profile/change-picture/{id}', 'changePicture')->name('profile.changePicture')->middleware('permission:profile.edit');
     });
 
 

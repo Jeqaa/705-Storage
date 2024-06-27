@@ -93,11 +93,11 @@
                             <div class="card-body">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="nama_produk" class="form-label">Nama Produk</label>
+                                    <label for="nama_produk" class="form-label">Name</label>
                                     <input type="text" class="form-control" id="nama_produk" name="nama_produk" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="kategori" class="form-label">Kategori</label>
+                                    <label for="kategori" class="form-label">Category</label>
                                     <select class="form-select" id="kategori" name="kategori">
                                         <option value="Best Seller">Best Seller</option>
                                         <option value="Other (Voer)">Other (Voer)</option>
@@ -107,7 +107,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="jumlah_barang" class="form-label">Jumlah_barang:</label>
+                                    <label for="jumlah_barang" class="form-label">Stock:</label>
                                     <div class="input-group">
                                         <!-- <button class="btn btn-outline-secondary" type="button" id="btnMinus">-</button> -->
                                         <input type="number" name="jumlah_barang" id="jumlah_barang" class="form-control input-number"
