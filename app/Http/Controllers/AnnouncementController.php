@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,7 +10,8 @@ class AnnouncementController extends Controller
     public function index()
     {
         $announcements = Announcement::orderBy('show', 'desc')->paginate(10);
-        return view('announcement.view', ['announcements' => $announcements]); // Update view path
+        $title = 'Announcements - 705 Storage';
+        return view('announcement.view', ['announcements' => $announcements, 'title' => $title]); // Update view path
     }
 
     public function create()
@@ -39,13 +41,15 @@ class AnnouncementController extends Controller
     public function show($id)
     {
         $announcement = Announcement::findOrFail($id);
-        return view('announcement.show', ['announcement' => $announcement]); // Update view path
+        $title = 'Announcements - 705 Storage';
+        return view('announcement.show', ['announcement' => $announcement, 'title' => $title]); // Update view path
     }
 
     public function edit($id)
     {
         $announcement = Announcement::findOrFail($id);
-        return view('announcement.edit', ['announcement' => $announcement]); // Update view path
+        $title = 'Announcements - 705 Storage';
+        return view('announcement.edit', ['announcement' => $announcement, 'title' => $title]); // Update view path
     }
 
     public function update(Request $request, $id)
@@ -75,11 +79,11 @@ class AnnouncementController extends Controller
 
         return redirect()->route('announcement.view')->with('success', 'Announcement deleted successfully');
     }
-    
+
     public function toggleShow($id)
     {
         $announcement = Announcement::findOrFail($id);
-    
+
         if ($announcement->show) {
             // If the announcement is already true, toggle it off (false)
             $announcement->update(['show' => false]);
@@ -90,8 +94,7 @@ class AnnouncementController extends Controller
             $announcement->update(['show' => true]);
             $message = 'Announcement selected successfully';
         }
-    
+
         return redirect()->route('announcement.view')->with('success', $message);
     }
-
 }

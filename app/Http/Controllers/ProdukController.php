@@ -13,7 +13,8 @@ class ProdukController extends Controller
     public function index()
     {
         $produk = produk::all();
-        return view('dashboardlte', ['produk' => $produk]);
+        $title = 'Produk - 705 Storage';
+        return view('dashboardlte', compact('produk', 'title'));
     }
 
     public function search(Request $request)
@@ -136,7 +137,8 @@ class ProdukController extends Controller
     public function edit($id)
     {
         $prd = produk::find($id);
-        return view('produk.edit', compact('prd'));
+        $title = 'Edit ' . $prd->nama_produk . '- 705 Storage';
+        return view('produk.edit', compact('prd', 'title'));
     }
 
     public function update(Request $request, $id)

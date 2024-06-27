@@ -9,17 +9,17 @@
       <!-- Sidebar -->
       <div class="sidebar">
           <!-- Sidebar user panel (optional) -->
-          <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
-              <div>
-                  <img src="{{ Auth::user()->image_path }}" width="40" height="40"
-                      class="imgProfile rounded-circle" alt="User Image">
+          @if (Auth::user()->can('profile.view'))
+              <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
+                  <div>
+                      <img src="{{ Auth::user()->image_path }}" width="40" height="40"
+                          class="imgProfile rounded-circle" alt="User Image">
+                  </div>
+                  <div class="ms-3">
+                      <a href="/profile" class="ms-0">{{ Auth::user()->name }}</a>
+                  </div>
               </div>
-              <div class="ms-3">
-                  <a href="/profile" class="ms-0">{{ Auth::user()->name }}</a>
-              </div>
-          </div>
-
-
+          @endif
           <!-- Sidebar Menu -->
           <nav class="mt-2">
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -125,11 +125,11 @@
                           </a>
                       </li>
                   @endif
-                @if (Auth::user()->can('announcement.edit'))
+                  @if (Auth::user()->can('announcement.view'))
                       <li class="nav-item">
                           <a href="{{ route('announcement.view') }}"
                               class="nav-link {{ Request::routeIs('announcement.view') ? 'active' : '' }}">
-                              <i class="nav-icon fas fa-users"></i>
+                              <i class="nav-icon fas fa-bullhorn"></i>
                               <p>
                                   Announcement
                               </p>

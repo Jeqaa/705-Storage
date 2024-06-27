@@ -16,83 +16,26 @@ use App\Http\Controllers\AnnouncementController;
 
 Auth::routes(['verify' => true]);
 
-// Route::get('/', function () {
-//     return view('home', ['title' => 'Home']);
-// });
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-// Route untuk authetikasi, jadi gak usah verify email, user bisa akses ini
-// route dibikin just in case ad yang pengen tambahin fitur kalo udah bikin akun tapi blm verifikasi email(?)
-// Route::middleware(['auth'])->group(function () {
-
-// });
-
-// Route untuk authetikasi yang harus verifikasi email.
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     // Ini masih yang lama gtw buat apa
-//     Route::get('/history', function () {
-//         return view('history', ['title' => 'History']);
-//     })->name('history');
-//     Route::get('/setting', function () {
-//         return view('setting', ['title' => 'Setting']);
-//     })->name('setting');
-
-//     // CRUD Produk, ProdukController -> Redirect ke dashboardlte dengan data product
-//     // ===================================================================================
-
-//     // ke halaman utama
-//     Route::get('/', [ProdukController::class, 'index']);
-//     Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
-
-//     // untuk mengubah produk
-//     Route::get('/produk/edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
-
-//     // untuk menyimpan produk
-//     Route::post('/produk/store', [ProdukController::class, 'store'])->name('produk.store');
-
-//     // untuk mencari produk
-//     Route::get('/produk/search', [ProdukController::class, 'search'])->name('produk.search');
-
-//     // untuk menghapus produk berdasarkan id
-//     Route::delete('/produk/destroy/{edit}', [ProdukController::class, 'destroy'])->name('produk.destroy');
-
-//     // untuk mengupdate produk berdasarkan id
-//     Route::put('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
-
-//     // CRUD History
-//     // ===================================================================================
-
-//     // untuk pindah kehalaman history
-//     // Note : Route hanya 1 karena kebanyakan memakai controller di product (karna memang history terbentuk dari
-//     // perubahan produk yang dilakukan user)
-
-
-//     // TAMBAHIN ROUTE LAIN
-//     // Route::get
-// });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Overview Routes
     Route::get('/', [DashboardController::class, 'view'])->name('dashboard.view')->middleware('permission:dashboard.view');
 
     // Profile Routes
-    Route::controller(ProfileController::class)->group(function() {
-        Route::get('/profile', 'profile')->name('profile.edit');
-        Route::post('/profile/update-name/{id}', 'updateName')->name('profile.updateName');
-        Route::get('/profile/send-to-old-mail/{id}/', 'sendToOldMail')->name('profile.sendToOldMail');
-        Route::post('/profile/send-to-new-mail/{id}/', 'sendToNewMail')->name('profile.sendToNewMail');
-        Route::get('/profile/send-reset-password/{id}/', 'sendResetPassword')->name('profile.sendResetPassword');
-        Route::get('/profile/otp}', 'otp')->name('profile.otp');
-        Route::post('/profile/verify-otp/{id}', 'verifyOtp')->name('profile.verifyOtp');
-        Route::get('/profile/change-mail-page', 'changeMailPage')->name('profile.changeMailPage');
-        Route::get('/profile/change-password-page', 'changePasswordPage')->name('profile.changePasswordPage');
-        Route::post('/profile/change-password/{id}', 'changePassword')->name('profile.changePassword');
-        Route::post('/profile/change-picture/{id}', 'changePicture')->name('profile.changePicture');
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profile', 'profile')->name('profile.edit')->middleware('permission:profile.view');
+        Route::post('/profile/update-name/{id}', 'updateName')->name('profile.updateName')->middleware('permission:profile.edit');
+        Route::get('/profile/send-to-old-mail/{id}/', 'sendToOldMail')->name('profile.sendToOldMail')->middleware('permission:profile.edit');
+        Route::post('/profile/send-to-new-mail/{id}/', 'sendToNewMail')->name('profile.sendToNewMail')->middleware('permission:profile.edit');
+        Route::get('/profile/send-reset-password/{id}/', 'sendResetPassword')->name('profile.sendResetPassword')->middleware('permission:profile.edit');
+        Route::get('/profile/otp}', 'otp')->name('profile.otp')->middleware('permission:profile.edit');
+        Route::post('/profile/verify-otp/{id}', 'verifyOtp')->name('profile.verifyOtp')->middleware('permission:profile.edit');
+        Route::get('/profile/change-mail-page', 'changeMailPage')->name('profile.changeMailPage')->middleware('permission:profile.edit');
+        Route::get('/profile/change-password-page', 'changePasswordPage')->name('profile.changePasswordPage')->middleware('permission:profile.edit');
+        Route::post('/profile/change-password/{id}', 'changePassword')->name('profile.changePassword')->middleware('permission:profile.edit');
+        Route::post('/profile/change-picture/{id}', 'changePicture')->name('profile.changePicture')->middleware('permission:profile.edit');
     });
-
-
-
 
     // Produk Routes
     Route::controller(ProdukController::class)->group(function () {
@@ -105,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // History Routes
-    Route::get('/history', [HistoryController::class, 'index'])->name('history.view');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.view')->middleware('permission:history.view');
 
     // To do routes
     Route::controller(TodoController::class)->group(function () {
@@ -155,17 +98,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Manage Annoncements
     Route::controller(AnnouncementController::class)->group(function () {
-        Route::get('/announcements','index')->name('announcement.view')->middleware('permission:announcement.edit');
-        Route::get('/announcements/create','create')->name('announcement.create')->middleware('permission:announcement.create');
-        Route::post('/announcements', 'store')->name('announcement.store')->middleware('permission:announcement.create');
+        Route::get('/announcements', 'index')->name('announcement.view')->middleware('permission:announcement.view');
+        Route::get('/announcements/create', 'create')->name('announcement.create')->middleware('permission:announcement.store');
+        Route::post('/announcements', 'store')->name('announcement.store')->middleware('permission:announcement.store');
         Route::get('/announcements/{id}/edit', 'edit')->name('announcement.edit')->middleware('permission:announcement.edit');
-        Route::put('/announcements/{id}','update')->name('announcement.update')->middleware('permission:announcement.edit');
-        Route::delete('/announcements/{id}','delete')->name('announcement.delete')->middleware('permission:announcement.delete');
-        Route::post('/announcements/{id}/toggle-show','toggleShow')->name('announcement.toggle-show')->middleware('permission:announcement.edit');
+        Route::put('/announcements/{id}', 'update')->name('announcement.update')->middleware('permission:announcement.edit');
+        Route::delete('/announcements/{id}', 'delete')->name('announcement.delete')->middleware('permission:announcement.delete');
+        Route::post('/announcements/{id}/toggle-show', 'toggleShow')->name('announcement.toggle-show')->middleware('permission:announcement.edit');
     });
 });
 
-    
+
 
 // web.php
 
