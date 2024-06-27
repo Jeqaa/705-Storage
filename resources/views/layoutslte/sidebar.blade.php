@@ -125,7 +125,17 @@
                           </a>
                       </li>
                   @endif
-
+                  @if (Auth::user()->can('announcement.view'))
+                      <li class="nav-item">
+                          <a href="{{ route('announcement.view') }}"
+                              class="nav-link {{ Request::routeIs('announcement.view') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-bullhorn"></i>
+                              <p>
+                                  Announcement
+                              </p>
+                          </a>
+                      </li>
+                  @endif
                   <li class="nav-item">
                       <a class="nav-link" href="{{ route('logout') }}"
                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

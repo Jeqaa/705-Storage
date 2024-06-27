@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/dashboardlte.css') }}">
     <link rel="stylesheet" href="{{ asset('css/history.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/active_role.css') }}">
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- ChartJS -->
