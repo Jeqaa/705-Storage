@@ -11,6 +11,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ActiveRolesController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\ProfileController;
 
 Auth::routes(['verify' => true]);
 
@@ -73,6 +74,24 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Overview Routes
     Route::get('/', [DashboardController::class, 'view'])->name('dashboard.view')->middleware('permission:dashboard.view');
+
+    // Profile Routes
+    Route::controller(ProfileController::class)->group(function() {
+        Route::get('/profile', 'profile')->name('profile.edit');
+        Route::post('/profile/update-name/{id}', 'updateName')->name('profile.updateName');
+        Route::get('/profile/send-to-old-mail/{id}/', 'sendToOldMail')->name('profile.sendToOldMail');
+        Route::post('/profile/send-to-new-mail/{id}/', 'sendToNewMail')->name('profile.sendToNewMail');
+        Route::get('/profile/send-reset-password/{id}/', 'sendResetPassword')->name('profile.sendResetPassword');
+        Route::get('/profile/otp}', 'otp')->name('profile.otp');
+        Route::post('/profile/verify-otp/{id}', 'verifyOtp')->name('profile.verifyOtp');
+        Route::get('/profile/change-mail-page', 'changeMailPage')->name('profile.changeMailPage');
+        Route::get('/profile/change-password-page', 'changePasswordPage')->name('profile.changePasswordPage');
+        Route::post('/profile/change-password/{id}', 'changePassword')->name('profile.changePassword');
+        Route::post('/profile/change-picture/{id}', 'changePicture')->name('profile.changePicture');
+    });
+
+
+
 
     // Produk Routes
     Route::controller(ProdukController::class)->group(function () {
