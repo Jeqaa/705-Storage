@@ -41,12 +41,13 @@
                     <div class="form-group">
                         <label for="password">New Password</label>
                         <input type="password" class="form-control" name="password" id="password"
-                            placeholder="Enter New Password" required>
-                    </div>
+                            placeholder="Enter New Password" pattern=".{8,}" title="Must be at least 8 characters long" required>
+                        <small class="text-muted">Must be at least 8 characters long</small>
+                </div>
                     <div class="form-group">
                         <label for="password_confirmation">Repeat Password</label>
                         <input type="password" class="form-control" name="password_confirmation" id="password_confirmation"
-                            placeholder="Repeat New Password" required>
+                            placeholder="Repeat New Password" pattern=".{8,}" title="Must be at least 8 characters long" required>
                     </div>
                     <div class="form-group d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Save</button>

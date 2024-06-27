@@ -14,6 +14,8 @@ class ProdukController extends Controller
     {
         $produk = produk::all();
         $title = 'Produk - 705 Storage';
+
+        // View all product
         return view('dashboardlte', compact('produk', 'title'));
     }
 

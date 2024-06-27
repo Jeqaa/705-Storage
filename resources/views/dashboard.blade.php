@@ -237,7 +237,8 @@
                                 <ul class="users-list clearfix">
                                     @foreach ($latestUsers as $user)
                                         <li>
-                                            <img src="{{ asset('dist/img/user-placeholder.png') }}" alt="User Image">
+                                            <!-- <img src="{{ asset('dist/img/user-placeholder.png') }}" alt="User Image"> -->
+                                            <img src="{{ asset($user->image_path ?: 'profileImage/default.png')  }}" alt="User Image">
                                             <a class="users-list-name" href="{{ route('manage-users.edit', $user->id) }}"
                                                 data-toggle="tooltip" title="Edit">{{ $user->name }}</a>
                                             <span class="users-list-date">{{ $user->created_at->diffForHumans() }}</span>

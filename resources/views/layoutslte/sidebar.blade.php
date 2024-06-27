@@ -12,7 +12,8 @@
           @if (Auth::user()->can('profile.view'))
               <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
                   <div>
-                      <img src="{{ Auth::user()->image_path }}" width="40" height="40"
+                      
+                      <img src="{{ asset(Auth::user()->image_path)}}" width="40" height="40"
                           class="imgProfile rounded-circle" alt="User Image">
                   </div>
                   <div class="ms-3">

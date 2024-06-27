@@ -80,7 +80,7 @@ class ProfileController extends Controller
             $mail->Port       = 587;                   // TCP port to connect to
 
             //Recipients
-            $mail->setFrom(getenv('EMAIL'), "Don't Replay");
+            $mail->setFrom(getenv('EMAIL'), "Don't reply");
             $mail->addAddress($email); // Add a recipient
 
             // Content
@@ -123,7 +123,7 @@ class ProfileController extends Controller
             $mail->Port       = 587;                   // TCP port to connect to
 
             //Recipients
-            $mail->setFrom(getenv('EMAIL'), "Don't Replay");
+            $mail->setFrom(getenv('EMAIL'), "Don't reply");
             $mail->addAddress($email); // Add a recipient
 
             // Content
@@ -167,7 +167,7 @@ class ProfileController extends Controller
             $mail->Port       = 587;                   // TCP port to connect to
 
             //Recipients
-            $mail->setFrom(getenv('EMAIL'), "Don't Replay");
+            $mail->setFrom(getenv('EMAIL'), "Don't reply");
             $mail->addAddress($email); // Add a recipient
 
             // Content
@@ -287,12 +287,14 @@ class ProfileController extends Controller
         // Bersihkan nama file dari simbol-simbol khusus
         $cleanedFileName = Str::slug($filename) . '_' . time() . '.' . $extension;
 
-        $destinationPath = 'profileImage/';
-        $image_path = $destinationPath . $cleanedFileName;
-
+        $destinationPath = "profileImage/";
+        // $destinationPath = "asset('/profileImage/";
+        // $image_path = ($destinationPath . $cleanedFileName."')");
+        $image_path = ($destinationPath . $cleanedFileName);
+    
         // Hapus file lama jika ada
         $oldImagePath = $user->image_path;
-        if ($oldImagePath && File::exists(public_path($oldImagePath))) {
+        if ($oldImagePath && File::exists(public_path($oldImagePath)) && $oldImagePath != 'profileImage/default.png') {
             File::delete(public_path($oldImagePath));
         }
 

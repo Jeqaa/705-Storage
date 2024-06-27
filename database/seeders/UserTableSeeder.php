@@ -23,6 +23,7 @@ class UserTableSeeder extends Seeder
             'email' => 'admin@mail.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
+            // 'image_path' => "asset('profileImage/default.png')",
         ]);
 
         $admin->assignRole($adminRole);

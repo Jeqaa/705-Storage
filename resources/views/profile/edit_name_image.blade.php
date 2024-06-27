@@ -25,7 +25,7 @@
                         <div class="d-flex justify-content-center border-bottom mb-3">
                             <h3 class="card-title py-3 fs-4 fw-bold">EDIT IMAGE</h3>
                         </div>
-                        <img src="{{ Auth::user()->image_path }}" width="100" height="100"
+                        <img src="{{ asset(Auth::user()->image_path) }}" width="100" height="100"
                             class="imgProfile rounded-circle mb-4" alt="User Image">
                         <form id="uploadForm" class="uploadForm "
                             action="{{ route('profile.changePicture', Auth::user()->id) }}" method="POST"
