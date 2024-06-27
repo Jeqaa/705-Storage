@@ -11,11 +11,11 @@
           <!-- Sidebar user panel (optional) -->
           <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
               <div>
-                  <img src="{{ asset('img/profile.png') }}" width="40" height="40"
+                  <img src="{{ Auth::user()->image_path }}" width="40" height="40"
                       class="imgProfile rounded-circle" alt="User Image">
               </div>
-              <div class="info">
-                  <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+              <div class="ms-3">
+                  <a href="/profile" class="ms-0">{{ Auth::user()->name }}</a>
               </div>
           </div>
 
