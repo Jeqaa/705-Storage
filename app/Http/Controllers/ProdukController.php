@@ -31,8 +31,10 @@ class ProdukController extends Controller
             $category = $request->input('category');
             if ($category == 'best_seller') {
                 $query->where('kategori', '=', 'Best Seller');
-            } else if ($category == 'other') {
-                $query->where('kategori', '=', 'Other');
+            } else if ($category == 'other_voer') {
+                $query->where('kategori', '=', 'Other (Voer)');
+            } else if ($category == 'other_liquid') {
+                $query->where('kategori', '=', 'Other (Liquid)');
             }
         }
 
@@ -71,8 +73,10 @@ class ProdukController extends Controller
 
 
         if ($productCount > 0) {
-            $errorMsg = 'Tidak Dapat Membuat Produk Baru Dengan Nama Yang Sudah Ada.';
-            return view('error', compact('errorMsg'));
+            return redirect()->route('produk')->with([
+                'message' => 'Tidak dapat membuat produk baru dengan nama yang sama.',
+                'alert-type' => 'error'
+            ]);
         } else {
             $result = DB::insert('INSERT INTO produk (nama_produk, kategori, jumlah_barang, created_at, updated_at) VALUES (?, ?, ?, ?, ?)', [
                 $nama_produk,
@@ -93,9 +97,15 @@ class ProdukController extends Controller
             ]);
 
             if ($result) {
-                return redirect(Route('produk'))->with('success', 'Data berhasil dimasukkan!');
+                return redirect()->route('produk')->with([
+                    'message' => 'Produk berhasil dibuat.',
+                    'alert-type' => 'success'
+                ]);
             } else {
-                return redirect(Route('produk'))->with('error', 'Gagal memasukkan data.');
+                return redirect()->route('produk')->with([
+                    'message' => 'Produk gagal dibuat.',
+                    'alert-type' => 'error'
+                ]);
             }
         }
     }
@@ -117,7 +127,10 @@ class ProdukController extends Controller
         ]);
         $prd->delete();
 
-        return redirect(Route('produk'))->with('success', 'Produk deleted successfully.');
+        return redirect()->route('produk')->with([
+            'message' => 'Produk berhasil dihapus.',
+            'alert-type' => 'success'
+        ]);
     }
 
     public function edit($id)
@@ -152,9 +165,11 @@ class ProdukController extends Controller
 
         // kalau ternyata user mencoba mengedit nama proudk ke nama yang sudah ada, maka akan masuk ke if, jika tidak maka akan ke else
         if ($productCount > 0) {
-            // error message untuk user yang mencoba mengganti nama produk menggunakan yang sudah ada
-            $errorMsg = 'Tidak Dapat Mengganti Nama Produk Dengan Yang Sudah Ada.';
-            return view('error', compact('errorMsg'));
+
+            return redirect()->route('produk')->with([
+                'message' => 'Tidak dapat mengganti nama produk dengan yang sudah ada.',
+                'alert-type' => 'error'
+            ]);
         } else {
             // inisialisasi variabel pendukung
             $gantiNama = 'False';
@@ -211,7 +226,10 @@ class ProdukController extends Controller
             }
 
             // untuk kembali ke halaman produk
-            return redirect(Route('produk'))->with('success', 'Produk Berhasil Diupdate');
+            return redirect()->route('produk')->with([
+                'message' => 'Produk berhasil diperbarui.',
+                'alert-type' => 'success'
+            ]);
         }
     }
 }
