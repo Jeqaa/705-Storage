@@ -10,7 +10,8 @@ class RoleController extends Controller
     public function viewRoles()
     {
         $roles = Role::all();
-        return view('role_management.roles.view_roles', compact('roles'));
+        $title = 'Roles - 705 Storage';
+        return view('role_management.roles.view_roles', compact('roles', 'title'));
     }
 
     // simpan nama role
@@ -35,7 +36,8 @@ class RoleController extends Controller
     public function editRoles($id)
     {
         $roles = Role::findOrFail($id);
-        return view('role_management.roles.edit_roles', compact('roles'));
+        $title = 'Edit ' . $roles->name . ' - 705 Storage';
+        return view('role_management.roles.edit_roles', compact('roles', 'title'));
     }
 
     // update nama role (unik)

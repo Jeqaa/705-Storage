@@ -12,14 +12,16 @@ class ManageUserController extends Controller
     public function viewUsers()
     {
         $users = User::all();
-        return view('manage_users.view_manage_users', compact('users'));
+        $title = 'User Management - 705 Storage';
+        return view('manage_users.view_manage_users', compact('users', 'title'));
     }
 
     public function editUser($id)
     {
         $user = User::findOrFail($id);
         $roles = Role::all();
-        return view('manage_users.edit_manage_users', compact('user', 'roles'));
+        $title = 'Edit ' . $user->name . ' - 705 Storage';
+        return view('manage_users.edit_manage_users', compact('user', 'roles', 'title'));
     }
 
     // update nama user, email user (unik), dan role

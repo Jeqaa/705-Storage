@@ -23,12 +23,13 @@ class UserTableSeeder extends Seeder
             'email' => 'admin@mail.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
+            // 'image_path' => "asset('profileImage/default.png')",
         ]);
 
         $admin->assignRole($adminRole);
 
         $emp = User::create([
-            'name' => 'Karyawan',
+            'name' => 'Karyawan Pertama',
             'email' => 'emp@mail.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
@@ -36,14 +37,68 @@ class UserTableSeeder extends Seeder
 
         $emp->assignRole($employeeRole);
 
+        $emp2 = User::create([
+            'name' => 'Karyawan Kedua',
+            'email' => 'emp2@mail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        $emp2->assignRole($employeeRole);
+
+        $emp3 = User::create([
+            'name' => 'Karyawan Ketiga',
+            'email' => 'emp3@mail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        $emp3->assignRole($employeeRole);
+
         $user = User::create([
-            'name' => 'User',
+            'name' => 'User Pertama',
             'email' => 'user@mail.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
         ]);
 
         $user->assignRole($userRole);
+
+        $user2 = User::create([
+            'name' => 'User Kedua',
+            'email' => 'user2@mail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        $user2->assignRole($userRole);
+
+        $user3 = User::create([
+            'name' => 'User Ketiga',
+            'email' => 'user3@mail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        $user3->assignRole($userRole);
+
+        $user4 = User::create([
+            'name' => 'User Keempat',
+            'email' => 'user4@mail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        $user4->assignRole($userRole);
+
+        $user5 = User::create([
+            'name' => 'User Kelima',
+            'email' => 'user5@mail.com',
+            'password' => bcrypt('password'),
+            'email_verified_at' => now(),
+        ]);
+
+        $user5->assignRole($userRole);
 
         /**
          * semua permission untuk admin

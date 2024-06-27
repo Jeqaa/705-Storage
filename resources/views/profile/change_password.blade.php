@@ -3,7 +3,7 @@
 @section('content')
     <script src="{{ asset('js/swa2.js') }}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             @if (Session::has('message'))
                 let message = "{{ Session::get('message') }}";
                 let type = "{{ Session::get('alert-type', 'info') }}";
@@ -28,28 +28,33 @@
             });
         });
     </script>
-    <section class="content">
-        <div class="container-fluid">
-            <form id="myEditForm" class="col-md-6" action="{{ route('profile.changePassword',Auth::user()->id) }}" method="POST">
-                <div class="card-header d-flex justify-content-center border-bottom mb-3">
-                    <h3 class="card-title py-3 fs-4 fw-bold">ENTER NEW PASSWORD</h3>
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid d-flex justify-content-center flex-row pt-5">
+                <form id="edit_main_Form" class="col-md-6" action="{{ route('profile.changePassword', Auth::user()->id) }}"
+                    method="POST">
+                    <div class="card-header d-flex justify-content-center border-bottom mb-3">
+                        <h3 class="card-title py-3 fs-4 fw-bold">ENTER NEW PASSWORD</h3>
+                    </div>
+                    @csrf
+                    @method('POST')
+                    <div class="form-group">
+                        <label for="password">New Password</label>
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="Enter New Password" pattern=".{8,}" title="Must be at least 8 characters long" required>
+                        <small class="text-muted">Must be at least 8 characters long</small>
                 </div>
-                @csrf
-                @method('POST')
-                <div class="form-group">
-                    <label for="password">New Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter New Password" pattern=".{8,}" title="Must be at least 8 characters long" required>
-                    <small class="text-muted">Must be at least 8 characters long</small>
-                </div>
-                <div class="form-group">
-                    <label for="password_confirmation">Repeat Password</label>
-                    <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Repeat New Password" pattern=".{8,}" title="Must be at least 8 characters long" required>
-                </div>
-                <div class="form-group d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ route('profile.edit') }}" class="btn btn-secondary">Cancel</a>
-                </div>
-            </form>
-        </div>
-    </section>
+                    <div class="form-group">
+                        <label for="password_confirmation">Repeat Password</label>
+                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation"
+                            placeholder="Repeat New Password" pattern=".{8,}" title="Must be at least 8 characters long" required>
+                    </div>
+                    <div class="form-group d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="{{ route('profile.edit') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
 @endsection
