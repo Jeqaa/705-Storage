@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
 
+    // Dashboard view dengan beberapa boxes, grafik, dan tabel
     public function view()
     {
         $totalProducts = Produk::count();

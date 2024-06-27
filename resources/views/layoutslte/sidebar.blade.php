@@ -9,16 +9,17 @@
       <!-- Sidebar -->
       <div class="sidebar">
           <!-- Sidebar user panel (optional) -->
-          <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
-              <div>
-                  <img src="{{ Auth::user()->image_path }}" width="40" height="40"
-                      class="imgProfile rounded-circle" alt="User Image">
+          @if (Auth::user()->can('profile.view'))
+              <div class="mt-3 mb-3 d-flex justify-content-center align-items-center">
+                  <div>
+                      <img src="{{ Auth::user()->image_path }}" width="40" height="40"
+                          class="imgProfile rounded-circle" alt="User Image">
+                  </div>
+                  <div class="ms-3">
+                      <a href="/profile" class="ms-0">{{ Auth::user()->name }}</a>
+                  </div>
               </div>
-              <div class="ms-3">
-                  <a href="/profile" class="ms-0">{{ Auth::user()->name }}</a>
-              </div>
-          </div>
-
+          @endif
           <!-- Sidebar Menu -->
           <nav class="mt-2">
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
