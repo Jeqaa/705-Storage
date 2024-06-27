@@ -12,6 +12,7 @@ use App\Http\Controllers\ActiveRolesController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AnnouncementController;
 
 Auth::routes(['verify' => true]);
 
@@ -151,7 +152,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/manage-users/update/{id}', 'updateUser')->name('manage-users.update')->middleware('permission:user.management.edit');
         Route::delete('/manage-users/delete/{id}', 'deleteUser')->name('manage-users.delete')->middleware('permission:user.management.delete');
     });
+
+    // Manage Annoncements
+    Route::controller(AnnouncementController::class)->group(function () {
+        Route::get('/announcements','index')->name('announcement.view')->middleware('permission:announcement.edit');
+        Route::get('/announcements/create','create')->name('announcement.create')->middleware('permission:announcement.create');
+        Route::post('/announcements', 'store')->name('announcement.store')->middleware('permission:announcement.create');
+        Route::get('/announcements/{id}/edit', 'edit')->name('announcement.edit')->middleware('permission:announcement.edit');
+        Route::put('/announcements/{id}','update')->name('announcement.update')->middleware('permission:announcement.edit');
+        Route::delete('/announcements/{id}','delete')->name('announcement.delete')->middleware('permission:announcement.delete');
+        Route::post('/announcements/{id}/toggle-show','toggleShow')->name('announcement.toggle-show')->middleware('permission:announcement.edit');
+    });
 });
+
+    
+
+// web.php
+
+
 
 // Route::get('/error', function () {
 //     return view('error', ['title' => 'Error']);

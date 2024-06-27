@@ -25,7 +25,8 @@
         color: #ffffff;
     }
 </style>
-
+<div class="card">
+                        
 @section('content')
     <div class="content-wrapper" style="min-height: 805px;">
 
@@ -42,8 +43,30 @@
 
         <section class="content">
             <div class="container-fluid">
-                <div class="row">
+                <div class="card">
+                    @if ($showedAnnouncement != null)
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="flex-grow-1">
+                                <span class="text-bold text-lg">{{ $showedAnnouncement->title }}</span>
+                            </p>
+                            <button class="btn btn-link toggle-content" data-toggle="collapse" data-target="#collapseContent" aria-expanded="false" aria-controls="collapseContent">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div id="collapseContent" class="collapse">
+                            <div class="additional-content">
+                                {{$showedAnnouncement->content}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    @endif
 
+
+
+
+                <div class="row">
                     {{-- Box untuk total produk --}}
                     @if (Auth::user()->can('produk.view'))
                         <div class="col-lg-3 col-6">
@@ -106,59 +129,59 @@
 
                     {{-- Box untuk history terbaru --}}
                     @if (Auth::user()->can('history.view'))
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                @if ($latestHistory)
-                                    <h3>Product: {{ $latestHistory->nama_produk }}</h3>
-                                    <p>last updated by {{ $latestHistory->username }}</p>
-                                @else
-                                    <h3>None</h3>
-                                    <p>No history found</p>
-                                @endif
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    @if ($latestHistory)
+                                        <h3>Product: {{ $latestHistory->nama_produk }}</h3>
+                                        <p>last updated by {{ $latestHistory->username }}</p>
+                                    @else
+                                        <h3>None</h3>
+                                        <p>No history found</p>
+                                    @endif
 
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="{{ route('history.view') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
-                            </div>
-                            <a href="{{ route('history.view') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
                     @endif
 
                     {{-- Box untuk todo yang belum selesai --}}
                     @if (Auth::user()->can('todos.view'))
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-primary">
-                            <div class="inner">
-                                <h3>{{ $totalInProgressTodos }}</h3>
-                                <p>In Progress To-Dos</p>
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-primary">
+                                <div class="inner">
+                                    <h3>{{ $totalInProgressTodos }}</h3>
+                                    <p>In Progress To-Dos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-clipboard"></i>
+                                </div>
+                                <a href="{{ route('to-dos.view') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-clipboard"></i>
-                            </div>
-                            <a href="{{ route('to-dos.view') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
                     @endif
 
                     {{-- Box untuk user yang tidak memiliki akses ke aplikasi --}}
                     @if (Auth::user()->can('user.management.view'))
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>{{ $totalNotEmployeeUsers }}</h3>
-                                <p>Users without access to the application</p>
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>{{ $totalNotEmployeeUsers }}</h3>
+                                    <p>Users without access to the application</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person"></i>
+                                </div>
+                                <a href="{{ route('manage-users.view') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-person"></i>
-                            </div>
-                            <a href="{{ route('manage-users.view') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
                     @endif
 
                 </div>
