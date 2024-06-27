@@ -12,6 +12,7 @@ use App\Http\Controllers\ActiveRolesController;
 use App\Http\Controllers\ManageUserController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AnnouncementController;
 
 Auth::routes(['verify' => true]);
 
@@ -106,6 +107,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // History Routes
     Route::get('/history', [HistoryController::class, 'index'])->name('history.view');
 
+    // To do routes
+    Route::controller(TodoController::class)->group(function () {
+        Route::get('/to-dos', 'viewTodos')->name('to-dos.view')->middleware('permission:todos.view');
+        Route::post('/to-dos/store', 'todoStore')->name('to-dos.store')->middleware('permission:todos.store');
+        Route::get('/to-dos/edit/{id}', 'editTodo')->name('to-dos.edit')->middleware('permission:todos.edit');
+        Route::put('/to-dos/update/{id}', 'updateTodo')->name('to-dos.update')->middleware('permission:todos.edit');
+        Route::patch('/to-dos/done/{id}', 'markAsDone')->name('to-dos.markAsDone')->middleware('permission:todos.edit');
+        Route::patch('/to-dos/undone/{id}', 'markAsUndone')->name('to-dos.markAsUndone')->middleware('permission:todos.edit');
+        Route::delete('/to-dos/delete/{id}', 'deleteTodo')->name('to-dos.delete')->middleware('permission:todos.delete');
+    });
+
     // Permission Routes
     Route::controller(PermissionController::class)->group(function () {
         Route::get('/role-management', 'redirectToPermission');
@@ -141,17 +153,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/manage-users/delete/{id}', 'deleteUser')->name('manage-users.delete')->middleware('permission:user.management.delete');
     });
 
-    // To do routes
-    Route::controller(TodoController::class)->group(function () {
-        Route::get('/to-dos', 'viewTodos')->name('to-dos.view')->middleware('permission:todos.view');
-        Route::post('/to-dos/store', 'todoStore')->name('to-dos.store')->middleware('permission:todos.store');
-        Route::get('/to-dos/edit/{id}', 'editTodo')->name('to-dos.edit')->middleware('permission:todos.edit');
-        Route::put('/to-dos/update/{id}', 'updateTodo')->name('to-dos.update')->middleware('permission:todos.edit');
-        Route::patch('/to-dos/done/{id}', 'markAsDone')->name('to-dos.markAsDone')->middleware('permission:todos.edit');
-        Route::patch('/to-dos/undone/{id}', 'markAsUndone')->name('to-dos.markAsUndone')->middleware('permission:todos.edit');
-        Route::delete('/to-dos/delete/{id}', 'deleteTodo')->name('to-dos.delete')->middleware('permission:todos.delete');
+    // Manage Annoncements
+    Route::controller(AnnouncementController::class)->group(function () {
+        Route::get('/announcements','index')->name('announcement.view')->middleware('permission:announcement.edit');
+        Route::get('/announcements/create','create')->name('announcement.create')->middleware('permission:announcement.create');
+        Route::post('/announcements', 'store')->name('announcement.store')->middleware('permission:announcement.create');
+        Route::get('/announcements/{id}/edit', 'edit')->name('announcement.edit')->middleware('permission:announcement.edit');
+        Route::put('/announcements/{id}','update')->name('announcement.update')->middleware('permission:announcement.edit');
+        Route::delete('/announcements/{id}','delete')->name('announcement.delete')->middleware('permission:announcement.delete');
+        Route::post('/announcements/{id}/toggle-show','toggleShow')->name('announcement.toggle-show')->middleware('permission:announcement.edit');
     });
 });
+
+    
+
+// web.php
+
+
 
 // Route::get('/error', function () {
 //     return view('error', ['title' => 'Error']);
