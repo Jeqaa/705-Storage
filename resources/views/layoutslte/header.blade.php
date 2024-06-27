@@ -4,6 +4,7 @@
     <title>AdminLTE 3 | Dashboard</title>
     <link rel="stylesheet" href="{{ asset('css/dashboardlte.css') }}">
     <link rel="stylesheet" href="{{ asset('css/history.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/active_role.css') }}">
 
 
     <!-- Google Font: Source Sans Pro -->

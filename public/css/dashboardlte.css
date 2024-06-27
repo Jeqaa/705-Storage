@@ -49,3 +49,27 @@
     margin: 0; /* Sesuaikan margin jika diperlukan */
     height: 100%; /* Memastikan sel memiliki tinggi penuh */
 }
+
+/* numpang css untuk view edit_name_image.blade.php */
+#edit-name-image,
+#profile_otp_send,
+#edit_main_Form,
+.img-edit {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.img-edit {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.uploadForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
