@@ -97,7 +97,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php $i = 1; @endphp
+                                                    @php $i = ($roles->currentPage() - 1) * $roles->perPage() + 1; @endphp
                                                     @foreach ($roles as $role)
                                                         <tr>
                                                             <td class="text-center">{{ $i }}</td>
@@ -122,6 +122,7 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                            {{ $roles->links() }}
                                         @else
                                             <p class="text-danger font-weight-bold text-center pt-3">No roles found.</p>
                                         @endif

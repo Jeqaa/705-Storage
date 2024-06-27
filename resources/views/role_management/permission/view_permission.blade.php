@@ -126,7 +126,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php $i = 1; @endphp
+                                                    @php $i = ($permissions->currentPage() - 1) * $permissions->perPage() + 1; @endphp
                                                     @foreach ($permissions as $permission)
                                                         <tr>
                                                             <td class="text-center">{{ $i }}</td>
@@ -154,6 +154,7 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                            {{ $permissions->links() }}
                                         @else
                                             <p class="text-danger font-weight-bold text-center pt-3">No permissions found.
                                             </p>

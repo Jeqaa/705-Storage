@@ -39,7 +39,6 @@
             </div>
         </div>
 
-
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -98,75 +97,162 @@
                                     <i class="ion ion-alert"></i>
                                 </div>
                                 <a href="{{ route('produk') }}" class="small-box-footer"
-                                    style="color: #ffffff !important;">More info <i
+                                    style="color: #ffffff !important;">More
+                                    info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Box untuk todo yang belum selesai --}}
+                    @if (Auth::user()->can('todos.view'))
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-primary">
+                                <div class="inner">
+                                    <h3>{{ $totalInProgressTodos }}</h3>
+                                    <p>In Progress To-Dos</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-clipboard"></i>
+                                </div>
+                                <a href="{{ route('to-dos.view') }}" class="small-box-footer">More info <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     @endif
 
-                    {{-- Box untuk history terbaru --}}
-                    @if (Auth::user()->can('history.view'))
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                @if ($latestHistory)
-                                    <h3>Product: {{ $latestHistory->nama_produk }}</h3>
-                                    <p>last updated by {{ $latestHistory->username }}</p>
-                                @else
-                                    <h3>None</h3>
-                                    <p>No history found</p>
-                                @endif
-
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
-                            </div>
-                            <a href="{{ route('history.view') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    @endif
-
-                    {{-- Box untuk todo yang belum selesai --}}
-                    @if (Auth::user()->can('todos.view'))
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-primary">
-                            <div class="inner">
-                                <h3>{{ $totalInProgressTodos }}</h3>
-                                <p>In Progress To-Dos</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-clipboard"></i>
-                            </div>
-                            <a href="{{ route('to-dos.view') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    @endif
-
                     {{-- Box untuk user yang tidak memiliki akses ke aplikasi --}}
                     @if (Auth::user()->can('user.management.view'))
-                    <div class="col-lg-3 col-6">
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>{{ $totalNotEmployeeUsers }}</h3>
-                                <p>Users without access to the application</p>
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>{{ $totalNotEmployeeUsers }}</h3>
+                                    <p>Users without access to the application</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person"></i>
+                                </div>
+                                <a href="{{ route('manage-users.view') }}" class="small-box-footer">More info <i
+                                        class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-person"></i>
+                        </div>
+                    @endif
+                </div>
+
+            </div>
+
+            <!-- Bar chart 5 produk dengan stok tertinggi -->
+            @if (Auth::user()->can('produk.view'))
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="card card-dark">
+                            <div class="card-header">
+                                <h3 class="card-title">Top 5 Products with Highest Stock</h3>
                             </div>
-                            <a href="{{ route('manage-users.view') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <div class="card-body">
+                                <canvas id="barChart" style="height: 400px; width: 100%;"></canvas>
+                            </div>
                         </div>
                     </div>
-                    @endif
-
                 </div>
-            </div>
-        </section>
+            @endif
+
+            <!-- Pie Chart Kategori Produk -->
+            @if (Auth::user()->can('produk.view'))
+                <div class="card card-dark">
+                    <div class="card-header">
+                        <h3 class="card-title">Product By Category</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
+                        <canvas id="pieChart"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 343px;"
+                            width="343" height="250" class="chartjs-render-monitor"></canvas>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Edit/Update 5 pertama produk (history) -->
+            @if (Auth::user()->can('history.view'))
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card card-dark">
+                            <div class="card-header">
+                                <h3 class="card-title">Latest Edits</h3>
+                                <div class="card-tools">
+                                    <span><strong>Description:</strong></span>
+                                    <span class="badge badge-success">Create New Products</span>
+                                    <span class="badge badge-warning">Reducing Products</span>
+                                    <span class="badge badge-primary">Add Products</span>
+                                    <span class="badge badge-danger">Delete Products</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group">
+                                    @foreach ($latestEdits as $edit)
+                                        @php
+                                            $keterangan = $edit->keterangan;
+                                            $row_class = '';
+                                            if (strpos($keterangan, 'Membuat Produk Baru') !== false) {
+                                                $row_class = 'list-group-item-success';
+                                            } elseif (strpos($keterangan, 'Mengurangi Produk') !== false) {
+                                                $row_class = 'list-group-item-warning';
+                                            } elseif (strpos($keterangan, 'Menambahkan Produk') !== false) {
+                                                $row_class = 'list-group-item-primary';
+                                            } elseif (strpos($keterangan, 'Menghapus Produk') !== false) {
+                                                $row_class = 'list-group-item-danger';
+                                            }
+                                        @endphp
+                                        <li class="list-group-item {{ $row_class }}">
+                                            Product: <span class="fw-bold">{{ $edit->nama_produk }}</span>
+                                            by <span class="fw-bold">{{ $edit->username }}</span>
+                                            at {{ $edit->created_at }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- 8 user terbaru yang registrasi -->
+            @if (Auth::user()->can('user.management.view'))
+                <div class="card card-dark">
+                    <div class="card-header">
+                        <h3 class="card-title">Latest Members</h3>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <ul class="users-list clearfix">
+                            @foreach ($latestMembers as $member)
+                                <li>
+                                    <img src="{{ asset('dist/img/user-placeholder.png') }}" alt="User Image">
+                                    <a class="users-list-name" href="{{ route('manage-users.edit', $member->id) }}"
+                                        data-toggle="tooltip" title="Edit">{{ $member->name }}</a>
+                                    <span class="users-list-date">{{ $member->created_at->diffForHumans() }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{{ route('manage-users.view') }}">Manage Users</a>
+                    </div>
+                </div>
+            @endif
+    </div>
+
+    </section>
 
     </div>
     <script>
+        // Low stock product scroll
         $(document).ready(function() {
             var $scrollContainer = $('.scroll-container');
             var $scrollContent = $('.scroll-content');
@@ -185,6 +271,107 @@
             }
 
             scroll(); // Start the scrolling
+
+        });
+
+        // Data for the chart
+        var labels = {!! json_encode($topProducts->pluck('nama_produk')) !!};
+        var data = {!! json_encode($topProducts->pluck('jumlah_barang')) !!};
+
+        // Bar chart configuration
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Stock Quantity',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Hide legend for simplicity
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.yLabel;
+                        }
+                    }
+                }
+            },
+        });
+
+        // Pie Chart
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: {!! json_encode(array_keys($productCountsByCategory)) !!},
+                datasets: [{
+                    label: 'Product Count by Category',
+                    data: {!! json_encode(array_values($productCountsByCategory)) !!},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+
+        // Tooltip bootstrap
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 @endsection

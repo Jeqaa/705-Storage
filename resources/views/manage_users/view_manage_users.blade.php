@@ -86,7 +86,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php $i = 1; @endphp
+                                                    @php $i = ($users->currentPage() - 1) * $users->perPage() + 1; @endphp
                                                     @foreach ($users as $user)
                                                         <tr>
                                                             <td class="text-center">{{ $i }}</td>
@@ -123,6 +123,7 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                            {{ $users->links() }}
                                         @else
                                             <p class="text-danger font-weight-bold text-center pt-3">No users found.</p>
                                         @endif

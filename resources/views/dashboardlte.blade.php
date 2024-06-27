@@ -2,23 +2,23 @@
 
 
 @section('content')
-<!-- SweetAlert2 -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{{-- SweetAlert2 Alert --}}
-<script src="{{ asset('js/swa2.js') }}"></script>
-<script>
-    @if (Session::has('message'))
-        let message = "{{ Session::get('message') }}";
-        let type = "{{ Session::get('alert-type', 'info') }}";
-        Swal.fire({
-            title: type.charAt(0).toUpperCase() + type.slice(1),
-            text: message,
-            icon: type,
-            showConfirmButton: true,
-        });
-    @endif
-</script>
+    {{-- SweetAlert2 Alert --}}
+    <script src="{{ asset('js/swa2.js') }}"></script>
+    <script>
+        @if (Session::has('message'))
+            let message = "{{ Session::get('message') }}";
+            let type = "{{ Session::get('alert-type', 'info') }}";
+            Swal.fire({
+                title: type.charAt(0).toUpperCase() + type.slice(1),
+                text: message,
+                icon: type,
+                showConfirmButton: true,
+            });
+        @endif
+    </script>
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
@@ -110,8 +110,8 @@
                                     <label for="jumlah_barang" class="form-label">Jumlah_barang:</label>
                                     <div class="input-group">
                                         <!-- <button class="btn btn-outline-secondary" type="button" id="btnMinus">-</button> -->
-                                        <input type="number" name="jumlah_barang" id="jumlah_barang" class="form-control input-number"
-                                             min="0" required>
+                                        <input type="number" name="jumlah_barang" id="jumlah_barang"
+                                            class="form-control input-number" min="0" required>
                                         <!-- <button class="btn btn-outline-secondary" type="button" id="btnPlus">+</button> -->
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php $i = 1; @endphp
+                                                @php $i = ($produk->currentPage() - 1) * $produk->perPage() + 1; @endphp
                                                 @foreach ($produk as $prd)
                                                     <tr>
                                                         <td class="text-center">{{ $i }}</td>
@@ -157,12 +157,12 @@
                                                                     class ="btn btn-primary me-2">Edit</a>
                                                             @endif
                                                             @if (Auth::user()->can('produk.delete'))
-                                                                <form action="{{ route('produk.destroy', $prd->id) }}" method="POST"
-                                                                    class="d-inline">
+                                                                <form action="{{ route('produk.destroy', $prd->id) }}"
+                                                                    method="POST" class="d-inline">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger btn-sm swa2-confirm-delete">Delete</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger btn-sm swa2-confirm-delete">Delete</button>
                                                                 </form>
                                                             @endif
                                                         </td>
@@ -171,6 +171,7 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        {{ $produk->links() }}
                                     @else
                                         <p class="text-danger font-weight-bold text-center pt-3">No products found.</p>
                                     @endif

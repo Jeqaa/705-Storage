@@ -76,7 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [DashboardController::class, 'view'])->name('dashboard.view')->middleware('permission:dashboard.view');
 
     // Profile Routes
-    Route::controller(ProfileController::class)->group(function() {
+    Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile.edit');
         Route::post('/profile/update-name/{id}', 'updateName')->name('profile.updateName');
         Route::get('/profile/send-to-old-mail/{id}/', 'sendToOldMail')->name('profile.sendToOldMail');
@@ -90,9 +90,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/profile/change-picture/{id}', 'changePicture')->name('profile.changePicture');
     });
 
-
-
-
     // Produk Routes
     Route::controller(ProdukController::class)->group(function () {
         Route::get('/produk', 'index')->name('produk')->middleware('permission:produk.view');
@@ -104,7 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // History Routes
-    Route::get('/history', [HistoryController::class, 'index'])->name('history.view');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.view')->middleware('permission:history.view');
 
     // To do routes
     Route::controller(TodoController::class)->group(function () {

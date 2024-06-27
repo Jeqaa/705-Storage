@@ -14,8 +14,9 @@ class PermissionController extends Controller
 
     public function viewPermission()
     {
-        $permissions = Permission::all();
-        return view('role_management.permission.view_permission', compact('permissions'));
+        $permissions = Permission::paginate(10);
+        $title = 'Permission - 705 Storage';
+        return view('role_management.permission.view_permission', compact('permissions', 'title'));
     }
 
     // tambah permission (unik) dengan nama group
@@ -41,7 +42,8 @@ class PermissionController extends Controller
     public function editPermission($id)
     {
         $permission = Permission::findOrFail($id);
-        return view('role_management.permission.edit_permission', compact('permission'));
+        $title = 'Edit ' . $permission->name . '- 705 Storage';
+        return view('role_management.permission.edit_permission', compact('permission', 'title'));
     }
 
     // update nama permission (unik) dan nama group

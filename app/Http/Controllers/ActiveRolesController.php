@@ -11,8 +11,9 @@ class ActiveRolesController extends Controller
 {
     public function viewActiveRoles()
     {
-        $roles = Role::all();
-        return view('role_management.active_roles.view_active_roles', compact('roles'));
+        $roles = Role::paginate(10);
+        $title = 'Active Roles - 705 Storage';
+        return view('role_management.active_roles.view_active_roles', compact('roles', 'title'));
     }
 
     public function editActiveRoles($id)
@@ -20,9 +21,10 @@ class ActiveRolesController extends Controller
         $role = Role::findORFail($id);
         $permissions = Permission::all();
         $permission_groups = User::getPermissionGroups();
+        $title = 'Edit ' . $role->name . ' - 705 Storage';
         return view(
             'role_management.active_roles.edit_active_roles',
-            compact('role', 'permissions', 'permission_groups')
+            compact('role', 'permissions', 'permission_groups', 'title')
         );
     }
 

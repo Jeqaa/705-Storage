@@ -12,7 +12,8 @@ class TodoController extends Controller
     {
         $todos = Auth::user()->todos;
 
-        return view('todos.view_todos', compact('todos'));
+        $title = 'To-do - 705 Storage';
+        return view('todos.view_todos', compact('todos', 'title'));
     }
 
     // tambah todo
@@ -36,7 +37,8 @@ class TodoController extends Controller
     {
         $todo = Todo::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
-        return view('todos.edit_todos', compact('todo'));
+        $title = 'Edit To-do - 705 Storage';
+        return view('todos.edit_todos', compact('todo', 'title'));
     }
 
     // update judul, deskripsi, dan pin todo
