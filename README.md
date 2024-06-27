@@ -1,66 +1,69 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 705 Storage
+**Kelompok 2:**
+ - Shinzi (535220118)
+ - Jonathan Kennedy Torsandy (535220127)
+ - Gabriel Nathanael Irawan (535220142)
+ - Felix Ferdinand (535220161)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Tentang Website
+Website ini dibuat dengan sesuai mitra (705 Net Official) dari usaha bisnis yang fokus ke makanan burung. Penjualan makanan burung tersebut dijual secara daring. Mitra 705 Net Official tidak memiliki toko fisik dan proses produksi berada di lokasi yang berbeda (gudang). Produk yang diambil dari gudang ke tempat penjualan  diproses dan dijual ke pembeli secara daring.  Pengambilan setiap produk tersebut dihitung dan yang stoknya rendah dikirimkan ke grup WhatsApp kepada Admin penjualan untuk memproduksi stok produk yang rendah. Oleh karena itu, diperlukan sebuah aplikasi atau website yang dapat mencatakan produk stok yang rendah dan mencatat tanggal dan waktu stok baru yang dimasukkan.
 
-## About Laravel
+## Fitur-Fitur
+ - Login dan register dengan verifikasi email dan lupa password.
+ - Menu Dashboard menunjukkan overview (box, grafik, dan informasi singkat).
+ - Menu Products berfungsi untuk tambah produk, edit (mengganti nama, kategori, dan jumlah/stok), dan menghapus produk yang ada.
+ - Menu History menunjukkan riwayat data yang mengatur di menu Products.
+ - Menu Todo dapat digunakan untuk menuliskan note/catatan yang harus dilakukan. Pada menu ini dapat membuat todo/catatan dengan *pinned* supaya dapat ditunjukkan di paling atas kolom. Edit dan menggantikan judul, deskripsi, menambahkan dan menghapus *pinned*. Setiap todo dapat di tandai sudah selesai dan tidak selesai. Todo yang belum selesai dilakukan dan yang sudah dilakukan dapat di hapuskan.
+ - Menu Permission digunakan untuk membuat, merubah, dan menghapus permission yang digunakan untuk izin dari semua halaman.
+ - Menu Roles dapat digunakan untuk membuat, merubah, dan menghapus role.
+ - Menu Active Roles adalah tempat di mana suatu role dapat diberikan 1 atau lebih permission. Pada menu ini dapat juga di ubah permission pada role yang sudah ada dan menghapus role.
+ - Menu User Management untuk mengatur user/pengguna. Dalam halaman ini, dapat mengubah nama, email, dan role dari pengguna tersebut. Pada halaman inilah, user yang baru registrasi harus di ganti role menjadi role yang mempunyai akses (seperti karyawan) agar dapat mengakses website.
+ - Menu Announcement dapat digunakan untuk mengirimkan pengumuman dan diaktifkan biasanya oleh admin (dapat juga dengan role yang mempunyai group permission announcement). Pengumuman ini ditampilkan pada halaman dashboard.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instalasi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+ 1. Clone repistory.
+    ```
+    git clone https://github.com/Jeqaa/705-Storage.git
+    ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+ 2. Install dependency 
+    ```
+    composer install
+    npm install
+    ```
 
-## Learning Laravel
+3. Copy environment (.env) example dan isi .env sesuai dengan perangkat dan database yang digunakan.
+    ```
+    cp .env.example .env
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4. Generate key untuk APP_KEY pada file .env.
+    ```
+    php artisan key:generate
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+5. Lakukan seed database untuk mendapatkan data dummy dan akun yang dapat digunakan langsung.
+    ```    
+    php artisan migrate
+    php artisan db:seed
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+6. Jalankan server.
+    ```    
+    php artisan serve
+    npm run dev
+    ```
 
-## Laravel Sponsors
+7. Akses website melalui `http://127.0.0.1:8000` atau `http://localhost:8000`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Akun buatan (seed)
+Beberapa akun dapat digunakan langsung untuk testing.
+ - admin@mail.com dengan role admin yang dapat akses semua fitur.
+ - emp@mail.com dengan role employee yang dapat akses fitur untuk karyawan (seperti dashboard, product management, history, dan to-do).
+ - user@mail.com dengan role user yang tidak dapat akses website sama sekali (butuh penggantian role ke role lainnya (dengan salah satu permission) agar dapat mengakses website.
+ - emp2@mail.com dapat digunakan hingga emp9@mail.com
+ - user2@mail.com dapat digunakan hingga user9@mail.com
 
-### Premium Partners
+Password yang digunakan pada semua akun buatan tersebut adalah **password**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
