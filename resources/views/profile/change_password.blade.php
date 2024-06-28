@@ -16,7 +16,7 @@
             @endif
 
             // Validation script to check if passwords match
-            let form = document.getElementById('myEditForm');
+            let form = document.getElementById('edit_main_Form');
             form.addEventListener('submit', function(event) {
                 let password1 = document.getElementById('password').value;
                 let password2 = document.getElementById('password_confirmation').value;
