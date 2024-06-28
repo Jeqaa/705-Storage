@@ -62,8 +62,8 @@ Beberapa akun dapat digunakan langsung untuk testing.
  - admin@mail.com dengan role admin yang dapat akses semua fitur.
  - emp@mail.com dengan role employee yang dapat akses fitur untuk karyawan (seperti dashboard, product management, history, dan to-do).
  - user@mail.com dengan role user yang tidak dapat akses website sama sekali (butuh penggantian role ke role lainnya (dengan salah satu permission) agar dapat mengakses website.
- - emp2@mail.com dapat digunakan hingga emp9@mail.com
- - user2@mail.com dapat digunakan hingga user9@mail.com
-
+ - emp2@mail.com dapat digunakan hingga emp3@mail.com
+ - user2@mail.com dapat digunakan hingga user5@mail.com
+ 
 Password yang digunakan pada semua akun buatan tersebut adalah **password**
 
